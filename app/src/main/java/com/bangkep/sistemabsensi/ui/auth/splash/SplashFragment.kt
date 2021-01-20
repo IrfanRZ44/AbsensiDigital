@@ -1,18 +1,19 @@
 package com.bangkep.sistemabsensi.ui.auth.splash
 
-import android.os.Handler
 import androidx.navigation.fragment.findNavController
 import com.bangkep.sistemabsensi.R
-import com.bangkep.sistemabsensi.base.BaseFragment
+import com.bangkep.sistemabsensi.base.BaseFragmentBind
+import com.bangkep.sistemabsensi.databinding.FragmentSplashBinding
 
-
-class SplashFragment : BaseFragment() {
+class SplashFragment : BaseFragmentBind<FragmentSplashBinding>() {
     override fun getLayoutResource(): Int = R.layout.fragment_splash
+    lateinit var viewModel: SplashViewModel
 
     override fun myCodeHere() {
-        Handler().postDelayed({
-            findNavController().navigate(R.id.loginFragment)
-        }, 2000L)
+        bind.lifecycleOwner = this
+        viewModel = SplashViewModel(findNavController(), savedData, activity)
+        bind.viewModel = viewModel
+        viewModel.checkUser()
     }
 
 }

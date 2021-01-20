@@ -2,7 +2,6 @@
     <string name="app_name">MASKER</string>
     <string name="base_application">MASKER</string>
 
-    <string name="text_all_right_reserved">Ahlan Wa Sahlan</string>
     <string name="selamat_datang">Selamat Datang</string>
     <string name="login">Masuk</string>
     <string name="lanjut">Lanjut</string>
@@ -92,7 +91,6 @@
 
     <string name="tolak">TOLAK</string>
     <string name="terima">TERIMA</string>
-    <string name="username_atau_no_handphone">Username atau No. Handphone</string>
     <string name="lokasi">Lokasi</string>
     <string name="navigasi">Navigasi</string>
     <string name="edit_profil">Edit Profil</string>
@@ -121,4 +119,5 @@
     <string name="menu_setting">Setting</string>
     <string name="main_activity">Main Activity</string>
     <string name="authentication">Authentication</string>
+    <string name="sistem_manajemen_disiplin_dan_kinerja_asn">Sistem Manajemen Disiplin dan Kinerja ASN</string>
 </resources>

@@ -79,10 +79,10 @@
                 android:layout_marginLeft="@dimen/h5"
                 android:layout_marginTop="@dimen/h3"
                 android:layout_marginRight="@dimen/h5"
-                android:hint="@string/username_atau_no_handphone"
+                android:hint="@string/username"
                 android:textColorHint="@color/gray2"
                 app:errorEnabled="true"
-                errorText="@{viewModel.userName}"
+                errorText="@{viewModel.etUsername}"
                 android:layout_below="@+id/textStatus"
                 app:errorTextAppearance="@style/error_appearance"
                 >
@@ -92,12 +92,44 @@
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_username_gray"
                     android:drawablePadding="@dimen/h2"
-                    android:imeOptions="actionDone"
+                    android:imeOptions="actionNext"
                     android:inputType="textCapSentences"
                     android:maxLines="1"
                     android:textAlignment="textStart"
                     android:textColor="@color/black"
-                    android:text="@={viewModel.userName}"
+                    android:text="@={viewModel.etUsername}"
+                    android:textSize="@dimen/text_h3"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@id/etPassword"
+                android:layout_below="@+id/etUsername"
+                style="@style/customEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/password"
+                android:textColorHint="@color/gray2"
+                android:layout_marginLeft="@dimen/h5"
+                android:layout_marginRight="@dimen/h5"
+                app:errorEnabled="true"
+                errorText="@{viewModel.etPassword}"
+                app:errorTextAppearance="@style/error_appearance"
+                app:endIconMode="password_toggle"
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    style="@style/textStandardWhite"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionDone"
+                    android:inputType="textPassword"
+                    android:drawableStart="@drawable/ic_password_gray"
+                    android:drawablePadding="@dimen/h2"
+                    android:maxLines="1"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_h3"
+                    android:text="@={viewModel.etPassword}"
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -106,7 +138,7 @@
                 style="@style/buttonStandardBlue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/etUsername"
+                android:layout_below="@+id/etPassword"
                 android:layout_margin="@dimen/h5"
                 android:padding="@dimen/h3"
                 android:text="@string/login"
@@ -114,45 +146,11 @@
                 android:onClick="@{()-> viewModel.onClickLogin()}"
                 disableButton="@{viewModel.isShowLoading}"
                 />
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/viewNoAccount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/btnLogin"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/textNoAkun"
-                    style="@style/textStandardWhite"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/btnLogin"
-                    android:layout_alignParentEnd="true"
-                    android:text="@string/belum_punya_akun"
-                    android:textColor="@color/gray3"
-                    android:textSize="@dimen/text_h2" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/textSignUp"
-                    style="@style/textStandardWhite"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/btnLogin"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="@dimen/h1"
-                    android:text="@string/sign_up"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/text_h2"
-                    android:textStyle="bold"
-                    android:onClick="@{()-> viewModel.onClickRegister()}"
-                    />
-            </androidx.appcompat.widget.LinearLayoutCompat>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_100"
-                android:layout_below="@+id/viewNoAccount"
+                android:layout_marginTop="@dimen/h2"
+                android:layout_below="@+id/btnLogin"
                 />
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>

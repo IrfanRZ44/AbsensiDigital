@@ -17,12 +17,6 @@
         android:label="@string/login"
         tools:layout="@layout/fragment_login" />
     <fragment
-        android:id="@+id/registerFragment"
-        android:name="com.bangkep.sistemabsensi.ui.auth.register.RegisterFragment"
-        android:label="@string/register"
-        tools:layout="@layout/fragment_register"
-        />
-    <fragment
         android:id="@+id/lihatFotoFragment"
         android:name="com.bangkep.sistemabsensi.utils.LihatFotoFragment"
         android:label="@string/foto"

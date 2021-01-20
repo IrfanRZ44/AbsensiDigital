@@ -3,27 +3,14 @@ package com.bangkep.sistemabsensi.utils
 object Constant {
     const val instalApp = "Dapatkan update tabligh dari ustadz favoritmu hanya di Balligh. " +
             "Install Aplikasinya sekarang juga </downloadlink>"
-    const val referenceBiodata = "Biodata"
-    const val referenceNotif = "Notif"
-    const val referenceSampul = "sampul"
-    const val referenceIdKontak = "idKontak"
-    const val referenceIdUser = "idUser"
-    const val referenceIdTujuan = "idTujuan"
-    const val referenceWilayah = "Wilayah"
-    const val referenceProvinsi = "Provinsi"
-    const val referenceKota = "Kota"
-    const val referenceKecamatan = "Kecamatan"
-    const val onBoarding = "onBoarding"
-    const val referenceUser = "Users"
-    const val referenceChat = "Chat"
-    const val referenceRuangChat = "RuangChat"
-    const val referenceStatus = "status"
-    const val referenceToken = "token"
-    const val referenceJenisAkun = "jenisAkun"
-    const val referenceActiveAccount = "activeAkun"
-    const val referenceBookmark= "Bookmark"
+    const val reffUser = "Users"
 
-    const val referenceFotoUser = "fotoUser"
+    const val reffBaseUrl = "https://sistemabsensi.tahirkun.asia/api/v1/Json_process/"
+    const val reffLoginUser = "loginUser"
+    const val contentType = "application/json"
+
+    const val reffFotoUser = "fotoUser"
+    const val reffSuccess = "Success"
 
     const val codeRequestFoto = 100
     const val codeRequestGallery = 1
@@ -42,7 +29,6 @@ object Constant {
     const val phone = "noHp"
     const val nama = "nama"
     const val token = "token"
-    const val username = "username"
     const val provinsi = "provinsi"
     const val noHp = "noHp"
 

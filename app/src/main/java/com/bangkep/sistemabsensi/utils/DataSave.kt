@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.widget.Toast
 import com.bangkep.sistemabsensi.model.ModelUser
-import com.bangkep.sistemabsensi.utils.Constant.referenceUser
 import com.google.gson.Gson
 
 class DataSave(private val context: Context?) {
@@ -27,7 +26,7 @@ class DataSave(private val context: Context?) {
     fun getDataUser(): ModelUser? {
         return try {
             val gson = Gson()
-            val json: String = preferences?.getString(referenceUser, "")
+            val json: String = preferences?.getString(Constant.reffUser, "")
                 ?: throw Exception("Preferences Belum Di Inisialisasikan")
             gson.fromJson(json, ModelUser::class.java)
         }catch (e: Exception){

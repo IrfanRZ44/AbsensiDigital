@@ -20,7 +20,7 @@ class LoginFragment : BaseFragmentBind<FragmentLoginBinding>(){
     }
 
     private fun onClick() {
-        bind.etUsername.editText?.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
+        bind.etPassword.editText?.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 viewModel.onClickLogin()
                 return@OnEditorActionListener false
