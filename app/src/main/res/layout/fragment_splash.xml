@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
-    tools:context="com.exomatik.baseapplication.ui.auth.splash.SplashFragment"
+    tools:context="com.bangkep.sistemabsensi.ui.auth.splash.SplashFragment"
     >
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="@dimen/_170"
