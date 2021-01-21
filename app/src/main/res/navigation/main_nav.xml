@@ -5,7 +5,7 @@
     android:id="@+id/auth_nav"
     android:label="Authentication"
     tools:showIn="navigation_view"
-    app:startDestination="@id/nav_beranda">
+    app:startDestination="@id/navBeranda">
     <fragment
         android:id="@+id/lihatFotoFragment"
         android:name="com.bangkep.sistemabsensi.utils.LihatFotoFragment"
@@ -13,18 +13,23 @@
         tools:layout="@layout/fragment_lihat_foto"
         />
     <fragment
-        android:id="@+id/nav_beranda"
+        android:id="@+id/navBeranda"
         android:name="com.bangkep.sistemabsensi.ui.main.beranda.BerandaFragment"
         android:label="@string/beranda"
         tools:layout="@layout/fragment_beranda" />
     <fragment
-        android:id="@+id/nav_profile"
-        android:name="com.bangkep.sistemabsensi.ui.main.blank1.Blank1Fragment"
-        android:label="fragment_blank1"
-        tools:layout="@layout/fragment_blank1" />
+        android:id="@+id/navRiwayat"
+        android:name="com.bangkep.sistemabsensi.ui.main.riwayat.RiwayatFragment"
+        android:label="@string/riwayat"
+        tools:layout="@layout/fragment_riwayat" />
     <fragment
-        android:id="@+id/nav_setting"
-        android:name="com.bangkep.sistemabsensi.ui.main.blank2.Blank2Fragment"
-        android:label="fragment_blank2"
-        tools:layout="@layout/fragment_blank2" />
+        android:id="@+id/navProfil"
+        android:name="com.bangkep.sistemabsensi.ui.main.profil.ProfilFragment"
+        android:label="@string/menu_profile"
+        tools:layout="@layout/fragment_profil" />
+    <fragment
+        android:id="@+id/navAbout"
+        android:name="com.bangkep.sistemabsensi.ui.main.about.AboutFragment"
+        android:label="@string/tentang_sistem"
+        tools:layout="@layout/fragment_about" />
 </navigation>

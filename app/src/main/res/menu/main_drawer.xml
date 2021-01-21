@@ -3,16 +3,24 @@
     <group android:checkableBehavior="single"
         android:visible="true">
         <item
-            android:id="@+id/nav_beranda"
+            android:id="@+id/navBeranda"
             android:icon="@drawable/ic_home_gray"
             android:title="@string/beranda" />
         <item
-            android:id="@+id/nav_profile"
+            android:id="@+id/navRiwayat"
+            android:icon="@drawable/ic_riwayat_gray"
+            android:title="@string/riwayat" />
+        <item
+            android:id="@+id/navProfil"
             android:icon="@drawable/ic_profile_gray"
             android:title="@string/menu_profile" />
         <item
-            android:id="@+id/nav_setting"
-            android:icon="@drawable/ic_settings_gray"
-            android:title="@string/menu_setting" />
+            android:id="@+id/navAbout"
+            android:icon="@drawable/ic_about_gray"
+            android:title="@string/tentang_sistem" />
+        <item
+            android:id="@+id/navLogout"
+            android:icon="@drawable/ic_logout_gray"
+            android:title="@string/keluar" />
     </group>
 </menu>

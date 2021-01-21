@@ -1,16 +1,16 @@
-package com.bangkep.sistemabsensi.ui.main.blank1
+package com.bangkep.sistemabsensi.ui.main.riwayat
 
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import com.bangkep.sistemabsensi.R
 import com.bangkep.sistemabsensi.base.BaseFragmentBind
-import com.bangkep.sistemabsensi.databinding.FragmentBlank1Binding
+import com.bangkep.sistemabsensi.databinding.FragmentRiwayatBinding
 
-class Blank1Fragment : BaseFragmentBind<FragmentBlank1Binding>() {
-    private lateinit var viewModel: Blank1ViewModel
+class RiwayatFragment : BaseFragmentBind<FragmentRiwayatBinding>() {
+    private lateinit var viewModel: RiwayatViewModel
 
-    override fun getLayoutResource(): Int = R.layout.fragment_blank1
+    override fun getLayoutResource(): Int = R.layout.fragment_riwayat
 
     override fun myCodeHere() {
         setHasOptionsMenu(true)
@@ -19,7 +19,7 @@ class Blank1Fragment : BaseFragmentBind<FragmentBlank1Binding>() {
 
     private fun init() {
         bind.lifecycleOwner = this
-        viewModel = Blank1ViewModel()
+        viewModel = RiwayatViewModel()
         bind.viewModel = viewModel
     }
 

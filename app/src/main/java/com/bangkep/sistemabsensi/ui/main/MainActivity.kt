@@ -1,28 +1,26 @@
 package com.bangkep.sistemabsensi.ui.main
 
-import android.content.Context
-import android.net.ConnectivityManager
+import android.content.Intent
 import android.os.CountDownTimer
+import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
 import androidx.navigation.NavController
-import androidx.navigation.ui.AppBarConfiguration
-import com.bangkep.sistemabsensi.R
-import com.bangkep.sistemabsensi.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_main.*
 import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import coil.api.load
-import coil.request.CachePolicy
-import coil.transform.CircleCropTransformation
-import com.bangkep.sistemabsensi.utils.Constant.defaultTempFoto
+import com.bangkep.sistemabsensi.R
+import com.bangkep.sistemabsensi.base.BaseActivity
+import com.bangkep.sistemabsensi.model.ModelUser
+import com.bangkep.sistemabsensi.ui.auth.AuthActivity
+import com.bangkep.sistemabsensi.utils.Constant
 import com.bangkep.sistemabsensi.utils.dismissKeyboard
-import com.bangkep.sistemabsensi.utils.onClickFoto
-import com.bangkep.sistemabsensi.utils.showSnackbar
-import com.bangkep.sistemabsensi.utils.showSnackbarIndefinite
+import com.bangkep.sistemabsensi.utils.showMessage
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 
 class MainActivity : BaseActivity() {
@@ -30,8 +28,9 @@ class MainActivity : BaseActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
     private lateinit var view: View
-    private var timerCekKoneksi: CountDownTimer? = null
+    private var exit = false
 
+    @Suppress("DEPRECATION")
     override fun myCodeHere() {
         setTheme(R.style.CustomTheme)
         drawerLayout.systemUiVisibility = (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
@@ -41,64 +40,23 @@ class MainActivity : BaseActivity() {
         view = findViewById(android.R.id.content)
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_beranda,
-                R.id.nav_profile, R.id.nav_setting
+                R.id.navBeranda,
+                R.id.navRiwayat,
+                R.id.navProfil,
+                R.id.navAbout
             ), drawerLayout
         )
         navController = findNavController(R.id.navMuballighFragment)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        runnabelCekKoneksi()
         setData()
-    }
-
-    @Suppress("DEPRECATION")
-    private fun isNetworkAvailable(): Boolean {
-        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
-        return connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)!!.state == android.net.NetworkInfo.State.CONNECTED || connectivityManager.getNetworkInfo(
-            ConnectivityManager.TYPE_WIFI)!!.state == android.net.NetworkInfo.State.CONNECTED
-    }
-
-    private fun runnabelCekKoneksi() {
-        var snackbarNotShown = false
-        timerCekKoneksi = object : CountDownTimer(300000, 5000) {
-            override fun onTick(millisUntilFinished: Long) {
-                if(!isNetworkAvailable()){
-                    if (!snackbarNotShown){
-                        showSnackbarIndefinite(view, "Afwan, mohon periksa koneksi internet Anda")
-                        snackbarNotShown = true
-                    }
-                }
-                else{
-                    if (snackbarNotShown){
-                        showSnackbar(view, "Afwan, mohon periksa koneksi internet Anda")
-                        snackbarNotShown = false
-                    }
-                }
-            }
-
-            override fun onFinish() {}
-        }.start()
     }
 
     private fun setData() {
         val headerView = navView?.getHeaderView(0)
 
-        headerView?.foto?.load(defaultTempFoto) {
-            crossfade(true)
-            placeholder(R.drawable.ic_camera_white)
-            transformations(CircleCropTransformation())
-            error(R.drawable.ic_camera_white)
-            fallback(R.drawable.ic_camera_white)
-            memoryCachePolicy(CachePolicy.ENABLED)
-        }
-
-        headerView?.foto?.setOnClickListener {
-            drawerLayout?.closeDrawer(GravityCompat.START)
-            onClickFoto(defaultTempFoto, navController)
-        }
+        headerView?.textJenisUser?.text = savedData.getDataUser()?.level
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -108,8 +66,7 @@ class MainActivity : BaseActivity() {
 
     private fun showProgress() {
         progress.visibility = View.VISIBLE
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+        window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
             WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
     }
 
@@ -120,7 +77,55 @@ class MainActivity : BaseActivity() {
         if (drawerLayout?.isDrawerOpen(GravityCompat.END)!!) {
             drawerLayout?.closeDrawer(GravityCompat.END)
         } else {
-            super.onBackPressed()
+            if (exit) {
+                finish()
+                return
+            } else {
+                showMessage(view, "Tekan Cepat 2 Kali untuk Keluar")
+                exit = true
+
+                object : CountDownTimer(2000, 1000) {
+                    override fun onTick(millisUntilFinished: Long) {
+                    }
+
+                    override fun onFinish() {
+                        exit = false
+                    }
+                }.start()
+            }
         }
+    }
+
+    private fun alertLogout() {
+        val alert = AlertDialog.Builder(this)
+        alert.setTitle(Constant.attention)
+        alert.setMessage(Constant.alertLogout)
+        alert.setPositiveButton(
+            Constant.iya
+        ) { _, _ ->
+            showProgress()
+            savedData.setDataObject(ModelUser(), Constant.reffUser)
+            val intent = Intent(this, AuthActivity::class.java)
+            startActivity(intent)
+            finish()
+//            val username = savedData.getDataUser()?.username
+//            if (!username.isNullOrEmpty()){
+//                removeToken(username)
+//            }
+        }
+        alert.setNegativeButton(
+            Constant.tidak
+        ) { dialog, _ -> dialog.dismiss() }
+
+        alert.show()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        navView.menu.findItem(R.id.navLogout)?.setOnMenuItemClickListener {
+            drawerLayout?.closeDrawer(GravityCompat.START)
+            alertLogout()
+            true
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

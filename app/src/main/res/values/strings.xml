@@ -32,7 +32,7 @@
     <string name="action_add">Tambah</string>
     <string name="action_share">Bagikan</string>
 
-    <string name="menu_profile">Profil Saya</string>
+    <string name="menu_profile">Profil</string>
     <string name="menu_kontak">Kontak</string>
     <string name="menu_pesan">Pesan</string>
     <string name="pengaturan">Pengaturan</string>
@@ -120,4 +120,8 @@
     <string name="main_activity">Main Activity</string>
     <string name="authentication">Authentication</string>
     <string name="sistem_manajemen_disiplin_dan_kinerja_asn">Sistem Manajemen Disiplin dan Kinerja ASN</string>
+    <string name="riwayat">Riwayat</string>
+    <string name="tentang_sistem">Tentang Sistem</string>
+    <string name="kab_banggai_kepulauan">Kab. Banggai Kepulauan</string>
+    <string name="jenis_akun">Jenis Akun</string>
 </resources>

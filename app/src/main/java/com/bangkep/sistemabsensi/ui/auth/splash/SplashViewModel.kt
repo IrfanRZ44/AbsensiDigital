@@ -5,20 +5,11 @@ package com.bangkep.sistemabsensi.ui.auth.splash
 import android.app.Activity
 import android.content.Intent
 import android.os.CountDownTimer
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
 import com.bangkep.sistemabsensi.R
 import com.bangkep.sistemabsensi.base.BaseViewModel
-import com.bangkep.sistemabsensi.model.ModelUser
 import com.bangkep.sistemabsensi.ui.main.MainActivity
-import com.bangkep.sistemabsensi.utils.*
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.iid.InstanceIdResult
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-
+import com.bangkep.sistemabsensi.utils.DataSave
 
 class SplashViewModel(
     private val navController: NavController,
