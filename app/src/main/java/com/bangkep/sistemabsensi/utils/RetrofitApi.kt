@@ -1,5 +1,6 @@
 package com.bangkep.sistemabsensi.utils
 
+import com.bangkep.sistemabsensi.model.ModelResult
 import com.bangkep.sistemabsensi.model.ModelUser
 import retrofit2.Call
 import retrofit2.http.*
@@ -16,6 +17,13 @@ interface RetrofitApi {
         @Body input: Map<String, String>,
         @Header("Content-Type") contentType: String
     ): Call<ModelUser>
+
+    @Headers("Accept:application/json")
+    @POST(Constant.reffDeleteToken)
+    fun deleteToken(
+        @Body input: Map<String, String>,
+        @Header("Content-Type") contentType: String
+    ): Call<ModelResult>
 
     companion object {
         const val baseUrl = Constant.reffBaseUrl

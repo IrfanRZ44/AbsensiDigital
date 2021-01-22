@@ -49,7 +49,6 @@ class LoginViewModel(
         }
     }
 
-    @Suppress("DEPRECATION")
     private fun getUserToken(body: HashMap<String, String>) {
         isShowLoading.value = true
 

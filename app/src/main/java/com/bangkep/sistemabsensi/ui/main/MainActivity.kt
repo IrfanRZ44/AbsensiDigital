@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.CountDownTimer
 import android.view.MenuItem
 import android.view.View
-import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
 import androidx.navigation.NavController
@@ -15,13 +14,18 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.bangkep.sistemabsensi.R
 import com.bangkep.sistemabsensi.base.BaseActivity
+import com.bangkep.sistemabsensi.model.ModelResult
 import com.bangkep.sistemabsensi.model.ModelUser
 import com.bangkep.sistemabsensi.ui.auth.AuthActivity
 import com.bangkep.sistemabsensi.utils.Constant
+import com.bangkep.sistemabsensi.utils.RetrofitUtils
 import com.bangkep.sistemabsensi.utils.dismissKeyboard
 import com.bangkep.sistemabsensi.utils.showMessage
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : BaseActivity() {
     override fun getLayoutResource(): Int = R.layout.activity_main
@@ -64,12 +68,6 @@ class MainActivity : BaseActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-    private fun showProgress() {
-        progress.visibility = View.VISIBLE
-        window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-    }
-
     override fun onBackPressed() {
         if (drawerLayout?.isDrawerOpen(GravityCompat.START)!!) {
             drawerLayout?.closeDrawer(GravityCompat.START)
@@ -102,22 +100,61 @@ class MainActivity : BaseActivity() {
         alert.setMessage(Constant.alertLogout)
         alert.setPositiveButton(
             Constant.iya
-        ) { _, _ ->
-            showProgress()
-            savedData.setDataObject(ModelUser(), Constant.reffUser)
-            val intent = Intent(this, AuthActivity::class.java)
-            startActivity(intent)
-            finish()
-//            val username = savedData.getDataUser()?.username
-//            if (!username.isNullOrEmpty()){
-//                removeToken(username)
-//            }
+        ) { dialog, _ ->
+            val username = savedData.getDataUser()?.username
+
+            if (!username.isNullOrEmpty()){
+                progress.visibility = View.VISIBLE
+                dialog.dismiss()
+                val body = HashMap<String, String>()
+                body["username"] = username
+
+                deleteToken(body)
+            }
+            else{
+                showMessage(view, "Error, mohon mulai ulang aplikasi")
+            }
         }
         alert.setNegativeButton(
             Constant.tidak
         ) { dialog, _ -> dialog.dismiss() }
 
         alert.show()
+    }
+
+    private fun deleteToken(body: HashMap<String, String>){
+        RetrofitUtils.deleteToken(body,
+            object : Callback<ModelResult> {
+                override fun onResponse(
+                    call: Call<ModelResult>,
+                    response: Response<ModelResult>
+                ) {
+                    progress.visibility = View.GONE
+                    val result = response.body()
+
+                    if (result?.response == Constant.reffSuccess){
+                        successDeleteToken()
+                    }
+                    else{
+                        showMessage(view, result?.response)
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ModelResult>,
+                    t: Throwable
+                ) {
+                    progress.visibility = View.GONE
+                    showMessage(view, t.message)
+                }
+            })
+    }
+
+    private fun successDeleteToken(){
+        savedData.setDataObject(ModelUser(), Constant.reffUser)
+        val intent = Intent(this, AuthActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
