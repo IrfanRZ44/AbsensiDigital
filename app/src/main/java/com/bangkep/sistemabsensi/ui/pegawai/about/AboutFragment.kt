@@ -1,4 +1,4 @@
-package com.bangkep.sistemabsensi.ui.main.about
+package com.bangkep.sistemabsensi.ui.pegawai.about
 
 import android.annotation.SuppressLint
 import android.content.Context

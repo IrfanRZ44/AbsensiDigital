@@ -1,4 +1,4 @@
-package com.bangkep.sistemabsensi.ui.main.profil
+package com.bangkep.sistemabsensi.ui.pegawai.profil
 
 import com.bangkep.sistemabsensi.R
 import com.bangkep.sistemabsensi.base.BaseFragmentBind

@@ -1,4 +1,4 @@
-package com.bangkep.sistemabsensi.ui.main
+package com.bangkep.sistemabsensi.ui.operator
 
 import android.content.Intent
 import android.os.CountDownTimer
@@ -21,14 +21,13 @@ import com.bangkep.sistemabsensi.utils.Constant
 import com.bangkep.sistemabsensi.utils.RetrofitUtils
 import com.bangkep.sistemabsensi.utils.dismissKeyboard
 import com.bangkep.sistemabsensi.utils.showMessage
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.nav_header_main.view.*
+import kotlinx.android.synthetic.main.activity_pegawai.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainActivity : BaseActivity() {
-    override fun getLayoutResource(): Int = R.layout.activity_main
+class OperatorActivity : BaseActivity() {
+    override fun getLayoutResource(): Int = R.layout.activity_operator
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
     private lateinit var view: View
@@ -45,22 +44,13 @@ class MainActivity : BaseActivity() {
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navBeranda,
-                R.id.navRiwayat,
                 R.id.navProfil,
                 R.id.navAbout
             ), drawerLayout
         )
-        navController = findNavController(R.id.navMuballighFragment)
+        navController = findNavController(R.id.navOperatorFragment)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-        setData()
-    }
-
-    private fun setData() {
-        val headerView = navView?.getHeaderView(0)
-
-        headerView?.textJenisUser?.text = savedData.getDataUser()?.level
     }
 
     override fun onSupportNavigateUp(): Boolean {

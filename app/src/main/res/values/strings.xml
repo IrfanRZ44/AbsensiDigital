@@ -124,4 +124,6 @@
     <string name="tentang_sistem">Tentang Sistem</string>
     <string name="kab_banggai_kepulauan">Kab. Banggai Kepulauan</string>
     <string name="jenis_akun">Jenis Akun</string>
+    <string name="pegawai">Pegawai</string>
+    <string name="operator">Operator</string>
 </resources>

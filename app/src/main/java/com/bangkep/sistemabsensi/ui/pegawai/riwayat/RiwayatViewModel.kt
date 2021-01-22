@@ -1,4 +1,4 @@
-package com.bangkep.sistemabsensi.ui.main.riwayat
+package com.bangkep.sistemabsensi.ui.pegawai.riwayat
 
 import com.bangkep.sistemabsensi.base.BaseViewModel
 

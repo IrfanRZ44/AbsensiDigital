@@ -33,7 +33,8 @@ object Constant {
     const val provinsi = "provinsi"
     const val noHp = "noHp"
 
-    const val personal = "Personal"
+    const val pegawai = "Pegawai"
+    const val operator = "Operator"
 
     const val ahlanWaSahlan = "Ahlan Wa Sahlan"
     const val noMessage = "Silahkan mengirim pesan untuk memulai obrolan"

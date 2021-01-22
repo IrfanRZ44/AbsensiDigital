@@ -1,4 +1,4 @@
-package com.bangkep.sistemabsensi.ui.main.beranda
+package com.bangkep.sistemabsensi.ui.pegawai.beranda
 
 import android.app.SearchManager
 import android.content.Context

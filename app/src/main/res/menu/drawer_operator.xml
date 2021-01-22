@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single"
+        android:visible="true">
+        <item
+            android:id="@+id/navBeranda"
+            android:icon="@drawable/ic_home_gray"
+            android:title="@string/beranda" />
+        <item
+            android:id="@+id/navProfil"
+            android:icon="@drawable/ic_profile_gray"
+            android:title="@string/menu_profile" />
+        <item
+            android:id="@+id/navAbout"
+            android:icon="@drawable/ic_about_gray"
+            android:title="@string/tentang_sistem" />
+        <item
+            android:id="@+id/navLogout"
+            android:icon="@drawable/ic_logout_gray"
+            android:title="@string/keluar" />
+    </group>
+</menu>

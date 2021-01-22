@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    tools:context="com.bangkep.sistemabsensi.ui.main.beranda.BerandaFragment"
+    tools:context="com.bangkep.sistemabsensi.ui.pegawai.beranda.BerandaFragment"
     >
     <data>
         <variable
             name="viewModel"
-            type="com.bangkep.sistemabsensi.ui.main.beranda.BerandaViewModel" />
+            type="com.bangkep.sistemabsensi.ui.pegawai.beranda.BerandaViewModel" />
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
