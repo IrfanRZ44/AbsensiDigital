@@ -1,17 +1,31 @@
 package com.bangkep.sistemabsensi.ui.pegawai.absenDatang
 
+import android.Manifest
+import android.app.Activity
 import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Environment
+import android.provider.MediaStore
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.navigation.fragment.findNavController
 import com.bangkep.sistemabsensi.R
 import com.bangkep.sistemabsensi.base.BaseFragmentBind
 import com.bangkep.sistemabsensi.databinding.FragmentAbsenDatangBinding
-import com.theartofdev.edmodo.cropper.CropImage
-import com.theartofdev.edmodo.cropper.CropImageView
+import com.bangkep.sistemabsensi.utils.Constant
+import com.bumptech.glide.Glide
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class AbsenDatangFragment : BaseFragmentBind<FragmentAbsenDatangBinding>() {
     private lateinit var viewModel: AbsenDatangViewModel
+    private var imageFilePath: String? = null
 
     override fun getLayoutResource(): Int = R.layout.fragment_absen_datang
 
@@ -19,7 +33,9 @@ class AbsenDatangFragment : BaseFragmentBind<FragmentAbsenDatangBinding>() {
         setHasOptionsMenu(true)
         init()
         bind.cardFoto.setOnClickListener {
-            onClickFoto()
+            activity?.let {
+                checkPermissionStorage(it)
+            }
         }
     }
 
@@ -28,29 +44,99 @@ class AbsenDatangFragment : BaseFragmentBind<FragmentAbsenDatangBinding>() {
         viewModel = AbsenDatangViewModel(activity, findNavController(), savedData)
         bind.viewModel = viewModel
         bind.btnAbsen.isEnabled = false
-        viewModel.idHari = this.arguments?.getString("id_hari")
+        viewModel.idHari = this.arguments?.getString(Constant.reffIdHari)
     }
 
-    private fun onClickFoto(){
-        context?.let {
-            CropImage.activity()
-                .setGuidelines(CropImageView.Guidelines.ON)
-                .setAspectRatio(1, 1)
-                .start(it, this)
+    private fun checkPermissionStorage(ctx: Context){
+        val permissionStorage = arrayOf(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+
+        if (ContextCompat.checkSelfPermission(ctx, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(ctx, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(permissionStorage, Constant.codeRequestStorage)
         }
+        else{
+            checkPermissionCamera(ctx)
+        }
+    }
+
+    private fun checkPermissionCamera(ctx: Context?){
+        val permissionsCamera = arrayOf(Manifest.permission.CAMERA)
+
+        if (ctx != null){
+            if (ContextCompat.checkSelfPermission(ctx, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(permissionsCamera, Constant.codeRequestCamera)
+            }
+            else{
+                openCameraIntent()
+            }
+        }
+        else{
+            viewModel.message.value = "Error, mohon mulai ulang aplikasi"
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            Constant.codeRequestStorage -> if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                checkPermissionCamera(context)
+            }
+            Constant.codeRequestCamera ->if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                openCameraIntent()
+            }
+            else ->
+                viewModel.message.value = "Mohon izinkan penyimpanan dan camera"
+
+        }
+    }
+
+    private fun openCameraIntent() {
+        val pictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        val act = activity
+
+        if (act != null && pictureIntent.resolveActivity(act.packageManager) != null) {
+            var photoFile : File? = null
+
+            try {
+                photoFile = createImageFile(act)
+            } catch (ex: IOException) {
+                viewModel.message.value = ex.message
+            }
+
+            if (photoFile != null) {
+                val photoURI = FileProvider.getUriForFile(act,"${Constant.appId}.provider", photoFile)
+                pictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                startActivityForResult(pictureIntent, Constant.codeRequestCamera)
+            }
+            else{
+                viewModel.message.value = "Error, gagal memilih foto"
+            }
+        }
+        else{
+            viewModel.message.value = "Error, gagal memilih foto"
+        }
+    }
+
+    @Throws(IOException::class)
+    private fun createImageFile(act: Activity): File {
+        val timeStamp = SimpleDateFormat(Constant.dateFormat3, Locale.getDefault()).format(Date())
+        val imageFileName = "IMG_" + timeStamp + "_"
+        val storageDir = act.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val image = File.createTempFile(imageFileName, ".jpg", storageDir)
+
+        imageFilePath = image.absolutePath
+        return image
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            val result = CropImage.getActivityResult(data)
-
-            if (resultCode == RESULT_OK){
-                val imageUri = result.uri
-                viewModel.foto.value = imageUri
-                bind.imgFoto.setBackgroundResource(android.R.color.transparent)
-                bind.btnAbsen.isEnabled = true
-            }
+        if (requestCode == Constant.codeRequestCamera && resultCode == RESULT_OK) {
+            viewModel.foto.value = Uri.parse(imageFilePath)
+            Glide.with(this).load(imageFilePath).into(bind.imgFoto)
+            bind.btnAbsen.isEnabled = true
         }
     }
 }

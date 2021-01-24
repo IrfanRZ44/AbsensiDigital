@@ -5,6 +5,6 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class ModelResultAbsen(
-    var id_hari: String = "",
+    var id_absensi: String = "",
     var response: String = ""
     ) : Parcelable

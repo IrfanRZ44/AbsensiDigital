@@ -4,6 +4,7 @@ object Constant {
     const val instalApp = "Dapatkan update tabligh dari ustadz favoritmu hanya di Balligh. " +
             "Install Aplikasinya sekarang juga </downloadlink>"
     const val appName = "Masker"
+    const val appId = "com.bangkep.sistemabsensi"
     const val reffUser = "Users"
 
     const val reffBaseUrl = "https://sistemabsensi.tahirkun.asia/api/v1/Json_process/"
@@ -18,11 +19,15 @@ object Constant {
     const val reffFotoAbsen = "https://sistemabsensi.tahirkun.asia/api/v1/Json_process/uploadImageAbsen"
     const val reffSuccess = "Success"
     const val reffIdAbsen = "id_absensi"
+    const val reffIdHari = "id_hari"
+    const val reffNip = "nip"
 
     const val codeRequestFoto = 100
     const val codeRequestGallery = 1
+    const val codeRequestCamera = 100
     const val codeRequestScanner = 100
     const val codeRequestLocation = 101
+    const val codeRequestStorage = 104
     const val codeRequestPhone = 1
     const val codeRequestLocationUpdate = 10
     const val codeRequestResultCrop = 400
@@ -31,7 +36,7 @@ object Constant {
     const val timeFormat = "HH:mm:ss"
     const val dateFormat1 = "yyyy-MM-dd"
     const val dateFormat2 = "yyyy-MM-dd HH:mm:ss"
-    const val dateFormat3 = "dd MMM yyyy"
+    const val dateFormat3 = "yyyyMMdd_HHmmss"
 
     const val phone = "noHp"
     const val nama = "nama"

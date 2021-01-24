@@ -16,14 +16,12 @@ class BerandaFragment : BaseFragmentBind<FragmentBerandaBinding>() {
 
     private fun init() {
         bind.lifecycleOwner = this
-        viewModel = BerandaViewModel(context, findNavController(), bind.btnApel, savedData)
+        viewModel = BerandaViewModel(findNavController(), bind.btnApel, savedData)
         bind.viewModel = viewModel
         viewModel.isDatang.value = false
         viewModel.isPulang.value = false
         viewModel.isApel.value = false
         viewModel.getHariKerja()
     }
-
-
 }
 

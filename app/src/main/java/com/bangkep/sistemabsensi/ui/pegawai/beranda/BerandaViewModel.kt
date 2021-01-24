@@ -1,7 +1,6 @@
 package com.bangkep.sistemabsensi.ui.pegawai.beranda
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -29,7 +28,6 @@ import java.util.*
 import kotlin.collections.HashMap
 
 class BerandaViewModel(
-    private val context: Context?,
     private val navController: NavController,
     private val btnApel: AppCompatButton,
     private val savedData: DataSave
@@ -68,8 +66,8 @@ class BerandaViewModel(
 
                         if (!nip.isNullOrEmpty() && idHari.isNotEmpty()){
                             val dataSend = HashMap<String, String>()
-                            dataSend["nip"] = nip
-                            dataSend["id_hari"] = idHari
+                            dataSend[Constant.reffNip] = nip
+                            dataSend[Constant.reffIdHari] = idHari
 
                             if (result.keterangan == Constant.hariAbsen){
                                 getListAbsensi(dataSend)
@@ -87,6 +85,7 @@ class BerandaViewModel(
                         }
                     }
                     else{
+                        showLog(result?.response)
                         if (result?.response == Constant.tanggalTidakTersedia){
                             message.value = "Sekarang bukan hari kerja"
                         }
@@ -115,8 +114,7 @@ class BerandaViewModel(
     fun getListAbsensi(body : HashMap<String, String>){
         isShowLoading.value = true
 
-        RetrofitUtils.getAbsensi(body,
-            object : Callback<ModelListAbsensi> {
+        RetrofitUtils.getAbsensi(body, object : Callback<ModelListAbsensi> {
                 override fun onResponse(
                     call: Call<ModelListAbsensi>,
                     response: Response<ModelListAbsensi>
@@ -159,13 +157,13 @@ class BerandaViewModel(
                             } else if (dataAbsen.jenis == Constant.jenisMasuk){
                                 if (!izin){
                                     if (!masuk){
-                                        masuk = true
+                                        masuk = dataAbsen.status != "2"
                                     }
                                 }
                             } else if (dataAbsen.jenis == Constant.jenisPulang){
                                 if (!izin){
                                     if (!pulang){
-                                        pulang = true
+                                        pulang = dataAbsen.status != "2"
                                     }
                                 }
                             }
@@ -233,7 +231,6 @@ class BerandaViewModel(
                             SimpleDateFormat(Constant.timeFormat).format(Date())
                         }
 
-                        showLog("$timeStart __ $timeEnd  __ $timeNow")
                         isApel.value = comparingTimes(timeStart, timeEnd, timeNow)
                     }
                 }
@@ -282,7 +279,7 @@ class BerandaViewModel(
         if (!id_hari.isNullOrEmpty()){
             val bundle = Bundle()
             val fragmentTujuan = AbsenDatangFragment()
-            bundle.putString("id_hari", id_hari)
+            bundle.putString(Constant.reffIdHari, id_hari)
             fragmentTujuan.arguments = bundle
             navController.navigate(R.id.navAbsenDatang, bundle)
         }
