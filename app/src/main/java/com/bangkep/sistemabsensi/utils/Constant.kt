@@ -3,15 +3,21 @@ package com.bangkep.sistemabsensi.utils
 object Constant {
     const val instalApp = "Dapatkan update tabligh dari ustadz favoritmu hanya di Balligh. " +
             "Install Aplikasinya sekarang juga </downloadlink>"
+    const val appName = "Masker"
     const val reffUser = "Users"
 
     const val reffBaseUrl = "https://sistemabsensi.tahirkun.asia/api/v1/Json_process/"
     const val reffLoginUser = "loginUser"
     const val reffDeleteToken = "deleteToken"
+    const val reffHariKerja = "getHariKerja"
+    const val reffAbsensiByJenis = "getAbsensiByJenis"
+    const val reffAbsensi = "getAbsensi"
+    const val reffCreateAbsensi = "createAbsensi"
     const val contentType = "application/json"
 
-    const val reffFotoUser = "fotoUser"
+    const val reffFotoAbsen = "https://sistemabsensi.tahirkun.asia/api/v1/Json_process/uploadImageAbsen"
     const val reffSuccess = "Success"
+    const val reffIdAbsen = "id_absensi"
 
     const val codeRequestFoto = 100
     const val codeRequestGallery = 1
@@ -22,9 +28,9 @@ object Constant {
     const val codeRequestResultCrop = 400
 
     const val defaultTempFoto = "https://www.google.co.id/images/branding/googlelogo/2x/googlelogo_color_160x56dp.png"
-    const val timeFormat = "HH:mm"
-    const val dateFormat1 = "dd-M-yyyy"
-    const val dateFormat2 = "dd-MMM-yyyy"
+    const val timeFormat = "HH:mm:ss"
+    const val dateFormat1 = "yyyy-MM-dd"
+    const val dateFormat2 = "yyyy-MM-dd HH:mm:ss"
     const val dateFormat3 = "dd MMM yyyy"
 
     const val phone = "noHp"
@@ -35,6 +41,19 @@ object Constant {
 
     const val pegawai = "Pegawai"
     const val operator = "Operator"
+
+    const val jenisMasuk = "Masuk Kerja"
+    const val jenisPulang = "Pulang Kerja"
+    const val jenisApel = "Apel"
+    const val jenisSakit = "Sakit"
+    const val jenisIzin = "Izin"
+    const val jenisAlpa = "Alpha"
+    const val jenisTLD = "TLD"
+    const val jenisTDD = "TDD"
+    const val jenisCuti = "Cuti"
+
+    const val hariAbsenApel = "Absensi Harian & Apel"
+    const val hariAbsen = "Absensi Harian"
 
     const val ahlanWaSahlan = "Ahlan Wa Sahlan"
     const val noMessage = "Silahkan mengirim pesan untuk memulai obrolan"
@@ -79,4 +98,6 @@ object Constant {
     const val unread = "unread"
     const val sended = "sended"
     const val message = "message"
+
+    const val tanggalTidakTersedia = "Tanggal tidak tersedia"
 }

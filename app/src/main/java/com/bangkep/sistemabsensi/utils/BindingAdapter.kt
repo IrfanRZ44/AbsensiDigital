@@ -123,6 +123,11 @@ fun disableButton(view: View?, isEnable: Boolean) {
     view?.isEnabled = !isEnable
 }
 
+@BindingAdapter("enableButton")
+fun enableButton(view: View?, isEnable: Boolean) {
+    view?.isEnabled = isEnable
+}
+
 @BindingAdapter("errorText")
 fun setErrorMessage(view: TextInputLayout, value: String?) {
     if (view.isClickable) {

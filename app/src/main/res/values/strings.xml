@@ -126,4 +126,11 @@
     <string name="jenis_akun">Jenis Akun</string>
     <string name="pegawai">Pegawai</string>
     <string name="operator">Operator</string>
+    <string name="datang">Datang</string>
+    <string name="pulang">Pulang</string>
+    <string name="apel">Apel</string>
+    <string name="absen_datang">Absen Datang</string>
+    <string name="absen_pulang">Absen Pulang</string>
+    <string name="nip">NIP</string>
+    <string name="kirim">Kirim</string>
 </resources>

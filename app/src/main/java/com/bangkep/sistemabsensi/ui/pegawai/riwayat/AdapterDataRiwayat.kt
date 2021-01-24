@@ -1,4 +1,4 @@
-package com.bangkep.sistemabsensi.ui.pegawai.beranda
+package com.bangkep.sistemabsensi.ui.pegawai.riwayat
 
 import android.view.LayoutInflater
 import android.view.View
@@ -13,11 +13,11 @@ import com.bangkep.sistemabsensi.utils.Constant.defaultTempFoto
 import com.bangkep.sistemabsensi.utils.onClickFoto
 import kotlinx.android.synthetic.main.item_kontak.view.*
 
-class AdapterDataBeranda(
+class AdapterDataRiwayat(
     private val listAfiliasi: ArrayList<ModelUser>,
     private val onClik: (ModelUser) -> Unit,
     private val navController: NavController
-) : RecyclerView.Adapter<AdapterDataBeranda.AfiliasiHolder>() {
+) : RecyclerView.Adapter<AdapterDataRiwayat.AfiliasiHolder>() {
 
     inner class AfiliasiHolder(private val itemAfiliasi: View) :
         RecyclerView.ViewHolder(itemAfiliasi) {

@@ -73,8 +73,13 @@ dependencies {
     //retrofit converter
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation "com.squareup.retrofit2:converter-gson:2.4.0"
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.14.9'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation "com.squareup.retrofit2:adapter-rxjava2:2.4.0"
+    implementation 'net.gotev:uploadservice:4.5.2'
 
-    //    firebase
+    //firebase
     implementation "com.google.firebase:firebase-core:18.0.1"
     implementation "com.google.firebase:firebase-messaging:21.0.1"
     implementation 'com.google.firebase:firebase-analytics:18.0.1'

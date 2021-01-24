@@ -32,4 +32,10 @@
         android:name="com.bangkep.sistemabsensi.ui.pegawai.about.AboutFragment"
         android:label="@string/tentang_sistem"
         tools:layout="@layout/fragment_about" />
+    <fragment
+        android:id="@+id/navAbsenDatang"
+        android:name="com.bangkep.sistemabsensi.ui.pegawai.absenDatang.AbsenDatangFragment"
+        android:label="@string/absen_datang"
+        tools:layout="@layout/fragment_absen_datang" />
+
 </navigation>
