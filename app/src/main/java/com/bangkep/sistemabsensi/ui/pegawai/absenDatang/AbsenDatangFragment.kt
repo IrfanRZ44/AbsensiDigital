@@ -45,6 +45,38 @@ class AbsenDatangFragment : BaseFragmentBind<FragmentAbsenDatangBinding>() {
         bind.viewModel = viewModel
         bind.btnAbsen.isEnabled = false
         viewModel.idHari = this.arguments?.getString(Constant.reffIdHari)
+        viewModel.idAbsensi = this.arguments?.getString(Constant.reffIdAbsen)
+        viewModel.jenisAbsensi = this.arguments?.getString(Constant.reffJenis)
+        val foto = this.arguments?.getString(Constant.reffFoto)
+
+        if (!viewModel.idAbsensi.isNullOrEmpty() && !foto.isNullOrEmpty()){
+            Glide.with(this).load(foto).into(bind.imgFoto)
+        }
+
+        if (viewModel.jenisAbsensi == Constant.jenisMasuk){
+            if (!viewModel.idAbsensi.isNullOrEmpty()){
+                supportActionBar?.title = "Absensi Datang Ulang"
+            }
+            else{
+                supportActionBar?.title = "Absensi Datang"
+            }
+        }
+        else if (viewModel.jenisAbsensi == Constant.jenisPulang){
+            if (!viewModel.idAbsensi.isNullOrEmpty()){
+                supportActionBar?.title = "Absensi Pulang Ulang"
+            }
+            else{
+                supportActionBar?.title = "Absensi Pulang"
+            }
+        }
+        else if (viewModel.jenisAbsensi == Constant.jenisApel){
+            if (!viewModel.idAbsensi.isNullOrEmpty()){
+                supportActionBar?.title = "Absensi Apel Ulang"
+            }
+            else{
+                supportActionBar?.title = "Absensi Apel"
+            }
+        }
     }
 
     private fun checkPermissionStorage(ctx: Context){
@@ -116,7 +148,7 @@ class AbsenDatangFragment : BaseFragmentBind<FragmentAbsenDatangBinding>() {
             }
         }
         else{
-            viewModel.message.value = "Error, gagal memilih foto"
+            viewModel.message.value = "Error, perangkat Anda tidak support untuk mengambil gambar"
         }
     }
 

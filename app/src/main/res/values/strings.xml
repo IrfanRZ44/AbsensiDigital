@@ -2,6 +2,7 @@
     <string name="app_name">MASKER</string>
     <string name="app_id">com.bangkep.sistemabsensi</string>
     <string name="base_application">MASKER</string>
+    <string name="google_maps_key">AIzaSyBLxi2hOlCnGFxXZUVLzEAflzJioUz47aw</string>
 
     <string name="selamat_datang">Selamat Datang</string>
     <string name="login">Masuk</string>
@@ -15,7 +16,6 @@
     <string name="sign_up_dengan_jejaring_sosial">Daftar dengan jejaring sosial</string>
     <string name="full_name">Nama lengkap tanpa gelar</string>
     <string name="email">Email</string>
-    <string name="konfirmasi_password">Konfirmasi Password</string>
     <string name="have_account">Sudah punya akun?</string>
     <string name="enter_code">Masukkan Kode Verifikasi</string>
     <string name="username">Username</string>
@@ -134,4 +134,9 @@
     <string name="absen_pulang">Absen Pulang</string>
     <string name="nip">NIP</string>
     <string name="kirim">Kirim</string>
+    <string name="absen">Absen</string>
+    <string name="detail_riwayat">Detail Riwayat</string>
+    <string name="konfirmasi_password">Konfirmasi Password</string>
+    <string name="password_kosongkan_jika_tidak_ingin_mengubah">Password (Kosongkan jika tidak ingin mengubah)</string>
+    <string name="let_value_empty">Kosongkan jika tidak ingin mengubah password</string>
 </resources>

@@ -37,5 +37,10 @@
         android:name="com.bangkep.sistemabsensi.ui.pegawai.absenDatang.AbsenDatangFragment"
         android:label="@string/absen_datang"
         tools:layout="@layout/fragment_absen_datang" />
+    <fragment
+        android:id="@+id/navDetailRiwayat"
+        android:name="com.bangkep.sistemabsensi.ui.pegawai.riwayat.detail.DetailRiwayatFragment"
+        android:label="@string/detail_riwayat"
+        tools:layout="@layout/fragment_detail_riwayat" />
 
 </navigation>

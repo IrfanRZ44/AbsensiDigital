@@ -16,7 +16,6 @@ import com.bangkep.sistemabsensi.ui.pegawai.absenDatang.AbsenDatangFragment
 import com.bangkep.sistemabsensi.utils.Constant
 import com.bangkep.sistemabsensi.utils.DataSave
 import com.bangkep.sistemabsensi.utils.RetrofitUtils
-import com.bangkep.sistemabsensi.utils.showLog
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -35,7 +34,9 @@ class BerandaViewModel(
     val isDatang = MutableLiveData<Boolean>()
     val isPulang = MutableLiveData<Boolean>()
     val isApel = MutableLiveData<Boolean>()
-    var id_hari : String? = ""
+    var idHari : String? = ""
+    var idAbsensi : String? = ""
+    var urlFoto : String? = ""
 
     fun getHariKerja(){
         isShowLoading.value = true
@@ -61,20 +62,20 @@ class BerandaViewModel(
 
                     if (result?.response == Constant.reffSuccess){
                         val nip = savedData.getDataUser()?.username
-                        val idHari = result.id_hari
-                        id_hari = result.id_hari
+                        val id = result.id_hari
+                        idHari = result.id_hari
 
-                        if (!nip.isNullOrEmpty() && idHari.isNotEmpty()){
+                        if (!nip.isNullOrEmpty() && id.isNotEmpty()){
                             val dataSend = HashMap<String, String>()
                             dataSend[Constant.reffNip] = nip
-                            dataSend[Constant.reffIdHari] = idHari
+                            dataSend[Constant.reffIdHari] = id
 
                             if (result.keterangan == Constant.hariAbsen){
-                                getListAbsensi(dataSend)
+                                getListAbsensi(dataSend, result)
                             }
                             else if (result.keterangan == Constant.hariAbsenApel){
                                 getAbsensiApel(dataSend, result.masuk_apel, result.pulang_apel)
-                                getListAbsensi(dataSend)
+                                getListAbsensi(dataSend, result)
                             }
                         }
                         else{
@@ -85,7 +86,6 @@ class BerandaViewModel(
                         }
                     }
                     else{
-                        showLog(result?.response)
                         if (result?.response == Constant.tanggalTidakTersedia){
                             message.value = "Sekarang bukan hari kerja"
                         }
@@ -111,8 +111,14 @@ class BerandaViewModel(
             })
     }
 
-    fun getListAbsensi(body : HashMap<String, String>){
+    fun getListAbsensi(body : HashMap<String, String>, dataHari: ModelHariKerja){
         isShowLoading.value = true
+        @SuppressLint("SimpleDateFormat")
+        val timeNow = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            LocalDateTime.now().format(DateTimeFormatter.ofPattern(Constant.timeFormat))
+        } else {
+            SimpleDateFormat(Constant.timeFormat).format(Date())
+        }
 
         RetrofitUtils.getAbsensi(body, object : Callback<ModelListAbsensi> {
                 override fun onResponse(
@@ -134,36 +140,57 @@ class BerandaViewModel(
                                 if (!izin){
                                     izin = true
                                 }
-                            } else if (dataAbsen.jenis == Constant.jenisCuti){
+                            }
+                            else if (dataAbsen.jenis == Constant.jenisCuti){
                                 if (!izin){
                                     izin = true
                                 }
-                            } else if (dataAbsen.jenis == Constant.jenisIzin){
+                            }
+                            else if (dataAbsen.jenis == Constant.jenisIzin){
                                 if (!izin){
                                     izin = true
                                 }
-                            } else if (dataAbsen.jenis == Constant.jenisSakit){
+                            }
+                            else if (dataAbsen.jenis == Constant.jenisSakit){
                                 if (!izin){
                                     izin = true
                                 }
-                            } else if (dataAbsen.jenis == Constant.jenisTLD){
+                            }
+                            else if (dataAbsen.jenis == Constant.jenisTLD){
                                 if (!izin){
                                     izin = true
                                 }
-                            } else if (dataAbsen.jenis == Constant.jenisTDD){
+                            }
+                            else if (dataAbsen.jenis == Constant.jenisTDD){
                                 if (!izin){
                                     izin = true
                                 }
-                            } else if (dataAbsen.jenis == Constant.jenisMasuk){
+                            }
+                            else if (dataAbsen.jenis == Constant.jenisMasuk){
                                 if (!izin){
                                     if (!masuk){
-                                        masuk = dataAbsen.status != "2"
+                                        if (dataAbsen.status == "2"){
+                                            idAbsensi = dataAbsen.id_absensi
+                                            urlFoto = dataAbsen.img
+                                            masuk = false
+                                        }
+                                        else{
+                                            masuk = true
+                                        }
                                     }
                                 }
-                            } else if (dataAbsen.jenis == Constant.jenisPulang){
+                            }
+                            else if (dataAbsen.jenis == Constant.jenisPulang){
                                 if (!izin){
                                     if (!pulang){
-                                        pulang = dataAbsen.status != "2"
+                                        if (dataAbsen.status == "2"){
+                                            idAbsensi = dataAbsen.id_absensi
+                                            urlFoto = dataAbsen.img
+                                            pulang = false
+                                        }
+                                        else{
+                                            pulang = true
+                                        }
                                     }
                                 }
                             }
@@ -174,25 +201,49 @@ class BerandaViewModel(
                             isPulang.value = false
                         }
                         else if (!izin && !masuk && !pulang){
-                            isDatang.value = true
-                            isPulang.value = false
+                            if (comparingTimesAfter(dataHari.masuk_kerja, timeNow)){
+                                isDatang.value = true
+                                isPulang.value = false
+                            }
+                            else{
+                                isDatang.value = false
+                                isPulang.value = false
+                            }
                         }
                         else if (!izin && masuk && !pulang){
-                            isDatang.value = false
-                            isPulang.value = true
+                            if (comparingTimesAfter(dataHari.pulang_kerja, timeNow)){
+                                isDatang.value = false
+                                isPulang.value = true
+                            }
+                            else{
+                                isDatang.value = false
+                                isPulang.value = false
+                            }
                         }
                         else if (!izin && masuk && pulang){
                             isDatang.value = false
                             isPulang.value = false
                         }
                         else{
-                            isDatang.value = true
-                            isPulang.value = false
+                            if(comparingTimesAfter(dataHari.masuk_kerja, timeNow)){
+                                isDatang.value = true
+                                isPulang.value = false
+                            }
+                            else{
+                                isDatang.value = false
+                                isPulang.value = false
+                            }
                         }
                     }
                     else{
-                        isDatang.value = true
-                        isPulang.value = false
+                        if(comparingTimesAfter(dataHari.masuk_kerja, timeNow)){
+                            isDatang.value = true
+                            isPulang.value = false
+                        }
+                        else{
+                            isDatang.value = false
+                            isPulang.value = false
+                        }
                     }
                 }
 
@@ -201,8 +252,14 @@ class BerandaViewModel(
                     t: Throwable
                 ) {
                     isShowLoading.value = false
-                    isDatang.value = true
-                    isPulang.value = false
+                    if(comparingTimesAfter(dataHari.masuk_kerja, timeNow)){
+                        isDatang.value = true
+                        isPulang.value = false
+                    }
+                    else{
+                        isDatang.value = false
+                        isPulang.value = false
+                    }
                 }
             })
     }
@@ -210,6 +267,12 @@ class BerandaViewModel(
     fun getAbsensiApel(body : HashMap<String, String>, timeStart: String, timeEnd: String){
         isShowLoading.value = true
         body["jenis"] = Constant.jenisApel
+        @SuppressLint("SimpleDateFormat")
+        val timeNow = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            LocalDateTime.now().format(DateTimeFormatter.ofPattern(Constant.timeFormat))
+        } else {
+            SimpleDateFormat(Constant.timeFormat).format(Date())
+        }
 
         RetrofitUtils.getAbsensiByJenis(body,
             object : Callback<ModelAbsensi> {
@@ -221,16 +284,17 @@ class BerandaViewModel(
                     val result = response.body()
 
                     if (result?.response == Constant.reffSuccess){
-                        isApel.value = false
+                        if (result.status == "2"){
+                            idAbsensi = result.id_absensi
+                            urlFoto = result.img
+
+                            isApel.value = true
+                        }
+                        else{
+                            isApel.value = false
+                        }
                     }
                     else{
-                        @SuppressLint("SimpleDateFormat")
-                        val timeNow = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            LocalDateTime.now().format(DateTimeFormatter.ofPattern(Constant.timeFormat))
-                        } else {
-                            SimpleDateFormat(Constant.timeFormat).format(Date())
-                        }
-
                         isApel.value = comparingTimes(timeStart, timeEnd, timeNow)
                     }
                 }
@@ -240,9 +304,35 @@ class BerandaViewModel(
                     t: Throwable
                 ) {
                     isShowLoading.value = false
-                    isApel.value = true
+                    isApel.value = comparingTimes(timeStart, timeEnd, timeNow)
                 }
             })
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private fun comparingTimesAfter(waktuMulai: String, waktuDipilih: String) : Boolean{
+        try {
+            val time1 = SimpleDateFormat(Constant.timeFormat).parse(waktuMulai)
+            val d = SimpleDateFormat(Constant.timeFormat).parse(waktuDipilih)
+
+            val calendar1 = Calendar.getInstance()
+            val calendar3 = Calendar.getInstance()
+
+            return if (time1 != null && d != null){
+                calendar1.time = time1
+                calendar1.add(Calendar.DATE, 1)
+                calendar3.time = d
+                calendar3.add(Calendar.DATE, 1)
+
+                val x = calendar3.time
+                x.after(calendar1.time)
+            } else{
+                false
+            }
+        } catch (e: ParseException) {
+            e.printStackTrace()
+            return false
+        }
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -276,10 +366,13 @@ class BerandaViewModel(
     }
 
     fun onClickDatang(){
-        if (!id_hari.isNullOrEmpty()){
+        if (!idHari.isNullOrEmpty()){
             val bundle = Bundle()
             val fragmentTujuan = AbsenDatangFragment()
-            bundle.putString(Constant.reffIdHari, id_hari)
+            bundle.putString(Constant.reffIdHari, idHari)
+            bundle.putString(Constant.reffIdAbsen, idAbsensi)
+            bundle.putString(Constant.reffFoto, urlFoto)
+            bundle.putString(Constant.reffJenis, Constant.jenisMasuk)
             fragmentTujuan.arguments = bundle
             navController.navigate(R.id.navAbsenDatang, bundle)
         }
@@ -289,10 +382,34 @@ class BerandaViewModel(
     }
 
     fun onClickPulang(){
-        message.value = "Pulang"
+        if (!idHari.isNullOrEmpty()){
+            val bundle = Bundle()
+            val fragmentTujuan = AbsenDatangFragment()
+            bundle.putString(Constant.reffIdHari, idHari)
+            bundle.putString(Constant.reffIdAbsen, idAbsensi)
+            bundle.putString(Constant.reffFoto, urlFoto)
+            bundle.putString(Constant.reffJenis, Constant.jenisPulang)
+            fragmentTujuan.arguments = bundle
+            navController.navigate(R.id.navAbsenDatang, bundle)
+        }
+        else{
+            message.value = "Error, hari ini tidak tersedia untuk melakukan absensi"
+        }
     }
 
     fun onClickApel(){
-
+        if (!idHari.isNullOrEmpty()){
+            val bundle = Bundle()
+            val fragmentTujuan = AbsenDatangFragment()
+            bundle.putString(Constant.reffIdHari, idHari)
+            bundle.putString(Constant.reffIdAbsen, idAbsensi)
+            bundle.putString(Constant.reffFoto, urlFoto)
+            bundle.putString(Constant.reffJenis, Constant.jenisApel)
+            fragmentTujuan.arguments = bundle
+            navController.navigate(R.id.navAbsenDatang, bundle)
+        }
+        else{
+            message.value = "Error, hari ini tidak tersedia untuk melakukan absensi apel"
+        }
     }
 }

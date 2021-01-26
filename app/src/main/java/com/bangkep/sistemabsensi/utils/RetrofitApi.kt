@@ -46,11 +46,32 @@ interface RetrofitApi {
     ): Call<ModelListAbsensi>
 
     @Headers("Accept:application/json")
+    @POST(Constant.reffRiwayat)
+    fun getRiwayat(
+        @Body input: Map<String, String>,
+        @Header("Content-Type") contentType: String
+    ): Call<ModelListAbsensi>
+
+    @Headers("Accept:application/json")
     @POST(Constant.reffCreateAbsensi)
     fun createAbsensi(
         @Body input: Map<String, String>,
         @Header("Content-Type") contentType: String
     ): Call<ModelResultAbsen>
+
+    @Headers("Accept:application/json")
+    @POST(Constant.reffUpdateAbsensiUlang)
+    fun updateAbsensi(
+        @Body input: Map<String, String>,
+        @Header("Content-Type") contentType: String
+    ): Call<ModelResultAbsen>
+
+    @Headers("Accept:application/json")
+    @POST(Constant.reffUpdateProfil)
+    fun updateProfil(
+        @Body input: Map<String, String>,
+        @Header("Content-Type") contentType: String
+    ): Call<ModelResult>
 
     companion object {
         const val baseUrl = Constant.reffBaseUrl

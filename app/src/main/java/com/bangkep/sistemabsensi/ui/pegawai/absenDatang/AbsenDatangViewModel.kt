@@ -28,15 +28,16 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.HashMap
 
-
 class AbsenDatangViewModel(
     private val activity: Activity?,
     private val navController: NavController,
     val savedData: DataSave) : BaseViewModel() {
     val foto = MutableLiveData<Uri>()
     var idHari : String? = ""
+    var idAbsensi : String? = ""
+    var jenisAbsensi : String? = ""
 
-    fun uploadMultipart(id_absensi: String, filePath: String, activity: Activity){
+    fun uploadMultipart(id_absensi: String, nameFile: String, filePath: String, activity: Activity){
         val uploadRequest = MultipartUploadRequest(activity, Constant.reffFotoAbsen)
         uploadRequest.setMethod("POST")
         uploadRequest.addFileToUpload(
@@ -44,6 +45,7 @@ class AbsenDatangViewModel(
                 parameterName = "image"
             )
         uploadRequest.addParameter(Constant.reffIdAbsen, id_absensi)
+        uploadRequest.addParameter(Constant.reffNameFile, nameFile)
         uploadRequest.startUpload()
     }
 
@@ -103,26 +105,40 @@ class AbsenDatangViewModel(
         val hariId = idHari
         val pathFoto = foto.value?.path
         val act = activity
+        val jenis = jenisAbsensi
 
-        if (!nip.isNullOrEmpty() && !hariId.isNullOrEmpty() && !pathFoto.isNullOrEmpty() && act != null){
+        if (!nip.isNullOrEmpty() && !hariId.isNullOrEmpty() && !pathFoto.isNullOrEmpty() && !jenis.isNullOrEmpty() && act != null){
             val body = HashMap<String, String>()
             body[Constant.reffNip] = nip
             body[Constant.reffIdHari] = hariId
             body["latitude"] = latitude
             body["longitude"] = longitude
-            body["jenis"] = Constant.jenisMasuk
+            body["jenis"] = jenis
             body["date_created"] = dateCreated
+            val idAbsen = idAbsensi
 
-            sendData(body, pathFoto, act)
-        }
-        else{
-            if (pathFoto.isNullOrEmpty()){
-                isShowLoading.value = true
-                message.value = "Error, Anda harus mengupload foto"
+            if (!idAbsen.isNullOrEmpty()){
+                body[Constant.reffIdAbsen] = idAbsen
+                updateAbsensi(body, pathFoto, act)
             }
             else{
-                isShowLoading.value = true
-                message.value = "Error, mohon login ulang"
+                sendData(body, pathFoto, act)
+            }
+        }
+        else{
+            when {
+                pathFoto.isNullOrEmpty() -> {
+                    isShowLoading.value = false
+                    message.value = "Error, Anda harus mengupload foto"
+                }
+                jenis.isNullOrEmpty() -> {
+                    isShowLoading.value = false
+                    message.value = "Error, terjadi kesalahan sistem database"
+                }
+                else -> {
+                    isShowLoading.value = false
+                    message.value = "Error, mohon login ulang"
+                }
             }
         }
     }
@@ -145,12 +161,53 @@ class AbsenDatangViewModel(
                     val result = response.body()
 
                     if (result?.response == Constant.reffSuccess){
-                        val idHari = result.id_absensi
+                        val idAbsen = result.id_absensi
+                        val nameFile = "${System.currentTimeMillis()}__${savedData.getDataUser()?.username}"
 
-                        if (idHari.isNotEmpty()){
-                            uploadMultipart(idHari, pathFoto, activity)
+                        if (idAbsen.isNotEmpty() && nameFile.isNotEmpty()){
+                            uploadMultipart(idAbsen, nameFile, pathFoto, activity)
                             navController.navigate(R.id.navBeranda)
                             message.value = "Berhasil absensi"
+                        }
+                        else{
+                            message.value = "Gagal mengupload foto"
+                        }
+                    }
+                    else{
+                        message.value = result?.response
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ModelResultAbsen>,
+                    t: Throwable
+                ) {
+                    isShowLoading.value = false
+                    message.value = t.message
+                }
+            })
+    }
+
+    private fun updateAbsensi(body: HashMap<String, String>, pathFoto: String, activity: Activity){
+        isShowLoading.value = true
+
+        RetrofitUtils.updateAbsensi(body,
+            object : Callback<ModelResultAbsen> {
+                override fun onResponse(
+                    call: Call<ModelResultAbsen>,
+                    response: Response<ModelResultAbsen>
+                ) {
+                    isShowLoading.value = false
+                    val result = response.body()
+
+                    if (result?.response == Constant.reffSuccess){
+                        val idAbsen = result.id_absensi
+                        val nameFile = "${System.currentTimeMillis()}__${savedData.getDataUser()?.username}"
+
+                        if (idAbsen.isNotEmpty() && nameFile.isNotEmpty()){
+                            uploadMultipart(idAbsen, nameFile, pathFoto, activity)
+                            navController.navigate(R.id.navBeranda)
+                            message.value = "Berhasil melakukan absensi ulang"
                         }
                         else{
                             message.value = "Gagal mengupload foto"

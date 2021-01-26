@@ -4,6 +4,7 @@ object Constant {
     const val instalApp = "Dapatkan update tabligh dari ustadz favoritmu hanya di Balligh. " +
             "Install Aplikasinya sekarang juga </downloadlink>"
     const val appName = "Masker"
+    const val sistemAbsensi = "Sistem Absensi"
     const val appId = "com.bangkep.sistemabsensi"
     const val reffUser = "Users"
 
@@ -13,14 +14,20 @@ object Constant {
     const val reffHariKerja = "getHariKerja"
     const val reffAbsensiByJenis = "getAbsensiByJenis"
     const val reffAbsensi = "getAbsensi"
+    const val reffRiwayat = "getRiwayat"
     const val reffCreateAbsensi = "createAbsensi"
+    const val reffUpdateAbsensiUlang = "updateAbsensiUlang"
+    const val reffUpdateProfil = "updateProfil"
     const val contentType = "application/json"
 
     const val reffFotoAbsen = "https://sistemabsensi.tahirkun.asia/api/v1/Json_process/uploadImageAbsen"
     const val reffSuccess = "Success"
     const val reffIdAbsen = "id_absensi"
+    const val reffNameFile = "nameFile"
     const val reffIdHari = "id_hari"
     const val reffNip = "nip"
+    const val reffJenis = "jenisAbsensi"
+    const val reffFoto = "urlFoto"
 
     const val codeRequestFoto = 100
     const val codeRequestGallery = 1

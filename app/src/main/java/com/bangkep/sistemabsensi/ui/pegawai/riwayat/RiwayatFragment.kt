@@ -29,18 +29,28 @@ class RiwayatFragment : BaseFragmentBind<FragmentRiwayatBinding>() {
         viewModel = RiwayatViewModel(bind.rvData, context, findNavController())
         bind.viewModel = viewModel
         viewModel.initAdapter()
-        viewModel.setData()
+
+        val nip = savedData.getDataUser()?.username
+
+        if (!nip.isNullOrEmpty()){
+            viewModel.getListRiwayat(nip)
+        }
+        else{
+            viewModel.message.value = "Error, terjadi kesalahan database, mohon login ulang"
+        }
     }
 
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.toolbar_search_and_notif, menu)
+        inflater.inflate(R.menu.toolbar_search, menu)
 
         val searchItem = menu.findItem(R.id.actionSearch)
         val searchManager = activity!!.getSystemService(Context.SEARCH_SERVICE) as SearchManager
 
         searchView = searchItem.actionView as SearchView
         searchView.setSearchableInfo(searchManager.getSearchableInfo(activity!!.componentName))
+
+        searchView.queryHint = "Cari Tanggal"
 
         queryTextListener = object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(newText: String): Boolean {
@@ -53,7 +63,7 @@ class RiwayatFragment : BaseFragmentBind<FragmentRiwayatBinding>() {
                 viewModel.adapter?.notifyDataSetChanged()
 
                 for (i in viewModel.listNama.indices){
-                    if (viewModel.listNama[i].nama.contains(query)){
+                    if (viewModel.listNama[i].date_created.contains(query)){
                         viewModel.listData.add(viewModel.listNama[i])
                         viewModel.adapter?.notifyDataSetChanged()
                     }
@@ -86,9 +96,6 @@ class RiwayatFragment : BaseFragmentBind<FragmentRiwayatBinding>() {
         when(item.itemId){
             R.id.actionSearch ->{
                 return false
-            }
-            R.id.actionNotif ->{
-                viewModel.message.value = "Notif"
             }
         }
 

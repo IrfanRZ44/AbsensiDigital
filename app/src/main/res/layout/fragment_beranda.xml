@@ -54,7 +54,7 @@
             />
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardFoto"
+            android:id="@+id/cardMain"
             style="@style/cardView"
             android:layout_centerHorizontal="true"
             android:layout_width="match_parent"

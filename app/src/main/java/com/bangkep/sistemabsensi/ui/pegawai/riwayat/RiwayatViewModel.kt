@@ -1,26 +1,34 @@
 package com.bangkep.sistemabsensi.ui.pegawai.riwayat
 
 import android.content.Context
+import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bangkep.sistemabsensi.R
 import com.bangkep.sistemabsensi.base.BaseViewModel
-import com.bangkep.sistemabsensi.model.ModelUser
+import com.bangkep.sistemabsensi.model.ModelAbsensi
+import com.bangkep.sistemabsensi.model.ModelListAbsensi
+import com.bangkep.sistemabsensi.ui.pegawai.riwayat.detail.DetailRiwayatFragment
 import com.bangkep.sistemabsensi.utils.Constant
+import com.bangkep.sistemabsensi.utils.RetrofitUtils
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class RiwayatViewModel(private val rcData: RecyclerView,
                        private val context: Context?,
                        private val navController: NavController
 ) : BaseViewModel() {
-    val listData = ArrayList<ModelUser>()
-    val listDataSearch = ArrayList<ModelUser>()
-    val listNama = ArrayList<ModelUser>()
+    val listData = ArrayList<ModelAbsensi>()
+    val listDataSearch = ArrayList<ModelAbsensi>()
+    val listNama = ArrayList<ModelAbsensi>()
     var adapter: AdapterDataRiwayat? = null
 
     fun initAdapter() {
         adapter = AdapterDataRiwayat(
             listData,
-            { dataData: ModelUser -> onClickItem(dataData) },
+            { dataData: ModelAbsensi -> onClickItem(dataData) },
             navController
         )
         rcData.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -35,62 +43,52 @@ class RiwayatViewModel(private val rcData: RecyclerView,
         else status.value = ""
     }
 
-    fun setData(){
-        listData.clear()
+    fun getListRiwayat(nip: String){
+        isShowLoading.value = true
 
-        val tempData1 = ModelUser("", "", "", "", "",
-            "Tes 2")
+        val body = HashMap<String, String>()
+        body["nip"] = nip
 
-        listData.add(tempData1)
-        listDataSearch.add(tempData1)
-        listNama.add(tempData1)
+        RetrofitUtils.getRiwayat(body, object : Callback<ModelListAbsensi> {
+            override fun onResponse(
+                call: Call<ModelListAbsensi>,
+                response: Response<ModelListAbsensi>
+            ) {
+                isShowLoading.value = false
+                val result = response.body()
 
-        val tempData2 = ModelUser("", "", "", "", "",
-            "Tes 1")
+                if (result?.response == Constant.reffSuccess){
+                    listData.clear()
+                    for (i in result.list_absen.indices){
+                        listData.add(result.list_absen[i])
+                        listDataSearch.add(result.list_absen[i])
+                        listNama.add(result.list_absen[i])
+                        adapter?.notifyDataSetChanged()
+                    }
 
-        listData.add(tempData2)
-        listDataSearch.add(tempData2)
-        listNama.add(tempData2)
-
-        val tempData3 = ModelUser("", "", "", "", "",
-            "Tes 10")
-
-        listData.add(tempData3)
-        listDataSearch.add(tempData3)
-        listNama.add(tempData3)
-
-        val tempData4 = ModelUser("", "", "", "", "",
-            "Ada asdas")
-
-        listData.add(tempData4)
-        listDataSearch.add(tempData4)
-        listNama.add(tempData4)
-
-        val tempData5 = ModelUser("", "", "", "", "",
-            "Base Application")
-
-        listData.add(tempData5)
-        listDataSearch.add(tempData5)
-        listNama.add(tempData5)
-
-        sortingData()
-    }
-
-    private fun sortingData() {
-        val listSorted =
-            listData.sortedWith(compareBy { it.nama })
-        listData.clear()
-        for (i: Int in listSorted.indices) {
-            if (listData.size < 5) {
-                listData.add(listSorted[i])
-                adapter?.notifyDataSetChanged()
+                    cekList()
+                }
+                else{
+                    message.value = result?.response
+                    cekList()
+                }
             }
-        }
 
-        cekList()
+            override fun onFailure(
+                call: Call<ModelListAbsensi>,
+                t: Throwable
+            ) {
+                isShowLoading.value = false
+                message.value = t.message
+            }
+        })
     }
 
-    private fun onClickItem(data: ModelUser) {
-        message.value = data.nama
+    private fun onClickItem(data: ModelAbsensi) {
+        val bundle = Bundle()
+        val fragmentTujuan = DetailRiwayatFragment()
+        bundle.putParcelable(Constant.reffAbsensi, data)
+        fragmentTujuan.arguments = bundle
+        navController.navigate(R.id.navDetailRiwayat, bundle)
     }
 }

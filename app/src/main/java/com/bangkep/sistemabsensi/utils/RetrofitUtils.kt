@@ -37,8 +37,23 @@ object RetrofitUtils{
         call.enqueue(callback)
     }
 
+    fun getRiwayat(input: Map<String, String>, callback: Callback<ModelListAbsensi>){
+        val call = api.getRiwayat(input, Constant.contentType)
+        call.enqueue(callback)
+    }
+
     fun createAbsensi(input: Map<String, String>, callback: Callback<ModelResultAbsen>){
         val call = api.createAbsensi(input, Constant.contentType)
+        call.enqueue(callback)
+    }
+
+    fun updateAbsensi(input: Map<String, String>, callback: Callback<ModelResultAbsen>){
+        val call = api.updateAbsensi(input, Constant.contentType)
+        call.enqueue(callback)
+    }
+
+    fun updateProfil(input: Map<String, String>, callback: Callback<ModelResult>){
+        val call = api.updateProfil(input, Constant.contentType)
         call.enqueue(callback)
     }
 }

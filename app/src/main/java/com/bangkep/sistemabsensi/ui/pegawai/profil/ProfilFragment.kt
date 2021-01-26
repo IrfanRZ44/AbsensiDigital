@@ -1,5 +1,6 @@
 package com.bangkep.sistemabsensi.ui.pegawai.profil
 
+import androidx.navigation.fragment.findNavController
 import com.bangkep.sistemabsensi.R
 import com.bangkep.sistemabsensi.base.BaseFragmentBind
 import com.bangkep.sistemabsensi.databinding.FragmentProfilBinding
@@ -15,8 +16,9 @@ class ProfilFragment : BaseFragmentBind<FragmentProfilBinding>() {
 
     private fun init() {
         bind.lifecycleOwner = this
-        viewModel = ProfilViewModel()
+        viewModel = ProfilViewModel(findNavController(), context, savedData)
         bind.viewModel = viewModel
+        viewModel.setData()
     }
 
 }
