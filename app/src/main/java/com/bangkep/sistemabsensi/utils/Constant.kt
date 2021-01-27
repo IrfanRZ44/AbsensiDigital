@@ -21,8 +21,11 @@ object Constant {
     const val contentType = "application/json"
 
     const val reffFotoAbsen = "https://sistemabsensi.tahirkun.asia/api/v1/Json_process/uploadImageAbsen"
+    const val reffFotoProfil = "https://sistemabsensi.tahirkun.asia/api/v1/Json_process/uploadImageProfil"
+    const val reffUrlFotoProfil = "https://sistemabsensi.tahirkun.asia/assets/img/users/"
     const val reffSuccess = "Success"
     const val reffIdAbsen = "id_absensi"
+    const val reffIdUser = "id_users"
     const val reffNameFile = "nameFile"
     const val reffIdHari = "id_hari"
     const val reffNip = "nip"

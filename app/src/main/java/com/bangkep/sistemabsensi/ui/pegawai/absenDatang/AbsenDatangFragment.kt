@@ -14,8 +14,9 @@ import androidx.core.content.FileProvider
 import androidx.navigation.fragment.findNavController
 import com.bangkep.sistemabsensi.R
 import com.bangkep.sistemabsensi.base.BaseFragmentBind
-import com.bangkep.sistemabsensi.databinding.FragmentAbsenDatangBinding
 import com.bangkep.sistemabsensi.utils.Constant
+import com.bangkep.sistemabsensi.databinding.FragmentAbsenDatangBinding
+import com.bangkep.sistemabsensi.utils.showLog
 import com.bumptech.glide.Glide
 import java.io.File
 import java.io.IOException
@@ -49,7 +50,7 @@ class AbsenDatangFragment : BaseFragmentBind<FragmentAbsenDatangBinding>() {
         viewModel.jenisAbsensi = this.arguments?.getString(Constant.reffJenis)
         val foto = this.arguments?.getString(Constant.reffFoto)
 
-        if (!viewModel.idAbsensi.isNullOrEmpty() && !foto.isNullOrEmpty()){
+        if (!foto.isNullOrEmpty()){
             Glide.with(this).load(foto).into(bind.imgFoto)
         }
 
@@ -167,6 +168,7 @@ class AbsenDatangFragment : BaseFragmentBind<FragmentAbsenDatangBinding>() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Constant.codeRequestCamera && resultCode == RESULT_OK) {
             viewModel.foto.value = Uri.parse(imageFilePath)
+            showLog(imageFilePath)
             Glide.with(this).load(imageFilePath).into(bind.imgFoto)
             bind.btnAbsen.isEnabled = true
         }

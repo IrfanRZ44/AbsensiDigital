@@ -139,4 +139,6 @@
     <string name="konfirmasi_password">Konfirmasi Password</string>
     <string name="password_kosongkan_jika_tidak_ingin_mengubah">Password (Kosongkan jika tidak ingin mengubah)</string>
     <string name="let_value_empty">Kosongkan jika tidak ingin mengubah password</string>
+    <string name="nama_lengkap">Nama Lengkap</string>
+    <string name="simpan">Simpan</string>
 </resources>
