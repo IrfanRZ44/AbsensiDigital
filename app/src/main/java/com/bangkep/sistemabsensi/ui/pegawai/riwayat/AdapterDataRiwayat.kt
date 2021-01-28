@@ -9,10 +9,11 @@ import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import coil.request.CachePolicy
+import coil.transform.CircleCropTransformation
 import com.bangkep.sistemabsensi.R
 import com.bangkep.sistemabsensi.model.ModelAbsensi
 import com.bangkep.sistemabsensi.utils.onClickFoto
-import kotlinx.android.synthetic.main.item_absen.view.*
+import kotlinx.android.synthetic.main.item_riwayat.view.*
 
 class AdapterDataRiwayat(
     private val listAfiliasi: ArrayList<ModelAbsensi>,
@@ -45,6 +46,7 @@ class AdapterDataRiwayat(
             }
             itemV.imgFoto.load(itemData.img) {
                 crossfade(true)
+                transformations(CircleCropTransformation())
                 placeholder(R.drawable.ic_camera_white)
                 error(R.drawable.ic_camera_white)
                 fallback(R.drawable.ic_camera_white)
@@ -65,7 +67,7 @@ class AdapterDataRiwayat(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AfiliasiHolder {
         return AfiliasiHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.item_absen,
+                R.layout.item_riwayat,
                 parent,
                 false
             )

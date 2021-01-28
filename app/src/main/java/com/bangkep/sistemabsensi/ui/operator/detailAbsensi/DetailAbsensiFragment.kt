@@ -5,8 +5,8 @@ import android.graphics.Color
 import android.os.Bundle
 import androidx.navigation.fragment.findNavController
 import com.bangkep.sistemabsensi.R
-import com.bangkep.sistemabsensi.base.BaseFragmentBind
 import com.bangkep.sistemabsensi.databinding.FragmentDetailAbsensiBinding
+import com.bangkep.sistemabsensi.base.BaseFragmentBind
 import com.bangkep.sistemabsensi.utils.Constant
 import com.bangkep.sistemabsensi.utils.showLog
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -39,9 +39,8 @@ class DetailAbsensiFragment : BaseFragmentBind<FragmentDetailAbsensiBinding>(), 
 
     @SuppressLint("SetTextI18n")
     private fun setData(){
-        viewModel.dataUser.value = this.arguments?.getParcelable(Constant.reffUser)
         viewModel.dataAbsensi.value = this.arguments?.getParcelable(Constant.reffAbsensi)
-        viewModel.dataNipNama.value = "${viewModel.dataAbsensi.value?.nip} - ${viewModel.dataUser.value?.nama}"
+        viewModel.dataNipNama.value = "${viewModel.dataAbsensi.value?.nip} - ${viewModel.dataAbsensi.value?.nama}"
         viewModel.jenisAbsen.value = "Absen : ${viewModel.dataAbsensi.value?.jenis}"
 
         when (viewModel.dataAbsensi.value?.status) {

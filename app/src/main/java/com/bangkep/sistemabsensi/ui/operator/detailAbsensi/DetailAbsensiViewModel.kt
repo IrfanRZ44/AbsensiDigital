@@ -4,9 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import com.bangkep.sistemabsensi.R
 import com.bangkep.sistemabsensi.base.BaseViewModel
-import com.bangkep.sistemabsensi.model.ModelAbsensi
 import com.bangkep.sistemabsensi.model.ModelResult
-import com.bangkep.sistemabsensi.model.ModelUser
+import com.bangkep.sistemabsensi.model.ModelSudahAbsensi
 import com.bangkep.sistemabsensi.utils.Constant
 import com.bangkep.sistemabsensi.utils.RetrofitUtils
 import com.bangkep.sistemabsensi.utils.onClickFoto
@@ -17,8 +16,7 @@ import retrofit2.Response
 class DetailAbsensiViewModel(
     private val navController: NavController
 ) : BaseViewModel() {
-    val dataAbsensi = MutableLiveData<ModelAbsensi>()
-    val dataUser = MutableLiveData<ModelUser>()
+    val dataAbsensi = MutableLiveData<ModelSudahAbsensi>()
     val dataNipNama = MutableLiveData<String>()
     val jenisAbsen = MutableLiveData<String>()
 

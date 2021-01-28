@@ -1,4 +1,4 @@
-package com.bangkep.sistemabsensi.ui.pegawai.riwayat.detail
+package com.bangkep.sistemabsensi.ui.pegawai.detailRiwayat
 
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController

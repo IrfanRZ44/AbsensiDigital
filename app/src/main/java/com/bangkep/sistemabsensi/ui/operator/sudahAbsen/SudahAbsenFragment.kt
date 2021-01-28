@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.bangkep.sistemabsensi.R
 import com.bangkep.sistemabsensi.base.BaseFragmentBind
 import com.bangkep.sistemabsensi.databinding.FragmentSudahAbsenBinding
+import com.bangkep.sistemabsensi.utils.Constant
 
 class SudahAbsenFragment : BaseFragmentBind<FragmentSudahAbsenBinding>() {
     private lateinit var viewModel: SudahAbsenViewModel
@@ -26,11 +27,16 @@ class SudahAbsenFragment : BaseFragmentBind<FragmentSudahAbsenBinding>() {
 
     private fun init() {
         bind.lifecycleOwner = this
-        viewModel = SudahAbsenViewModel(bind.rvData, context, findNavController())
+        viewModel = SudahAbsenViewModel(bind.rvData, context, savedData, findNavController())
         bind.viewModel = viewModel
         viewModel.initAdapter()
 
         viewModel.getHariKerja()
+
+        bind.swipeRefresh.setOnRefreshListener {
+            viewModel.getHariKerja()
+            bind.swipeRefresh.isRefreshing = false
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -42,7 +48,7 @@ class SudahAbsenFragment : BaseFragmentBind<FragmentSudahAbsenBinding>() {
         searchView = searchItem.actionView as SearchView
         searchView.setSearchableInfo(searchManager.getSearchableInfo(activity!!.componentName))
 
-        searchView.queryHint = "Cari Tanggal"
+        searchView.queryHint = "Cari Nama"
 
         queryTextListener = object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(newText: String): Boolean {
@@ -55,13 +61,15 @@ class SudahAbsenFragment : BaseFragmentBind<FragmentSudahAbsenBinding>() {
                 viewModel.adapter?.notifyDataSetChanged()
 
                 for (i in viewModel.listNama.indices){
-                    if (viewModel.listNama[i].date_created.contains(query)){
+                    if (viewModel.listNama[i].nama.contains(query)){
                         viewModel.listData.add(viewModel.listNama[i])
                         viewModel.adapter?.notifyDataSetChanged()
                     }
                 }
 
-                viewModel.cekList()
+                if (viewModel.listData.size == 0){
+                    viewModel.message.value = Constant.noData
+                }
                 return true
             }
         }
@@ -74,7 +82,6 @@ class SudahAbsenFragment : BaseFragmentBind<FragmentSudahAbsenBinding>() {
                 viewModel.listData.add(viewModel.listDataSearch[i])
                 viewModel.adapter?.notifyDataSetChanged()
             }
-            viewModel.cekList()
             false
         }
 

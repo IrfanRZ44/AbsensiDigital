@@ -39,7 +39,7 @@
         tools:layout="@layout/fragment_absensi" />
     <fragment
         android:id="@+id/navDetailRiwayat"
-        android:name="com.bangkep.sistemabsensi.ui.pegawai.riwayat.detail.DetailRiwayatFragment"
+        android:name="com.bangkep.sistemabsensi.ui.pegawai.detailRiwayat.DetailRiwayatFragment"
         android:label="@string/detail_riwayat"
         tools:layout="@layout/fragment_detail_riwayat" />
 

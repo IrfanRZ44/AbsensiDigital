@@ -32,4 +32,9 @@
         android:name="com.bangkep.sistemabsensi.ui.operator.detailAbsensi.DetailAbsensiFragment"
         android:label="@string/detail_absensi"
         tools:layout="@layout/fragment_detail_absensi" />
+    <fragment
+        android:id="@+id/navDetailPegawai"
+        android:name="com.bangkep.sistemabsensi.ui.operator.detailPegawai.DetailPegawaiFragment"
+        android:label="@string/detail_pegawai"
+        tools:layout="@layout/fragment_detail_pegawai" />
 </navigation>

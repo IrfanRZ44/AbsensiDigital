@@ -15,7 +15,9 @@ object Constant {
     const val reffHariKerja = "getHariKerja"
     const val reffAbsensiByJenis = "getAbsensiByJenis"
     const val reffAbsensi = "getAbsensi"
-    const val reffAbsensiByDate = "getAbsensiByDate"
+    const val reffPegawai = "getPegawai"
+    const val reffUserAlreadyAbsensi = "getUserAlreadyAbsensi"
+    const val reffUserNotAbsensi = "getUserNotAbsensi"
     const val reffRiwayat = "getRiwayat"
     const val reffCreateAbsensi = "createAbsensi"
     const val reffUpdateAbsensiUlang = "updateAbsensiUlang"
@@ -45,7 +47,8 @@ object Constant {
     const val codeRequestLocationUpdate = 10
     const val codeRequestResultCrop = 400
 
-    const val defaultTempFoto = "https://www.google.co.id/images/branding/googlelogo/2x/googlelogo_color_160x56dp.png"
+//    const val defaultTempFoto = "https://sistemabsensi.tahirkun.asia/assets/img/absensi/unlike.png"
+    const val defaultTempFoto = "https://firebasestorage.googleapis.com/v0/b/masker-4aa5d.appspot.com/o/unlike.png?alt=media&token=7d430377-3108-4a83-b042-e3bee1dcb7b5"
     const val timeFormat = "HH:mm:ss"
     const val dateFormat1 = "yyyy-MM-dd"
     const val dateFormat2 = "yyyy-MM-dd HH:mm:ss"

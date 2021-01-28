@@ -9,7 +9,7 @@ import com.bangkep.sistemabsensi.R
 import com.bangkep.sistemabsensi.base.BaseViewModel
 import com.bangkep.sistemabsensi.model.ModelAbsensi
 import com.bangkep.sistemabsensi.model.ModelListAbsensi
-import com.bangkep.sistemabsensi.ui.pegawai.riwayat.detail.DetailRiwayatFragment
+import com.bangkep.sistemabsensi.ui.pegawai.detailRiwayat.DetailRiwayatFragment
 import com.bangkep.sistemabsensi.utils.Constant
 import com.bangkep.sistemabsensi.utils.RetrofitUtils
 import retrofit2.Call
@@ -86,7 +86,8 @@ class RiwayatViewModel(private val rcData: RecyclerView,
 
     private fun onClickItem(data: ModelAbsensi) {
         val bundle = Bundle()
-        val fragmentTujuan = DetailRiwayatFragment()
+        val fragmentTujuan =
+            DetailRiwayatFragment()
         bundle.putParcelable(Constant.reffAbsensi, data)
         fragmentTujuan.arguments = bundle
         navController.navigate(R.id.navDetailRiwayat, bundle)

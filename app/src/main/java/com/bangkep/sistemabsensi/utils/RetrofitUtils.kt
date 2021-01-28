@@ -1,14 +1,20 @@
 package com.bangkep.sistemabsensi.utils
 
 import com.bangkep.sistemabsensi.model.*
+import com.google.gson.GsonBuilder
 import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+
 object RetrofitUtils{
+    private var gson = GsonBuilder()
+        .setLenient()
+        .create()
+
     private val retrofit = Retrofit.Builder()
         .baseUrl(RetrofitApi.baseUrl)
-        .addConverterFactory(GsonConverterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
     val api = retrofit.create(RetrofitApi::class.java)
 
@@ -42,8 +48,13 @@ object RetrofitUtils{
         call.enqueue(callback)
     }
 
-    fun getAbsensiByDate(input: Map<String, String>, callback: Callback<ModelListAbsensi>){
-        val call = api.getAbsensiByDate(input, Constant.contentType)
+    fun getUserAlreadyAbsensi(input: Map<String, String>, callback: Callback<ModelListSudahAbsensi>){
+        val call = api.getUserAlreadyAbsensi(input, Constant.contentType)
+        call.enqueue(callback)
+    }
+
+    fun getUserNotAbsensi(input: Map<String, String>, callback: Callback<ModelListBelumAbsensi>){
+        val call = api.getUserNotAbsensi(input, Constant.contentType)
         call.enqueue(callback)
     }
 

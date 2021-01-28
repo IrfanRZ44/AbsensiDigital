@@ -5,29 +5,28 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.AppCompatButton
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import coil.request.CachePolicy
+import coil.transform.CircleCropTransformation
 import com.bangkep.sistemabsensi.R
-import com.bangkep.sistemabsensi.model.ModelAbsensi
+import com.bangkep.sistemabsensi.model.ModelSudahAbsensi
 import com.bangkep.sistemabsensi.utils.onClickFoto
-import kotlinx.android.synthetic.main.item_verify_absen.view.*
+import com.bangkep.sistemabsensi.utils.showLog
+import kotlinx.android.synthetic.main.item_sudah_absen.view.*
 
 class AdapterSudahAbsen(
-    private val listAfiliasi: ArrayList<ModelAbsensi>,
-    private val getDataPegawai: (AppCompatTextView, String, ModelAbsensi, AppCompatButton) -> Unit,
+    private val listAfiliasi: ArrayList<ModelSudahAbsensi>,
+    private val onClik: (ModelSudahAbsensi) -> Unit,
     private val navController: NavController
 ) : RecyclerView.Adapter<AdapterSudahAbsen.AfiliasiHolder>() {
 
     inner class AfiliasiHolder(private val itemV: View) :
         RecyclerView.ViewHolder(itemV) {
         @SuppressLint("SetTextI18n")
-        fun bindAfiliasi(itemData: ModelAbsensi) {
-
-            getDataPegawai(itemV.textNama, itemData.nip, itemData, itemV.btnKonfirmasi)
+        fun bindAfiliasi(itemData: ModelSudahAbsensi) {
+            itemV.textNama.text = itemData.nama
             itemV.textNip.text = itemData.nip
             itemV.textTanggal.text = itemData.date_created
             itemV.textJenis.text = "Absen : ${itemData.jenis}"
@@ -51,6 +50,7 @@ class AdapterSudahAbsen(
             }
             itemV.imgFoto.load(itemData.img) {
                 crossfade(true)
+                transformations(CircleCropTransformation())
                 placeholder(R.drawable.ic_camera_white)
                 error(R.drawable.ic_camera_white)
                 fallback(R.drawable.ic_camera_white)
@@ -61,13 +61,17 @@ class AdapterSudahAbsen(
                 onClickFoto(itemData.img,
                     navController)
             }
+
+            itemV.btnKonfirmasi.setOnClickListener {
+                onClik(itemData)
+            }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AfiliasiHolder {
         return AfiliasiHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.item_verify_absen,
+                R.layout.item_sudah_absen,
                 parent,
                 false
             )

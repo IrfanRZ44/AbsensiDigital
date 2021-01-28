@@ -2,11 +2,11 @@
 <layout xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.bangkep.sistemabsensi.ui.pegawai.riwayat.detail.DetailRiwayatFragment">
+    tools:context="com.bangkep.sistemabsensi.ui.pegawai.detailRiwayat.DetailRiwayatFragment">
     <data>
         <variable
             name="viewModel"
-            type="com.bangkep.sistemabsensi.ui.pegawai.riwayat.detail.DetailRiwayatViewModel" />
+            type="com.bangkep.sistemabsensi.ui.pegawai.detailRiwayat.DetailRiwayatViewModel" />
     </data>
 
     <RelativeLayout

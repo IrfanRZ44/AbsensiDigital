@@ -1,4 +1,4 @@
-package com.bangkep.sistemabsensi.ui.pegawai.riwayat.detail
+package com.bangkep.sistemabsensi.ui.pegawai.detailRiwayat
 
 import android.annotation.SuppressLint
 import android.graphics.Color
@@ -28,7 +28,11 @@ class DetailRiwayatFragment : BaseFragmentBind<FragmentDetailRiwayatBinding>(), 
 
     private fun init() {
         bind.lifecycleOwner = this
-        viewModel = DetailRiwayatViewModel(findNavController(), savedData)
+        viewModel =
+            DetailRiwayatViewModel(
+                findNavController(),
+                savedData
+            )
         bind.viewModel = viewModel
 
         setData()

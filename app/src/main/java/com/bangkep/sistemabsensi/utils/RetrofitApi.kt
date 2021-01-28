@@ -52,11 +52,18 @@ interface RetrofitApi {
     ): Call<ModelListAbsensi>
 
     @Headers("Accept:application/json")
-    @POST(Constant.reffAbsensiByDate)
-    fun getAbsensiByDate(
+    @POST(Constant.reffUserAlreadyAbsensi)
+    fun getUserAlreadyAbsensi(
         @Body input: Map<String, String>,
         @Header("Content-Type") contentType: String
-    ): Call<ModelListAbsensi>
+    ): Call<ModelListSudahAbsensi>
+
+    @Headers("Accept:application/json")
+    @POST(Constant.reffUserNotAbsensi)
+    fun getUserNotAbsensi(
+        @Body input: Map<String, String>,
+        @Header("Content-Type") contentType: String
+    ): Call<ModelListBelumAbsensi>
 
     @Headers("Accept:application/json")
     @POST(Constant.reffRiwayat)

@@ -4,19 +4,15 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import androidx.appcompat.widget.AppCompatButton
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bangkep.sistemabsensi.R
 import com.bangkep.sistemabsensi.base.BaseViewModel
-import com.bangkep.sistemabsensi.model.ModelAbsensi
-import com.bangkep.sistemabsensi.model.ModelHariKerja
-import com.bangkep.sistemabsensi.model.ModelListAbsensi
-import com.bangkep.sistemabsensi.model.ModelUser
+import com.bangkep.sistemabsensi.model.*
 import com.bangkep.sistemabsensi.ui.operator.detailAbsensi.DetailAbsensiFragment
 import com.bangkep.sistemabsensi.utils.Constant
+import com.bangkep.sistemabsensi.utils.DataSave
 import com.bangkep.sistemabsensi.utils.RetrofitUtils
 import retrofit2.Call
 import retrofit2.Callback
@@ -30,34 +26,27 @@ import kotlin.collections.HashMap
 
 class SudahAbsenViewModel(private val rcData: RecyclerView,
                           private val context: Context?,
+                          private val savedData: DataSave,
                           private val navController: NavController
 ) : BaseViewModel() {
-    val listData = ArrayList<ModelAbsensi>()
-    val listDataSearch = ArrayList<ModelAbsensi>()
-    val listNama = ArrayList<ModelAbsensi>()
+    val listData = ArrayList<ModelSudahAbsensi>()
+    val listDataSearch = ArrayList<ModelSudahAbsensi>()
+    val listNama = ArrayList<ModelSudahAbsensi>()
     var adapter: AdapterSudahAbsen? = null
 
     fun initAdapter() {
         adapter = AdapterSudahAbsen(
             listData,
-            { textName: AppCompatTextView, username: String, item: ModelAbsensi, btnKonfirmasi ->
-                getDataPegawai(textName, username, item, btnKonfirmasi) },
+            { dataData: ModelSudahAbsensi -> onClickItem(dataData) },
             navController
         )
         rcData.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         rcData.adapter = adapter
-        rcData.isNestedScrollingEnabled = false
-    }
-
-    fun cekList() {
-        isShowLoading.value = false
-
-        if (listData.size == 0) status.value = Constant.noData
-        else status.value = ""
     }
 
     fun getHariKerja(){
         isShowLoading.value = true
+        listData.clear()
 
         @SuppressLint("SimpleDateFormat")
         val tglSkrng = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -79,7 +68,11 @@ class SudahAbsenViewModel(private val rcData: RecyclerView,
                     val result = response.body()
 
                     if (result?.response == Constant.reffSuccess){
-                        getAbsensiByDate(result.id_hari)
+                        savedData.getDataUser()?.idDinas?.let {
+                            getUserAlreadyAbsensi(result.id_hari,
+                                it
+                            )
+                        }
                     }
                     else{
                         if (result?.response == Constant.tanggalTidakTersedia){
@@ -101,39 +94,36 @@ class SudahAbsenViewModel(private val rcData: RecyclerView,
             })
     }
 
-    private fun getAbsensiByDate(idHari: String){
+    private fun getUserAlreadyAbsensi(idHari: String, idDinas: String){
         isShowLoading.value = true
 
         val body = HashMap<String, String>()
         body["id_hari"] = idHari
+        body["id_dinas"] = idDinas
 
-        RetrofitUtils.getAbsensiByDate(body, object : Callback<ModelListAbsensi> {
+        RetrofitUtils.getUserAlreadyAbsensi(body, object : Callback<ModelListSudahAbsensi> {
             override fun onResponse(
-                call: Call<ModelListAbsensi>,
-                response: Response<ModelListAbsensi>
+                call: Call<ModelListSudahAbsensi>,
+                response: Response<ModelListSudahAbsensi>
             ) {
                 isShowLoading.value = false
                 val result = response.body()
 
                 if (result?.response == Constant.reffSuccess){
-                    listData.clear()
                     for (i in result.list_absen.indices){
                         listData.add(result.list_absen[i])
                         listDataSearch.add(result.list_absen[i])
                         listNama.add(result.list_absen[i])
                         adapter?.notifyDataSetChanged()
                     }
-
-                    cekList()
                 }
                 else{
                     message.value = result?.response
-                    cekList()
                 }
             }
 
             override fun onFailure(
-                call: Call<ModelListAbsensi>,
+                call: Call<ModelListSudahAbsensi>,
                 t: Throwable
             ) {
                 isShowLoading.value = false
@@ -142,55 +132,9 @@ class SudahAbsenViewModel(private val rcData: RecyclerView,
         })
     }
 
-    private fun getDataPegawai(textNama: AppCompatTextView, username: String,
-                               dataItem: ModelAbsensi, btnKonfirmasi: AppCompatButton){
-        isShowLoading.value = true
-
-        val body = HashMap<String, String>()
-        body["username"] = username
-
-        RetrofitUtils.getDataPegawai(body, object : Callback<ModelUser> {
-            override fun onResponse(
-                call: Call<ModelUser>,
-                response: Response<ModelUser>
-            ) {
-                isShowLoading.value = false
-                val result = response.body()
-
-                if (result?.response == Constant.reffSuccess){
-                    textNama.text = result.nama
-
-                    btnKonfirmasi.setOnClickListener {
-                        onClickItem(dataItem, result)
-                    }
-                }
-                else{
-                    message.value = result?.response
-
-                    btnKonfirmasi.setOnClickListener {
-                        onClickItem(dataItem, null)
-                    }
-                }
-            }
-
-            override fun onFailure(
-                call: Call<ModelUser>,
-                t: Throwable
-            ) {
-                isShowLoading.value = false
-                message.value = t.message
-
-                btnKonfirmasi.setOnClickListener {
-                    onClickItem(dataItem, null)
-                }
-            }
-        })
-    }
-
-    private fun onClickItem(data: ModelAbsensi, dataPegawai: ModelUser?) {
+    private fun onClickItem(data: ModelSudahAbsensi) {
         val bundle = Bundle()
         val fragmentTujuan = DetailAbsensiFragment()
-        bundle.putParcelable(Constant.reffUser, dataPegawai)
         bundle.putParcelable(Constant.reffAbsensi, data)
         fragmentTujuan.arguments = bundle
         navController.navigate(R.id.navDetailAbsensi, bundle)

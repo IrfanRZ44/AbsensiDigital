@@ -143,4 +143,13 @@
     <string name="simpan">Simpan</string>
     <string name="konfirmasi">Konfirmasi</string>
     <string name="detail_absensi">Detail Absensi</string>
+    <string name="detail_pegawai">Detail Pegawai</string>
+    <string name="jabatan">Jabatan</string>
+    <string name="alpa">Alpa</string>
+    <string name="sakit">Sakit</string>
+    <string name="cuti">Cuti</string>
+    <string name="chat_wa">Chat WA</string>
+    <string name="izin">Izin</string>
+    <string name="tld">TLD</string>
+    <string name="tdd">TDD</string>
 </resources>
