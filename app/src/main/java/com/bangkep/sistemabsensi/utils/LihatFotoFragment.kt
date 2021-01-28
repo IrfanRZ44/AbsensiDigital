@@ -11,7 +11,6 @@ class LihatFotoFragment : BaseFragmentBind<FragmentLihatFotoBinding>() {
 
     override fun myCodeHere() {
         init()
-        onCLick()
     }
 
     private fun init(){
@@ -25,8 +24,5 @@ class LihatFotoFragment : BaseFragmentBind<FragmentLihatFotoBinding>() {
             fallback(R.drawable.ic_camera_white)
             memoryCachePolicy(CachePolicy.ENABLED)
         }
-    }
-
-    private fun onCLick() {
     }
 }

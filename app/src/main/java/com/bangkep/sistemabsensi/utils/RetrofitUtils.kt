@@ -12,8 +12,13 @@ object RetrofitUtils{
         .build()
     val api = retrofit.create(RetrofitApi::class.java)
 
-    fun createUser(input: Map<String, String>, callback: Callback<ModelUser>){
+    fun loginUser(input: Map<String, String>, callback: Callback<ModelUser>){
         val call = api.loginUser(input, Constant.contentType)
+        call.enqueue(callback)
+    }
+
+    fun getDataPegawai(input: Map<String, String>, callback: Callback<ModelUser>){
+        val call = api.getDataPegawai(input, Constant.contentType)
         call.enqueue(callback)
     }
 
@@ -37,6 +42,11 @@ object RetrofitUtils{
         call.enqueue(callback)
     }
 
+    fun getAbsensiByDate(input: Map<String, String>, callback: Callback<ModelListAbsensi>){
+        val call = api.getAbsensiByDate(input, Constant.contentType)
+        call.enqueue(callback)
+    }
+
     fun getRiwayat(input: Map<String, String>, callback: Callback<ModelListAbsensi>){
         val call = api.getRiwayat(input, Constant.contentType)
         call.enqueue(callback)
@@ -49,6 +59,11 @@ object RetrofitUtils{
 
     fun updateAbsensi(input: Map<String, String>, callback: Callback<ModelResultAbsen>){
         val call = api.updateAbsensi(input, Constant.contentType)
+        call.enqueue(callback)
+    }
+
+    fun updateAbsensiStatus(input: Map<String, String>, callback: Callback<ModelResult>){
+        val call = api.updateAbsensiStatus(input, Constant.contentType)
         call.enqueue(callback)
     }
 

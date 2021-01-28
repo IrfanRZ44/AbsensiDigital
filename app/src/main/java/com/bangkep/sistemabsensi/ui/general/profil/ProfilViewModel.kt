@@ -1,4 +1,4 @@
-package com.bangkep.sistemabsensi.ui.pegawai.profil
+package com.bangkep.sistemabsensi.ui.general.profil
 
 import android.app.Activity
 import android.net.Uri

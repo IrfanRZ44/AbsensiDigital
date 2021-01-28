@@ -90,7 +90,7 @@
     <string name="pick_alamat">Pick Alamat</string>
     <string name="silahkan_pick_alamat_anda">Silahkan pick alamat anda</string>
 
-    <string name="tolak">TOLAK</string>
+    <string name="tolak">Tolak</string>
     <string name="terima">TERIMA</string>
     <string name="lokasi">Lokasi</string>
     <string name="navigasi">Navigasi</string>
@@ -141,4 +141,6 @@
     <string name="let_value_empty">Kosongkan jika tidak ingin mengubah password</string>
     <string name="nama_lengkap">Nama Lengkap</string>
     <string name="simpan">Simpan</string>
+    <string name="konfirmasi">Konfirmasi</string>
+    <string name="detail_absensi">Detail Absensi</string>
 </resources>

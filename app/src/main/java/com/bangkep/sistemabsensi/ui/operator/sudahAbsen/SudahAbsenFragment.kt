@@ -1,4 +1,4 @@
-package com.bangkep.sistemabsensi.ui.pegawai.riwayat
+package com.bangkep.sistemabsensi.ui.operator.sudahAbsen
 
 import android.app.SearchManager
 import android.content.Context
@@ -9,15 +9,15 @@ import android.widget.SearchView
 import androidx.navigation.fragment.findNavController
 import com.bangkep.sistemabsensi.R
 import com.bangkep.sistemabsensi.base.BaseFragmentBind
-import com.bangkep.sistemabsensi.databinding.FragmentRiwayatBinding
+import com.bangkep.sistemabsensi.databinding.FragmentSudahAbsenBinding
 
-class RiwayatFragment : BaseFragmentBind<FragmentRiwayatBinding>() {
-    private lateinit var viewModel: RiwayatViewModel
+class SudahAbsenFragment : BaseFragmentBind<FragmentSudahAbsenBinding>() {
+    private lateinit var viewModel: SudahAbsenViewModel
     private lateinit var searchView : SearchView
     private var queryTextListener : SearchView.OnQueryTextListener? = null
     private var onCloseListener : SearchView.OnCloseListener? = null
 
-    override fun getLayoutResource(): Int = R.layout.fragment_riwayat
+    override fun getLayoutResource(): Int = R.layout.fragment_sudah_absen
 
     override fun myCodeHere() {
         setHasOptionsMenu(true)
@@ -26,20 +26,12 @@ class RiwayatFragment : BaseFragmentBind<FragmentRiwayatBinding>() {
 
     private fun init() {
         bind.lifecycleOwner = this
-        viewModel = RiwayatViewModel(bind.rvData, context, findNavController())
+        viewModel = SudahAbsenViewModel(bind.rvData, context, findNavController())
         bind.viewModel = viewModel
         viewModel.initAdapter()
 
-        val nip = savedData.getDataUser()?.username
-
-        if (!nip.isNullOrEmpty()){
-            viewModel.getListRiwayat(nip)
-        }
-        else{
-            viewModel.message.value = "Error, terjadi kesalahan database, mohon login ulang"
-        }
+        viewModel.getHariKerja()
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.toolbar_search, menu)

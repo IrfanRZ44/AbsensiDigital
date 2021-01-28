@@ -1,4 +1,4 @@
-package com.bangkep.sistemabsensi.ui.pegawai.absenDatang
+package com.bangkep.sistemabsensi.ui.pegawai.absensi
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -28,7 +28,7 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.HashMap
 
-class AbsenDatangViewModel(
+class AbsensiViewModel(
     private val activity: Activity?,
     private val navController: NavController,
     val savedData: DataSave) : BaseViewModel() {

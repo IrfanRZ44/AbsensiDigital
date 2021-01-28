@@ -1,4 +1,4 @@
-package com.bangkep.sistemabsensi.ui.pegawai.absenDatang
+package com.bangkep.sistemabsensi.ui.pegawai.absensi
 
 import android.Manifest
 import android.app.Activity
@@ -14,8 +14,8 @@ import androidx.core.content.FileProvider
 import androidx.navigation.fragment.findNavController
 import com.bangkep.sistemabsensi.R
 import com.bangkep.sistemabsensi.base.BaseFragmentBind
+import com.bangkep.sistemabsensi.databinding.FragmentAbsensiBinding
 import com.bangkep.sistemabsensi.utils.Constant
-import com.bangkep.sistemabsensi.databinding.FragmentAbsenDatangBinding
 import com.bangkep.sistemabsensi.utils.showLog
 import com.bumptech.glide.Glide
 import java.io.File
@@ -24,11 +24,11 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class AbsenDatangFragment : BaseFragmentBind<FragmentAbsenDatangBinding>() {
-    private lateinit var viewModel: AbsenDatangViewModel
+class AbsensiFragment : BaseFragmentBind<FragmentAbsensiBinding>() {
+    private lateinit var viewModel: AbsensiViewModel
     private var imageFilePath: String? = null
 
-    override fun getLayoutResource(): Int = R.layout.fragment_absen_datang
+    override fun getLayoutResource(): Int = R.layout.fragment_absensi
 
     override fun myCodeHere() {
         setHasOptionsMenu(true)
@@ -42,7 +42,7 @@ class AbsenDatangFragment : BaseFragmentBind<FragmentAbsenDatangBinding>() {
 
     private fun init() {
         bind.lifecycleOwner = this
-        viewModel = AbsenDatangViewModel(activity, findNavController(), savedData)
+        viewModel = AbsensiViewModel(activity, findNavController(), savedData)
         bind.viewModel = viewModel
         bind.btnAbsen.isEnabled = false
         viewModel.idHari = this.arguments?.getString(Constant.reffIdHari)

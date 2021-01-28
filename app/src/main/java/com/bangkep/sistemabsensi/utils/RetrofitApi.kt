@@ -9,10 +9,16 @@ import retrofit2.http.*
  * Created by IrfanRZ on 02/08/2019.
  */
 interface RetrofitApi {
-
     @Headers("Accept:application/json")
     @POST(Constant.reffLoginUser)
     fun loginUser(
+        @Body input: Map<String, String>,
+        @Header("Content-Type") contentType: String
+    ): Call<ModelUser>
+
+    @Headers("Accept:application/json")
+    @POST(Constant.reffGetDataPegawai)
+    fun getDataPegawai(
         @Body input: Map<String, String>,
         @Header("Content-Type") contentType: String
     ): Call<ModelUser>
@@ -46,6 +52,13 @@ interface RetrofitApi {
     ): Call<ModelListAbsensi>
 
     @Headers("Accept:application/json")
+    @POST(Constant.reffAbsensiByDate)
+    fun getAbsensiByDate(
+        @Body input: Map<String, String>,
+        @Header("Content-Type") contentType: String
+    ): Call<ModelListAbsensi>
+
+    @Headers("Accept:application/json")
     @POST(Constant.reffRiwayat)
     fun getRiwayat(
         @Body input: Map<String, String>,
@@ -65,6 +78,13 @@ interface RetrofitApi {
         @Body input: Map<String, String>,
         @Header("Content-Type") contentType: String
     ): Call<ModelResultAbsen>
+
+    @Headers("Accept:application/json")
+    @POST(Constant.reffUpdateAbsensiStatus)
+    fun updateAbsensiStatus(
+        @Body input: Map<String, String>,
+        @Header("Content-Type") contentType: String
+    ): Call<ModelResult>
 
     @Headers("Accept:application/json")
     @POST(Constant.reffUpdateProfil)

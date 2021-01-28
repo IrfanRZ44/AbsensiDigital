@@ -77,7 +77,7 @@ class LoginViewModel(
     }
 
     private fun loginUser(body: HashMap<String, String>){
-        RetrofitUtils.createUser(body,
+        RetrofitUtils.loginUser(body,
             object : Callback<ModelUser> {
                 override fun onResponse(
                     call: Call<ModelUser>,

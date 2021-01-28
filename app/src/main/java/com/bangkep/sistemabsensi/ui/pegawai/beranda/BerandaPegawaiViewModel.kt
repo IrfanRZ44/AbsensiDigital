@@ -12,7 +12,7 @@ import com.bangkep.sistemabsensi.base.BaseViewModel
 import com.bangkep.sistemabsensi.model.ModelAbsensi
 import com.bangkep.sistemabsensi.model.ModelHariKerja
 import com.bangkep.sistemabsensi.model.ModelListAbsensi
-import com.bangkep.sistemabsensi.ui.pegawai.absenDatang.AbsenDatangFragment
+import com.bangkep.sistemabsensi.ui.pegawai.absensi.AbsensiFragment
 import com.bangkep.sistemabsensi.utils.Constant
 import com.bangkep.sistemabsensi.utils.DataSave
 import com.bangkep.sistemabsensi.utils.RetrofitUtils
@@ -26,7 +26,7 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.HashMap
 
-class BerandaViewModel(
+class BerandaPegawaiViewModel(
     private val navController: NavController,
     private val btnApel: AppCompatButton,
     private val savedData: DataSave
@@ -368,7 +368,7 @@ class BerandaViewModel(
     fun onClickDatang(){
         if (!idHari.isNullOrEmpty()){
             val bundle = Bundle()
-            val fragmentTujuan = AbsenDatangFragment()
+            val fragmentTujuan = AbsensiFragment()
             bundle.putString(Constant.reffIdHari, idHari)
             bundle.putString(Constant.reffIdAbsen, idAbsensi)
             bundle.putString(Constant.reffFoto, urlFoto)
@@ -384,7 +384,7 @@ class BerandaViewModel(
     fun onClickPulang(){
         if (!idHari.isNullOrEmpty()){
             val bundle = Bundle()
-            val fragmentTujuan = AbsenDatangFragment()
+            val fragmentTujuan = AbsensiFragment()
             bundle.putString(Constant.reffIdHari, idHari)
             bundle.putString(Constant.reffIdAbsen, idAbsensi)
             bundle.putString(Constant.reffFoto, urlFoto)
@@ -400,7 +400,7 @@ class BerandaViewModel(
     fun onClickApel(){
         if (!idHari.isNullOrEmpty()){
             val bundle = Bundle()
-            val fragmentTujuan = AbsenDatangFragment()
+            val fragmentTujuan = AbsensiFragment()
             bundle.putString(Constant.reffIdHari, idHari)
             bundle.putString(Constant.reffIdAbsen, idAbsensi)
             bundle.putString(Constant.reffFoto, urlFoto)

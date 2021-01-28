@@ -1,7 +1,6 @@
 package com.bangkep.sistemabsensi.ui.pegawai
 
 import android.content.Intent
-import android.os.CountDownTimer
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AlertDialog
@@ -31,7 +30,6 @@ class PegawaiActivity : BaseActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
     private lateinit var view: View
-    private var exit = false
 
     @Suppress("DEPRECATION")
     override fun myCodeHere() {
@@ -66,22 +64,7 @@ class PegawaiActivity : BaseActivity() {
         if (drawerLayout?.isDrawerOpen(GravityCompat.END)!!) {
             drawerLayout?.closeDrawer(GravityCompat.END)
         } else {
-            if (exit) {
-                finish()
-                return
-            } else {
-                showMessage(view, "Tekan Cepat 2 Kali untuk Keluar")
-                exit = true
-
-                object : CountDownTimer(2000, 1000) {
-                    override fun onTick(millisUntilFinished: Long) {
-                    }
-
-                    override fun onFinish() {
-                        exit = false
-                    }
-                }.start()
-            }
+            super.onBackPressed()
         }
     }
 

@@ -14,17 +14,22 @@
         />
     <fragment
         android:id="@+id/navBeranda"
-        android:name="com.bangkep.sistemabsensi.ui.pegawai.beranda.BerandaFragment"
+        android:name="com.bangkep.sistemabsensi.ui.operator.beranda.BerandaOperatorFragment"
         android:label="@string/beranda"
-        tools:layout="@layout/fragment_beranda" />
+        tools:layout="@layout/fragment_beranda_operator" />
     <fragment
         android:id="@+id/navProfil"
-        android:name="com.bangkep.sistemabsensi.ui.pegawai.profil.ProfilFragment"
+        android:name="com.bangkep.sistemabsensi.ui.general.profil.ProfilFragment"
         android:label="@string/menu_profile"
         tools:layout="@layout/fragment_profil" />
     <fragment
         android:id="@+id/navAbout"
-        android:name="com.bangkep.sistemabsensi.ui.pegawai.about.AboutFragment"
+        android:name="com.bangkep.sistemabsensi.ui.general.about.AboutFragment"
         android:label="@string/tentang_sistem"
         tools:layout="@layout/fragment_about" />
+    <fragment
+        android:id="@+id/navDetailAbsensi"
+        android:name="com.bangkep.sistemabsensi.ui.operator.detailAbsensi.DetailAbsensiFragment"
+        android:label="@string/detail_absensi"
+        tools:layout="@layout/fragment_detail_absensi" />
 </navigation>

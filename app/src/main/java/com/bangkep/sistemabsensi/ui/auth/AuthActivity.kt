@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.activity_auth.*
 class AuthActivity : BaseActivity() {
     override fun getLayoutResource(): Int = R.layout.activity_auth
 
+    @Suppress("DEPRECATION")
     override fun myCodeHere() {
         NavHostFragment.create(R.navigation.auth_nav)
         viewParent.systemUiVisibility = (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION

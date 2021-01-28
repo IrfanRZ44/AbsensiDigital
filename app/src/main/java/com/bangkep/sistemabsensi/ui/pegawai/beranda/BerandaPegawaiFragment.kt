@@ -2,13 +2,13 @@ package com.bangkep.sistemabsensi.ui.pegawai.beranda
 
 import androidx.navigation.fragment.findNavController
 import com.bangkep.sistemabsensi.R
-import com.bangkep.sistemabsensi.databinding.FragmentBerandaBinding
 import com.bangkep.sistemabsensi.base.BaseFragmentBind
+import com.bangkep.sistemabsensi.databinding.FragmentBerandaPegawaiBinding
 
-class BerandaFragment : BaseFragmentBind<FragmentBerandaBinding>() {
-    private lateinit var viewModel: BerandaViewModel
+class BerandaPegawaiFragment : BaseFragmentBind<FragmentBerandaPegawaiBinding>() {
+    private lateinit var viewModel: BerandaPegawaiViewModel
 
-    override fun getLayoutResource(): Int = R.layout.fragment_beranda
+    override fun getLayoutResource(): Int = R.layout.fragment_beranda_pegawai
 
     override fun myCodeHere() {
         init()
@@ -16,7 +16,7 @@ class BerandaFragment : BaseFragmentBind<FragmentBerandaBinding>() {
 
     private fun init() {
         bind.lifecycleOwner = this
-        viewModel = BerandaViewModel(findNavController(), bind.btnApel, savedData)
+        viewModel = BerandaPegawaiViewModel(findNavController(), bind.btnApel, savedData)
         bind.viewModel = viewModel
         viewModel.isDatang.value = false
         viewModel.isPulang.value = false

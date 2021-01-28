@@ -1,4 +1,4 @@
-package com.bangkep.sistemabsensi.ui.pegawai.profil
+package com.bangkep.sistemabsensi.ui.general.profil
 
 import android.Manifest
 import android.app.Activity
@@ -10,7 +10,6 @@ import com.bangkep.sistemabsensi.R
 import com.bangkep.sistemabsensi.base.BaseFragmentBind
 import com.bangkep.sistemabsensi.databinding.FragmentProfilBinding
 import com.bangkep.sistemabsensi.utils.Constant
-import com.bangkep.sistemabsensi.utils.showLog
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 
@@ -25,7 +24,10 @@ class ProfilFragment : BaseFragmentBind<FragmentProfilBinding>() {
 
     private fun init() {
         bind.lifecycleOwner = this
-        viewModel = ProfilViewModel(activity, savedData)
+        viewModel = ProfilViewModel(
+            activity,
+            savedData
+        )
         bind.viewModel = viewModel
         viewModel.setData()
 
@@ -92,7 +94,6 @@ class ProfilFragment : BaseFragmentBind<FragmentProfilBinding>() {
 
                 val urlFoto = Constant.reffUrlFotoProfil + nameFile + extension
 
-                showLog("uri $urlFoto")
                 val dataUser = savedData.getDataUser()
                 dataUser?.foto = urlFoto
                 savedData.setDataObject(dataUser, Constant.reffUser)
