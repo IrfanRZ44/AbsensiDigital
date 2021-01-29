@@ -14,8 +14,12 @@ import androidx.navigation.NavController
 import com.bangkep.sistemabsensi.R
 import com.bangkep.sistemabsensi.base.BaseViewModel
 import com.bangkep.sistemabsensi.model.ModelResultAbsen
+import com.bangkep.sistemabsensi.model.ModelUser
+import com.bangkep.sistemabsensi.services.notification.model.Notification
+import com.bangkep.sistemabsensi.services.notification.model.Sender
 import com.bangkep.sistemabsensi.utils.Constant
 import com.bangkep.sistemabsensi.utils.DataSave
+import com.bangkep.sistemabsensi.utils.FirebaseUtils
 import com.bangkep.sistemabsensi.utils.RetrofitUtils
 import com.google.android.gms.location.LocationServices
 import net.gotev.uploadservice.protocols.multipart.MultipartUploadRequest
@@ -168,6 +172,8 @@ class AbsensiViewModel(
                             uploadMultipart(idAbsen, nameFile, pathFoto, activity)
                             navController.navigate(R.id.navBeranda)
                             message.value = "Berhasil absensi"
+
+                            sendNotification()
                         }
                         else{
                             message.value = "Gagal mengupload foto"
@@ -208,6 +214,8 @@ class AbsensiViewModel(
                             uploadMultipart(idAbsen, nameFile, pathFoto, activity)
                             navController.navigate(R.id.navBeranda)
                             message.value = "Berhasil melakukan absensi ulang"
+
+                            sendNotification()
                         }
                         else{
                             message.value = "Gagal mengupload foto"
@@ -224,6 +232,50 @@ class AbsensiViewModel(
                 ) {
                     isShowLoading.value = false
                     message.value = t.message
+                }
+            })
+    }
+
+    private fun sendNotification(){
+        val idDinas = savedData.getDataUser()?.idDinas
+
+        if (!idDinas.isNullOrEmpty()){
+            val notification = Notification(
+                "${savedData.getDataUser()?.nama} sudah melakukan absensi",
+                "Absensi Masker"
+                , "com.bangkep.sistemabsensi.fcm_TARGET_NOTIFICATION_OPERATOR"
+            )
+
+            val bodyAdmin = HashMap<String, String>()
+            bodyAdmin["id_dinas"] = idDinas
+
+            getDataAdmin(bodyAdmin, notification)
+        }
+    }
+
+    private fun getDataAdmin(body: HashMap<String, String>, notification: Notification){
+        isShowLoading.value = true
+
+        RetrofitUtils.getDataAdmin(body,
+            object : Callback<ModelUser> {
+                override fun onResponse(
+                    call: Call<ModelUser>,
+                    response: Response<ModelUser>
+                ) {
+                    isShowLoading.value = false
+                    val result = response.body()
+
+                    if (result?.response == Constant.reffSuccess){
+                        val sender = Sender(notification, result.token)
+                        FirebaseUtils.sendNotif(sender)
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ModelUser>,
+                    t: Throwable
+                ) {
+                    isShowLoading.value = false
                 }
             })
     }

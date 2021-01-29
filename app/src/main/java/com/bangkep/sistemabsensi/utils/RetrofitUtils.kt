@@ -28,6 +28,11 @@ object RetrofitUtils{
         call.enqueue(callback)
     }
 
+    fun getDataAdmin(input: Map<String, String>, callback: Callback<ModelUser>){
+        val call = api.getDataAdmin(input, Constant.contentType)
+        call.enqueue(callback)
+    }
+
     fun deleteToken(input: Map<String, String>, callback: Callback<ModelResult>){
         val call = api.deleteToken(input, Constant.contentType)
         call.enqueue(callback)

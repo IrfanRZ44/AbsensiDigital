@@ -70,13 +70,10 @@ class BerandaPegawaiViewModel(
                             dataSend[Constant.reffNip] = nip
                             dataSend[Constant.reffIdHari] = id
 
-                            if (result.keterangan == Constant.hariAbsen){
-                                getListAbsensi(dataSend, result)
-                            }
-                            else if (result.keterangan == Constant.hariAbsenApel){
+                            if (result.masuk_apel != "00:00:00"){
                                 getAbsensiApel(dataSend, result.masuk_apel, result.pulang_apel)
-                                getListAbsensi(dataSend, result)
                             }
+                            getListAbsensi(dataSend, result)
                         }
                         else{
                             message.value = "Terjadi kesalahan penyimpanan, mohon login ulang"

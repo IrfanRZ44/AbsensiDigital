@@ -6,7 +6,10 @@ import com.bangkep.sistemabsensi.R
 import com.bangkep.sistemabsensi.base.BaseViewModel
 import com.bangkep.sistemabsensi.model.ModelResult
 import com.bangkep.sistemabsensi.model.ModelSudahAbsensi
+import com.bangkep.sistemabsensi.services.notification.model.Notification
+import com.bangkep.sistemabsensi.services.notification.model.Sender
 import com.bangkep.sistemabsensi.utils.Constant
+import com.bangkep.sistemabsensi.utils.FirebaseUtils
 import com.bangkep.sistemabsensi.utils.RetrofitUtils
 import com.bangkep.sistemabsensi.utils.onClickFoto
 import retrofit2.Call
@@ -55,9 +58,27 @@ class DetailAbsensiViewModel(
                         navController.navigate(R.id.navBeranda)
                         if (status == "2"){
                             message.value = "Absensi ditolak"
+
+                            val notification = Notification(
+                                "Absensi Anda ditolak",
+                                "Absensi Masker"
+                                , "com.bangkep.sistemabsensi.fcm_TARGET_NOTIFICATION_PEGAWAI"
+                            )
+
+                            val sender = Sender(notification, dataAbsensi.value?.token)
+                            FirebaseUtils.sendNotif(sender)
                         }
                         else{
                             message.value = "Berhasil mengkonfirmasi absen"
+
+                            val notification = Notification(
+                                "Absensi Anda sudah dikonfirmasi",
+                                "Absensi Masker"
+                                , "com.bangkep.sistemabsensi.fcm_TARGET_NOTIFICATION_PEGAWAI"
+                            )
+
+                            val sender = Sender(notification, dataAbsensi.value?.token)
+                            FirebaseUtils.sendNotif(sender)
                         }
                     }
                     else{

@@ -11,7 +11,10 @@ import com.bangkep.sistemabsensi.R
 import com.bangkep.sistemabsensi.base.BaseViewModel
 import com.bangkep.sistemabsensi.model.ModelResultAbsen
 import com.bangkep.sistemabsensi.model.ModelUser
+import com.bangkep.sistemabsensi.services.notification.model.Notification
+import com.bangkep.sistemabsensi.services.notification.model.Sender
 import com.bangkep.sistemabsensi.utils.Constant
+import com.bangkep.sistemabsensi.utils.FirebaseUtils
 import com.bangkep.sistemabsensi.utils.RetrofitUtils
 import com.bangkep.sistemabsensi.utils.onClickFoto
 import retrofit2.Call
@@ -159,7 +162,16 @@ class DetailPegawaiViewModel(
 
                     if (result?.response == Constant.reffSuccess){
                         navController.navigate(R.id.navBeranda)
-                        message.value = "Berhasil absensi"
+                        message.value = "Berhasil menkonfirmasi absen"
+
+                        val notification = Notification(
+                            "Absensi Anda ${body["jenis"]}",
+                            "Absensi Masker"
+                            , "com.bangkep.sistemabsensi.fcm_TARGET_NOTIFICATION_PEGAWAI"
+                        )
+
+                        val sender = Sender(notification, dataUser.value?.token)
+                        FirebaseUtils.sendNotif(sender)
                     }
                     else{
                         message.value = result?.response

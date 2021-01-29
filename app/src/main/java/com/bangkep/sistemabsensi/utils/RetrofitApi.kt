@@ -24,6 +24,13 @@ interface RetrofitApi {
     ): Call<ModelUser>
 
     @Headers("Accept:application/json")
+    @POST(Constant.reffGetDataAdmin)
+    fun getDataAdmin(
+        @Body input: Map<String, String>,
+        @Header("Content-Type") contentType: String
+    ): Call<ModelUser>
+
+    @Headers("Accept:application/json")
     @POST(Constant.reffDeleteToken)
     fun deleteToken(
         @Body input: Map<String, String>,
