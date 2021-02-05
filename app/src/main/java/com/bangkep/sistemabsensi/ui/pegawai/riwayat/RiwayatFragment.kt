@@ -1,27 +1,37 @@
 package com.bangkep.sistemabsensi.ui.pegawai.riwayat
 
-import android.app.SearchManager
-import android.content.Context
+import android.app.DatePickerDialog
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.SearchView
 import androidx.navigation.fragment.findNavController
 import com.bangkep.sistemabsensi.R
 import com.bangkep.sistemabsensi.base.BaseFragmentBind
 import com.bangkep.sistemabsensi.databinding.FragmentRiwayatBinding
+import com.bangkep.sistemabsensi.utils.Constant
+import com.bangkep.sistemabsensi.utils.dismissKeyboard
+import java.text.SimpleDateFormat
+import java.util.*
 
 class RiwayatFragment : BaseFragmentBind<FragmentRiwayatBinding>() {
     private lateinit var viewModel: RiwayatViewModel
-    private lateinit var searchView : SearchView
-    private var queryTextListener : SearchView.OnQueryTextListener? = null
-    private var onCloseListener : SearchView.OnCloseListener? = null
 
     override fun getLayoutResource(): Int = R.layout.fragment_riwayat
 
     override fun myCodeHere() {
         setHasOptionsMenu(true)
         init()
+        bind.swipeRefresh.setOnRefreshListener {
+            bind.swipeRefresh.isRefreshing = false
+            val nip = savedData.getDataUser()?.username
+
+            if (!nip.isNullOrEmpty()){
+                viewModel.getListRiwayat(nip)
+            }
+            else{
+                viewModel.message.value = "Error, terjadi kesalahan database, mohon login ulang"
+            }
+        }
     }
 
     private fun init() {
@@ -42,52 +52,7 @@ class RiwayatFragment : BaseFragmentBind<FragmentRiwayatBinding>() {
 
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.toolbar_search, menu)
-
-        val searchItem = menu.findItem(R.id.actionSearch)
-        val searchManager = activity!!.getSystemService(Context.SEARCH_SERVICE) as SearchManager
-
-        searchView = searchItem.actionView as SearchView
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(activity!!.componentName))
-
-        searchView.queryHint = "Cari Tanggal"
-
-        queryTextListener = object : SearchView.OnQueryTextListener {
-            override fun onQueryTextChange(newText: String): Boolean {
-
-                return true
-            }
-
-            override fun onQueryTextSubmit(query: String): Boolean {
-                viewModel.listData.clear()
-                viewModel.adapter?.notifyDataSetChanged()
-
-                for (i in viewModel.listNama.indices){
-                    if (viewModel.listNama[i].date_created.contains(query)){
-                        viewModel.listData.add(viewModel.listNama[i])
-                        viewModel.adapter?.notifyDataSetChanged()
-                    }
-                }
-
-                viewModel.cekList()
-                return true
-            }
-        }
-
-        onCloseListener = SearchView.OnCloseListener {
-            viewModel.listData.clear()
-            viewModel.adapter?.notifyDataSetChanged()
-
-            for (i in viewModel.listDataSearch.indices){
-                viewModel.listData.add(viewModel.listDataSearch[i])
-                viewModel.adapter?.notifyDataSetChanged()
-            }
-            viewModel.cekList()
-            false
-        }
-
-        searchView.setOnQueryTextListener(queryTextListener)
-        searchView.setOnCloseListener(onCloseListener)
+        inflater.inflate(R.menu.toolbar_search_date, menu)
 
         super.onCreateOptionsMenu(menu, inflater)
     }
@@ -95,12 +60,50 @@ class RiwayatFragment : BaseFragmentBind<FragmentRiwayatBinding>() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.actionSearch ->{
+                activity?.let { dismissKeyboard(it) }
+                val datePickerDialog: DatePickerDialog
+                val localCalendar = Calendar.getInstance()
+
+                try {
+                    datePickerDialog = DatePickerDialog(activity ?: throw Exception("Error, mohon mulai ulang aplikasi"),
+                        DatePickerDialog.OnDateSetListener { _, paramAnonymousInt1, paramAnonymousInt2, paramAnonymousInt3 ->
+                            val dateSelected = Calendar.getInstance()
+                            dateSelected[paramAnonymousInt1, paramAnonymousInt2] = paramAnonymousInt3
+                            val dateFormatter = SimpleDateFormat(Constant.dateFormat1, Locale.US)
+                            val datePicked = dateFormatter.format(dateSelected.time)
+                            viewModel.listData.clear()
+                            viewModel.adapter?.notifyDataSetChanged()
+
+                            for (i in viewModel.listDataSearch.indices){
+                                if (viewModel.listDataSearch[i].date_created.contains(datePicked)){
+                                    viewModel.listData.add(viewModel.listDataSearch[i])
+                                    viewModel.adapter?.notifyDataSetChanged()
+                                }
+                            }
+
+                            if (viewModel.listData.size == 0){
+                                viewModel.message.value = Constant.noData
+                            }
+                            else{
+                                viewModel.message.value = ""
+                            }
+                        },
+                        localCalendar[Calendar.YEAR]
+                        ,
+                        localCalendar[Calendar.MONTH]
+                        ,
+                        localCalendar[Calendar.DATE]
+                    )
+
+                    datePickerDialog.show()
+                } catch (e: java.lang.Exception) {
+                    viewModel.message.value = e.message
+                }
+
                 return false
             }
         }
 
-        searchView.setOnQueryTextListener(queryTextListener)
-        searchView.setOnCloseListener(onCloseListener)
         return super.onOptionsItemSelected(item)
     }
 }

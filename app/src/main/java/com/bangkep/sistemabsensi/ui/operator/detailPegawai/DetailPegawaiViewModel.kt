@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
@@ -26,6 +28,7 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.HashMap
 
+
 class DetailPegawaiViewModel(
     private val navController: NavController,
     private val activity: Activity?
@@ -42,15 +45,17 @@ class DetailPegawaiViewModel(
     fun onClickWA(){
         try {
             isShowLoading.value = true
-            val text = "Permisi, hari ini Anda belum melakukan absensi harian pegawai"
+            val text = "Salam Masker ASN... Hari ini Anda belum melakukan absensi harian pegawai"
 
-            val sendIntent = Intent()
-            sendIntent.action = Intent.ACTION_SEND
-            sendIntent.putExtra(Intent.EXTRA_TEXT, text)
-            sendIntent.type = "text/plain"
-            isShowLoading.value = false
-            activity?.startActivity(sendIntent)
+            val phoneNumber = dataUser.value?.phone
+            val url = "https://api.whatsapp.com/send?phone=$phoneNumber&text=$text"
+            activity?.packageManager?.getPackageInfo("com.whatsapp", PackageManager.GET_ACTIVITIES)
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(url)
+            activity?.startActivity(i)
         }catch (e: ActivityNotFoundException){
+            message.value = e.message
+        } catch (e: PackageManager.NameNotFoundException){
             message.value = e.message
         }
     }
@@ -60,7 +65,7 @@ class DetailPegawaiViewModel(
         val nip = dataUser.value?.username
 
         if (!idHari.isNullOrEmpty() && !nip.isNullOrEmpty()){
-            validateData(Constant.jenisAlpa, idHari, nip)
+            validateData(Constant.jenisAlpa, idHari, nip, Constant.fotoAlpa)
         }
         else{
             message.value = "Error, terjadi kesalahan database"
@@ -72,7 +77,7 @@ class DetailPegawaiViewModel(
         val nip = dataUser.value?.username
 
         if (!idHari.isNullOrEmpty() && !nip.isNullOrEmpty()){
-            validateData(Constant.jenisCuti, idHari, nip)
+            validateData(Constant.jenisCuti, idHari, nip, Constant.fotoCuti)
         }
         else{
             message.value = "Error, terjadi kesalahan database"
@@ -84,7 +89,7 @@ class DetailPegawaiViewModel(
         val nip = dataUser.value?.username
 
         if (!idHari.isNullOrEmpty() && !nip.isNullOrEmpty()){
-            validateData(Constant.jenisSakit, idHari, nip)
+            validateData(Constant.jenisSakit, idHari, nip, Constant.fotoSakit)
         }
         else{
             message.value = "Error, terjadi kesalahan database"
@@ -96,7 +101,7 @@ class DetailPegawaiViewModel(
         val nip = dataUser.value?.username
 
         if (!idHari.isNullOrEmpty() && !nip.isNullOrEmpty()){
-            validateData(Constant.jenisIzin, idHari, nip)
+            validateData(Constant.jenisIzin, idHari, nip, Constant.fotoIzin)
         }
         else{
             message.value = "Error, terjadi kesalahan database"
@@ -108,7 +113,7 @@ class DetailPegawaiViewModel(
         val nip = dataUser.value?.username
 
         if (!idHari.isNullOrEmpty() && !nip.isNullOrEmpty()){
-            validateData(Constant.jenisTLD, idHari, nip)
+            validateData(Constant.jenisTLD, idHari, nip, Constant.fotoTLD)
         }
         else{
             message.value = "Error, terjadi kesalahan database"
@@ -120,14 +125,14 @@ class DetailPegawaiViewModel(
         val nip = dataUser.value?.username
 
         if (!idHari.isNullOrEmpty() && !nip.isNullOrEmpty()){
-            validateData(Constant.jenisTDD, idHari, nip)
+            validateData(Constant.jenisTDD, idHari, nip, Constant.fotoTDD)
         }
         else{
             message.value = "Error, terjadi kesalahan database"
         }
     }
 
-    private fun validateData(jenis: String, idHari: String, username: String){
+    private fun validateData(jenis: String, idHari: String, username: String, foto: String){
         @SuppressLint("SimpleDateFormat")
         val dateCreated = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             LocalDateTime.now().format(DateTimeFormatter.ofPattern(Constant.dateFormat2))
@@ -143,7 +148,7 @@ class DetailPegawaiViewModel(
         body["status"] = "1"
         body["jenis"] = jenis
         body["date_created"] = dateCreated
-        body["img"] = Constant.defaultTempFoto
+        body["img"] = foto
 
         sendData(body)
     }

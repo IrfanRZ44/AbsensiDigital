@@ -16,16 +16,6 @@
         android:theme="@style/CustomTheme"
         snackbar="@{viewModel.message}"
         >
-        <include
-            android:id="@+id/progress"
-            layout="@layout/progress_loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="@dimen/h2"
-            android:visibility="gone"
-            visible="@{viewModel.isShowLoading}"
-            />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imgLogo"
@@ -38,20 +28,6 @@
             android:scaleType="fitCenter"
             android:src="@drawable/ic_logo"
             />
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/imgLogo"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/h2"
-            android:layout_marginBottom="@dimen/h1"
-            android:fontFamily="@font/roboto_regular"
-            android:text="@={viewModel.message}"
-            showTextStatus="@{viewModel.message}"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_h3"
-            />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardMain"
@@ -60,75 +36,163 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/h2"
-            android:layout_below="@+id/textStatus"
+            android:layout_below="@+id/imgLogo"
             >
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textTanggal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/h2"
+                    android:layout_marginBottom="@dimen/h1"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="@={viewModel.tglKeterangan}"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_h3"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textKeterangan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/textTanggal"
+                    android:layout_marginBottom="@dimen/h1"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="@={viewModel.keterangan}"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/text_h3"
+                    />
+
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:id="@+id/lnAbsen"
+                    android:layout_below="@+id/textKeterangan"
                     >
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btnDatang"
+                    <androidx.appcompat.widget.LinearLayoutCompat
                         style="@style/buttonStandardBlue"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/_120"
                         android:layout_weight="0.5"
-                        android:drawableTop="@drawable/ic_datang_white"
-                        android:drawablePadding="@dimen/h2"
                         android:layout_centerHorizontal="true"
                         android:layout_margin="@dimen/h5"
                         android:padding="@dimen/h2"
-                        android:text="@string/datang"
-                        android:textColor="@color/white"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal"
                         android:onClick="@{()-> viewModel.onClickDatang()}"
                         enableButton="@{viewModel.isDatang}"
-                        android:enabled="false"
-                        />
+                        >
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="@dimen/_80"
+                            android:layout_height="@dimen/_80"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginBottom="@dimen/h2"
+                            android:padding="@dimen/h2"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_logo"
+                            imageSrc="@{viewModel.fotoDatang.toString()}"
+                            />
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/btnDatang"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="@string/datang"
+                            android:textAllCaps="true"
+                            android:textColor="@color/white"
+                            android:textAlignment="center"
+                            />
+                    </androidx.appcompat.widget.LinearLayoutCompat>
 
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btnPulang"
+                    <androidx.appcompat.widget.LinearLayoutCompat
                         style="@style/buttonStandardBlue"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/_120"
                         android:layout_weight="0.5"
-                        android:drawableTop="@drawable/ic_pulang_white"
-                        android:drawablePadding="@dimen/h2"
                         android:layout_centerHorizontal="true"
                         android:layout_margin="@dimen/h5"
                         android:padding="@dimen/h2"
-                        android:text="@string/pulang"
-                        android:textColor="@color/white"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal"
                         android:onClick="@{()-> viewModel.onClickPulang()}"
                         enableButton="@{viewModel.isPulang}"
-                        android:enabled="false"
-                        />
+                        >
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="@dimen/_80"
+                            android:layout_height="@dimen/_80"
+                            android:layout_centerHorizontal="true"
+                            android:padding="@dimen/h2"
+                            android:textAllCaps="true"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/ic_logo"
+                            imageSrc="@{viewModel.fotoPulang.toString()}"
+                            />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/btnPulang"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="@string/pulang"
+                            android:textColor="@color/white"
+                            android:textAlignment="center"
+                            android:textAllCaps="true"
+                            />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnApel"
+                <androidx.appcompat.widget.LinearLayoutCompat
                     style="@style/buttonStandardBlue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableTop="@drawable/ic_apel_white"
-                    android:drawablePadding="@dimen/h2"
+                    android:layout_width="@dimen/_120"
+                    android:layout_height="@dimen/_120"
                     android:layout_centerHorizontal="true"
                     android:layout_margin="@dimen/h5"
-                    android:paddingTop="@dimen/h2"
-                    android:paddingBottom="@dimen/h2"
-                    android:paddingStart="@dimen/margin_large"
-                    android:paddingEnd="@dimen/margin_large"
-                    android:text="@string/apel"
-                    android:textColor="@color/white"
-                    android:onClick="@{()-> viewModel.onClickApel()}"
-                    visible="@{viewModel.isApel}"
+                    android:padding="@dimen/h2"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal"
                     android:layout_below="@+id/lnAbsen"
+                    visible="@{viewModel.isApel}"
                     android:visibility="gone"
-                    />
+                    android:onClick="@{()-> viewModel.onClickApel()}"
+                    >
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/_80"
+                        android:layout_height="@dimen/_80"
+                        android:layout_centerHorizontal="true"
+                        android:padding="@dimen/h2"
+                        android:textAllCaps="true"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_logo"
+                        imageSrc="@{viewModel.fotoApel.toString()}"
+                        />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/btnApel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/apel"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white"
+                        />
+                </androidx.appcompat.widget.LinearLayoutCompat>
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
+
+        <include
+            android:id="@+id/progress"
+            layout="@layout/progress_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/h2"
+            android:visibility="gone"
+            visible="@{viewModel.isShowLoading}"
+            />
     </RelativeLayout>
 </layout>

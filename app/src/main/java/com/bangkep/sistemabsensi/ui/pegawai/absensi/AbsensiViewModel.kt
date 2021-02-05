@@ -11,6 +11,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import com.bangkep.sistemabsensi.R
 import com.bangkep.sistemabsensi.base.BaseViewModel
 import com.bangkep.sistemabsensi.model.ModelResultAbsen
@@ -170,7 +171,8 @@ class AbsensiViewModel(
 
                         if (idAbsen.isNotEmpty() && nameFile.isNotEmpty()){
                             uploadMultipart(idAbsen, nameFile, pathFoto, activity)
-                            navController.navigate(R.id.navBeranda)
+                            val navOption = NavOptions.Builder().setPopUpTo(R.id.navBeranda, true).build()
+                            navController.navigate(R.id.navBeranda, null, navOption)
                             message.value = "Berhasil absensi"
 
                             sendNotification()

@@ -33,7 +33,7 @@ class RiwayatViewModel(private val rcData: RecyclerView,
         )
         rcData.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         rcData.adapter = adapter
-        rcData.isNestedScrollingEnabled = false
+        rcData.isNestedScrollingEnabled = true
     }
 
     fun cekList() {

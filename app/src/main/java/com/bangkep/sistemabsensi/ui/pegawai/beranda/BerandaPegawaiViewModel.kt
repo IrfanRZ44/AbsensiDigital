@@ -1,10 +1,16 @@
 package com.bangkep.sistemabsensi.ui.pegawai.beranda
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context.LOCATION_SERVICE
+import android.content.Intent
+import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
-import androidx.appcompat.widget.AppCompatButton
+import android.widget.Toast
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import com.bangkep.sistemabsensi.R
@@ -28,15 +34,23 @@ import kotlin.collections.HashMap
 
 class BerandaPegawaiViewModel(
     private val navController: NavController,
-    private val btnApel: AppCompatButton,
-    private val savedData: DataSave
+    private val btnApel: AppCompatTextView,
+    private val savedData: DataSave,
+    private val activity: Activity?,
+    private val checkPermissionStorage: () -> Unit
 ) : BaseViewModel() {
     val isDatang = MutableLiveData<Boolean>()
     val isPulang = MutableLiveData<Boolean>()
     val isApel = MutableLiveData<Boolean>()
+    val keterangan = MutableLiveData<String>()
+    val tglKeterangan = MutableLiveData<String>()
     var idHari : String? = ""
     var idAbsensi : String? = ""
     var urlFoto : String? = ""
+    var fotoDatang : String = Constant.fotoDatang
+    var fotoPulang : String = Constant.fotoPulang
+    var fotoApel : String = Constant.fotoApel
+    private var request = 0
 
     fun getHariKerja(){
         isShowLoading.value = true
@@ -64,6 +78,7 @@ class BerandaPegawaiViewModel(
                         val nip = savedData.getDataUser()?.username
                         val id = result.id_hari
                         idHari = result.id_hari
+                        keterangan.value = result.keterangan
 
                         if (!nip.isNullOrEmpty() && id.isNotEmpty()){
                             val dataSend = HashMap<String, String>()
@@ -83,6 +98,7 @@ class BerandaPegawaiViewModel(
                         }
                     }
                     else{
+                        keterangan.value = "Sekarang bukan hari kerja"
                         if (result?.response == Constant.tanggalTidakTersedia){
                             message.value = "Sekarang bukan hari kerja"
                         }
@@ -99,6 +115,7 @@ class BerandaPegawaiViewModel(
                     call: Call<ModelHariKerja>,
                     t: Throwable
                 ) {
+                    keterangan.value = "Sekarang bukan hari kerja"
                     isShowLoading.value = false
                     message.value = t.message
                     isDatang.value = false
@@ -208,14 +225,16 @@ class BerandaPegawaiViewModel(
                             }
                         }
                         else if (!izin && masuk && !pulang){
-                            if (comparingTimesAfter(dataHari.pulang_kerja, timeNow)){
-                                isDatang.value = false
-                                isPulang.value = true
-                            }
-                            else{
-                                isDatang.value = false
-                                isPulang.value = false
-                            }
+                            isDatang.value = false
+                            isPulang.value = true
+//                            if (comparingTimesAfter(dataHari.pulang_kerja, timeNow)){
+//                                isDatang.value = false
+//                                isPulang.value = true
+//                            }
+//                            else{
+//                                isDatang.value = false
+//                                isPulang.value = false
+//                            }
                         }
                         else if (!izin && masuk && pulang){
                             isDatang.value = false
@@ -364,14 +383,10 @@ class BerandaPegawaiViewModel(
 
     fun onClickDatang(){
         if (!idHari.isNullOrEmpty()){
-            val bundle = Bundle()
-            val fragmentTujuan = AbsensiFragment()
-            bundle.putString(Constant.reffIdHari, idHari)
-            bundle.putString(Constant.reffIdAbsen, idAbsensi)
-            bundle.putString(Constant.reffFoto, urlFoto)
-            bundle.putString(Constant.reffJenis, Constant.jenisMasuk)
-            fragmentTujuan.arguments = bundle
-            navController.navigate(R.id.navAbsenDatang, bundle)
+            if (checkGPS()){
+                request = 1
+                checkPermissionStorage()
+            }
         }
         else{
             message.value = "Error, hari ini tidak tersedia untuk melakukan absensi"
@@ -380,14 +395,10 @@ class BerandaPegawaiViewModel(
 
     fun onClickPulang(){
         if (!idHari.isNullOrEmpty()){
-            val bundle = Bundle()
-            val fragmentTujuan = AbsensiFragment()
-            bundle.putString(Constant.reffIdHari, idHari)
-            bundle.putString(Constant.reffIdAbsen, idAbsensi)
-            bundle.putString(Constant.reffFoto, urlFoto)
-            bundle.putString(Constant.reffJenis, Constant.jenisPulang)
-            fragmentTujuan.arguments = bundle
-            navController.navigate(R.id.navAbsenDatang, bundle)
+            if (checkGPS()){
+                request = 2
+                checkPermissionStorage()
+            }
         }
         else{
             message.value = "Error, hari ini tidak tersedia untuk melakukan absensi"
@@ -396,17 +407,49 @@ class BerandaPegawaiViewModel(
 
     fun onClickApel(){
         if (!idHari.isNullOrEmpty()){
-            val bundle = Bundle()
-            val fragmentTujuan = AbsensiFragment()
-            bundle.putString(Constant.reffIdHari, idHari)
-            bundle.putString(Constant.reffIdAbsen, idAbsensi)
-            bundle.putString(Constant.reffFoto, urlFoto)
-            bundle.putString(Constant.reffJenis, Constant.jenisApel)
-            fragmentTujuan.arguments = bundle
-            navController.navigate(R.id.navAbsenDatang, bundle)
+            if (checkGPS()){
+                request = 3
+                checkPermissionStorage()
+            }
         }
         else{
             message.value = "Error, hari ini tidak tersedia untuk melakukan absensi apel"
+        }
+    }
+
+    fun navigateRequest(){
+        val bundle = Bundle()
+        val fragmentTujuan = AbsensiFragment()
+        bundle.putString(Constant.reffIdHari, idHari)
+        bundle.putString(Constant.reffIdAbsen, idAbsensi)
+        bundle.putString(Constant.reffFoto, urlFoto)
+        when (request) {
+            1 -> {
+                bundle.putString(Constant.reffJenis, Constant.jenisMasuk)
+            }
+            2 -> {
+                bundle.putString(Constant.reffJenis, Constant.jenisPulang)
+            }
+            3 -> {
+                bundle.putString(Constant.reffJenis, Constant.jenisApel)
+            }
+        }
+        fragmentTujuan.arguments = bundle
+        navController.navigate(R.id.navAbsen, bundle)
+    }
+
+    private fun checkGPS() : Boolean{
+        val service = activity?.getSystemService(LOCATION_SERVICE) as LocationManager?
+        val enabled = service?.isProviderEnabled(LocationManager.GPS_PROVIDER)
+
+        // Check if enabled and if not send user to the GPS settings
+        return if (enabled != null && !enabled) {
+            Toast.makeText(activity, "Nyalakan GPS terlebih dahulu", Toast.LENGTH_LONG).show()
+            val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+            activity?.startActivity(intent)
+            false
+        } else{
+            true
         }
     }
 }

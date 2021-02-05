@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">MASKER</string>
+    <string name="app_name">MASKER ASN</string>
     <string name="app_id">com.bangkep.sistemabsensi</string>
-    <string name="base_application">MASKER</string>
+    <string name="base_application">MASKER_ASN</string>
     <string name="google_maps_key">AIzaSyBLxi2hOlCnGFxXZUVLzEAflzJioUz47aw</string>
 
     <string name="selamat_datang">Selamat Datang</string>
@@ -152,4 +152,9 @@
     <string name="izin">Izin</string>
     <string name="tld">TLD</string>
     <string name="tdd">TDD</string>
+    <string name="nomor_hp">Nomor HP</string>
+    <string name="about">Dikembangkan oleh:
+KABIR LAND TECHNOLOGY
+"Mendukung Indonesia sebagai Digital Energy of Asia, UMKM Go Online, mewujudkan transparansi dan perlindungan privasi."
+Kontak : 081341717979 | E-mail : halo@kabirland.technology | Website : www.kabirland.technology</string>
 </resources>

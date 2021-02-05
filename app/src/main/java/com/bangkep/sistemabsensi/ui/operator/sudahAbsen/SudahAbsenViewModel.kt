@@ -30,8 +30,6 @@ class SudahAbsenViewModel(private val rcData: RecyclerView,
                           private val navController: NavController
 ) : BaseViewModel() {
     val listData = ArrayList<ModelSudahAbsensi>()
-    val listDataSearch = ArrayList<ModelSudahAbsensi>()
-    val listNama = ArrayList<ModelSudahAbsensi>()
     var adapter: AdapterSudahAbsen? = null
 
     fun initAdapter() {
@@ -44,7 +42,7 @@ class SudahAbsenViewModel(private val rcData: RecyclerView,
         rcData.adapter = adapter
     }
 
-    fun getHariKerja(){
+    fun getHariKerja(search: String?){
         isShowLoading.value = true
         listData.clear()
 
@@ -70,7 +68,7 @@ class SudahAbsenViewModel(private val rcData: RecyclerView,
                     if (result?.response == Constant.reffSuccess){
                         savedData.getDataUser()?.idDinas?.let {
                             getUserAlreadyAbsensi(result.id_hari,
-                                it
+                                it, search
                             )
                         }
                     }
@@ -94,12 +92,16 @@ class SudahAbsenViewModel(private val rcData: RecyclerView,
             })
     }
 
-    private fun getUserAlreadyAbsensi(idHari: String, idDinas: String){
+    private fun getUserAlreadyAbsensi(idHari: String, idDinas: String, search: String?){
         isShowLoading.value = true
 
         val body = HashMap<String, String>()
         body["id_hari"] = idHari
         body["id_dinas"] = idDinas
+
+        if (!search.isNullOrEmpty()){
+            body["search"] = search
+        }
 
         RetrofitUtils.getUserAlreadyAbsensi(body, object : Callback<ModelListSudahAbsensi> {
             override fun onResponse(
@@ -112,8 +114,6 @@ class SudahAbsenViewModel(private val rcData: RecyclerView,
                 if (result?.response == Constant.reffSuccess){
                     for (i in result.list_absen.indices){
                         listData.add(result.list_absen[i])
-                        listDataSearch.add(result.list_absen[i])
-                        listNama.add(result.list_absen[i])
                         adapter?.notifyDataSetChanged()
                     }
                 }

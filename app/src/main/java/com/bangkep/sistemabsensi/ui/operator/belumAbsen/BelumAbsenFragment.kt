@@ -10,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import com.bangkep.sistemabsensi.R
 import com.bangkep.sistemabsensi.base.BaseFragmentBind
 import com.bangkep.sistemabsensi.databinding.FragmentBelumAbsenBinding
-import com.bangkep.sistemabsensi.utils.Constant
 
 class BelumAbsenFragment : BaseFragmentBind<FragmentBelumAbsenBinding>() {
     private lateinit var viewModel: BelumAbsenViewModel
@@ -21,6 +20,7 @@ class BelumAbsenFragment : BaseFragmentBind<FragmentBelumAbsenBinding>() {
     override fun getLayoutResource(): Int = R.layout.fragment_belum_absen
 
     override fun myCodeHere() {
+        setHasOptionsMenu(true)
         init()
     }
 
@@ -30,10 +30,10 @@ class BelumAbsenFragment : BaseFragmentBind<FragmentBelumAbsenBinding>() {
         bind.viewModel = viewModel
         viewModel.initAdapter()
 
-        viewModel.getHariKerja()
+        viewModel.getHariKerja(null)
 
         bind.swipeRefresh.setOnRefreshListener {
-            viewModel.getHariKerja()
+            viewModel.getHariKerja(null)
             bind.swipeRefresh.isRefreshing = false
         }
     }
@@ -58,17 +58,7 @@ class BelumAbsenFragment : BaseFragmentBind<FragmentBelumAbsenBinding>() {
             override fun onQueryTextSubmit(query: String): Boolean {
                 viewModel.listData.clear()
                 viewModel.adapter?.notifyDataSetChanged()
-
-                for (i in viewModel.listNama.indices){
-                    if (viewModel.listNama[i].nama.contains(query)){
-                        viewModel.listData.add(viewModel.listNama[i])
-                        viewModel.adapter?.notifyDataSetChanged()
-                    }
-                }
-
-                if (viewModel.listData.size == 0){
-                    viewModel.message.value = Constant.noData
-                }
+                viewModel.getHariKerja(query)
                 return true
             }
         }
@@ -76,11 +66,7 @@ class BelumAbsenFragment : BaseFragmentBind<FragmentBelumAbsenBinding>() {
         onCloseListener = SearchView.OnCloseListener {
             viewModel.listData.clear()
             viewModel.adapter?.notifyDataSetChanged()
-
-            for (i in viewModel.listDataSearch.indices){
-                viewModel.listData.add(viewModel.listDataSearch[i])
-                viewModel.adapter?.notifyDataSetChanged()
-            }
+            viewModel.getHariKerja(null)
             false
         }
 

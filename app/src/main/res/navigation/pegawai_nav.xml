@@ -33,7 +33,7 @@
         android:label="@string/tentang_sistem"
         tools:layout="@layout/fragment_about" />
     <fragment
-        android:id="@+id/navAbsenDatang"
+        android:id="@+id/navAbsen"
         android:name="com.bangkep.sistemabsensi.ui.pegawai.absensi.AbsensiFragment"
         android:label="@string/absen_datang"
         tools:layout="@layout/fragment_absensi" />
@@ -42,5 +42,10 @@
         android:name="com.bangkep.sistemabsensi.ui.pegawai.detailRiwayat.DetailRiwayatFragment"
         android:label="@string/detail_riwayat"
         tools:layout="@layout/fragment_detail_riwayat" />
+    <fragment
+        android:id="@+id/navCamera"
+        android:name="com.bangkep.sistemabsensi.ui.pegawai.camera.CameraFragment"
+        android:label="Kamera"
+        tools:layout="@layout/fragment_camera" />
 
 </navigation>

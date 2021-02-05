@@ -37,6 +37,7 @@ object Constant {
     const val reffNip = "nip"
     const val reffJenis = "jenisAbsensi"
     const val reffFoto = "urlFoto"
+    const val reffFoto2 = "urlFoto2"
 
     const val codeRequestFoto = 100
     const val codeRequestGallery = 1
@@ -49,11 +50,21 @@ object Constant {
     const val codeRequestResultCrop = 400
 
 //    const val defaultTempFoto = "https://sistemabsensi.tahirkun.asia/assets/img/absensi/unlike.png"
-    const val defaultTempFoto = "https://firebasestorage.googleapis.com/v0/b/masker-4aa5d.appspot.com/o/unlike.png?alt=media&token=7d430377-3108-4a83-b042-e3bee1dcb7b5"
+    const val fotoAlpa = "https://sistemabsensi.tahirkun.asia/assets/img/informasi/icon_alpa.png"
+    const val fotoSakit = "https://sistemabsensi.tahirkun.asia/assets/img/informasi/icon_sakit.png"
+    const val fotoIzin = "https://sistemabsensi.tahirkun.asia/assets/img/informasi/icon_izin.png"
+    const val fotoTLD = "https://sistemabsensi.tahirkun.asia/assets/img/informasi/icon_tld.png"
+    const val fotoTDD = "https://sistemabsensi.tahirkun.asia/assets/img/informasi/icon_tdd.png"
+    const val fotoCuti = "https://sistemabsensi.tahirkun.asia/assets/img/informasi/icon_cuti.png"
+    const val fotoDatang = "https://sistemabsensi.tahirkun.asia/assets/img/informasi/icon_datang.png"
+    const val fotoPulang = "https://sistemabsensi.tahirkun.asia/assets/img/informasi/icon_pulang.png"
+    const val fotoApel = "https://sistemabsensi.tahirkun.asia/assets/img/informasi/icon_apel.png"
+
     const val timeFormat = "HH:mm:ss"
     const val dateFormat1 = "yyyy-MM-dd"
     const val dateFormat2 = "yyyy-MM-dd HH:mm:ss"
     const val dateFormat3 = "yyyyMMdd_HHmmss"
+    const val dateFormat4 = "EEEE, dd MMMM yyyy"
 
     const val phone = "noHp"
     const val nama = "nama"

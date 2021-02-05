@@ -24,23 +24,27 @@ class ProfilViewModel(
     val etPassword = MutableLiveData<String>()
     val etConfirmPassword = MutableLiveData<String>()
     val etEmail = MutableLiveData<String>()
+    val etPhone = MutableLiveData<String>()
 
     fun setData(){
         etNama.value = savedData.getDataUser()?.nama
         etEmail.value = savedData.getDataUser()?.email
+        etPhone.value = savedData.getDataUser()?.phone
         foto.value = Uri.parse(savedData.getDataUser()?.foto)
     }
 
     fun onClickSave(){
         val nama = etNama.value
         val email = etEmail.value
+        val phone = etPhone.value
         val password = etPassword.value
         val confirmPassword = etConfirmPassword.value
         val idUser = savedData.getDataUser()?.idUser
 
-        if (!email.isNullOrEmpty() && !idUser.isNullOrEmpty()){
+        if (!email.isNullOrEmpty() && !idUser.isNullOrEmpty() && !phone.isNullOrEmpty()){
             val body = HashMap<String, String>()
             body["mail"] = email
+            body["phone"] = phone
             body["id_users"] = idUser
             body["nama"] = nama?:""
 
@@ -69,6 +73,9 @@ class ProfilViewModel(
             if (email.isNullOrEmpty() && idUser.isNullOrEmpty()){
                 message.value = "Error, mohon mengisi form email"
             }
+            else if (phone.isNullOrEmpty()){
+                message.value = "Error, mohon mengisi form nomor hp"
+            }
         }
     }
 
@@ -89,6 +96,7 @@ class ProfilViewModel(
                         val dataUser = savedData.getDataUser()
                         dataUser?.nama = body["nama"]?:""
                         dataUser?.email = body["mail"]?:""
+                        dataUser?.phone = body["phone"]?:""
 
                         savedData.setDataObject(dataUser, Constant.reffUser)
                         message.value = "Berhasil menyimpan profil"

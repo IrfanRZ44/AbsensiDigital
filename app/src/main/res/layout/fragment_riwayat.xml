@@ -16,11 +16,11 @@
         android:theme="@style/CustomTheme"
         snackbar="@{viewModel.message}"
         >
-
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/swipeRefresh"
+            >
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
@@ -33,8 +33,8 @@
                     android:layout_marginTop="@dimen/h1"
                     android:layout_marginBottom="@dimen/h1"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="@={viewModel.status}"
-                    showTextStatus="@{viewModel.status}"
+                    android:text="@={viewModel.message}"
+                    showTextStatus="@{viewModel.message}"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_h2" />
 
@@ -55,6 +55,6 @@
                     visible="@{viewModel.isShowLoading}"
                     />
             </RelativeLayout>
-        </androidx.core.widget.NestedScrollView>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

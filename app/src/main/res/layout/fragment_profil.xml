@@ -95,6 +95,7 @@
                                 android:textColor="@color/black"
                                 android:text="@={viewModel.etNama}"
                                 android:textSize="@dimen/text_h3"
+                                android:enabled="false"
                                 />
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -123,6 +124,35 @@
                                 android:textAlignment="textStart"
                                 android:textColor="@color/black"
                                 android:text="@={viewModel.etEmail}"
+                                android:textSize="@dimen/text_h3"
+                                />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/customEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/h2"
+                            android:layout_marginRight="@dimen/h2"
+                            android:hint="@string/nomor_hp"
+                            android:textColorHint="@color/gray2"
+                            app:errorEnabled="true"
+                            errorText="@{viewModel.etPhone}"
+                            android:layout_below="@+id/textStatus"
+                            app:errorTextAppearance="@style/error_appearance"
+                            >
+                            <com.google.android.material.textfield.TextInputEditText
+                                style="@style/textStandardWhite"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@drawable/ic_phone_gray"
+                                android:drawablePadding="@dimen/h2"
+                                android:imeOptions="actionNext"
+                                android:inputType="textCapSentences"
+                                android:maxLines="1"
+                                android:textAlignment="textStart"
+                                android:textColor="@color/black"
+                                android:text="@={viewModel.etPhone}"
                                 android:textSize="@dimen/text_h3"
                                 />
                         </com.google.android.material.textfield.TextInputLayout>
