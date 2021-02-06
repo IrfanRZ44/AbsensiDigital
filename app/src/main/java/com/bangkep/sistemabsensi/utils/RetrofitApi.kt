@@ -17,6 +17,13 @@ interface RetrofitApi {
     ): Call<ModelUser>
 
     @Headers("Accept:application/json")
+    @POST(Constant.reffCheckToken)
+    fun checkToken(
+        @Body input: Map<String, String>,
+        @Header("Content-Type") contentType: String
+    ): Call<ModelResult>
+
+    @Headers("Accept:application/json")
     @POST(Constant.reffGetDataPegawai)
     fun getDataPegawai(
         @Body input: Map<String, String>,

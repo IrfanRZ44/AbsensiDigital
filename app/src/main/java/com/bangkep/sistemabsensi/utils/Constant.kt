@@ -10,6 +10,7 @@ object Constant {
 
     const val reffBaseUrl = "https://sistemabsensi.tahirkun.asia/api/v1/Json_process/"
     const val reffLoginUser = "loginUser"
+    const val reffCheckToken = "checkToken"
     const val reffGetDataPegawai = "getDataPegawai"
     const val reffGetDataAdmin = "getDataAdmin"
     const val reffDeleteToken = "deleteToken"

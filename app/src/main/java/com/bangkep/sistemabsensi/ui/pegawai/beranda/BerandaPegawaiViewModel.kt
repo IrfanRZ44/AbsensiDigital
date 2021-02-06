@@ -426,6 +426,7 @@ class BerandaPegawaiViewModel(
         when (request) {
             1 -> {
                 bundle.putString(Constant.reffJenis, Constant.jenisMasuk)
+
             }
             2 -> {
                 bundle.putString(Constant.reffJenis, Constant.jenisPulang)

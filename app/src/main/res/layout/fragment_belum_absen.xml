@@ -12,11 +12,10 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        snackbar="@{viewModel.message}"
         android:background="@color/gray5"
         android:theme="@style/CustomTheme"
-        snackbar="@{viewModel.message}"
         >
-
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

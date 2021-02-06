@@ -9,185 +9,189 @@
             type="com.bangkep.sistemabsensi.ui.operator.detailPegawai.DetailPegawaiViewModel" />
     </data>
 
-    <RelativeLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/gray5"
         android:theme="@style/CustomTheme"
-        snackbar="@{viewModel.message}"
         >
-        <include
-            android:id="@+id/progress"
-            layout="@layout/progress_loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="@dimen/h2"
-            android:visibility="gone"
-            visible="@{viewModel.isShowLoading}"
-            />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/h2"
-            android:layout_marginBottom="@dimen/h1"
-            android:fontFamily="@font/roboto_regular"
-            android:text="@={viewModel.message}"
-            showTextStatus="@{viewModel.message}"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_h2"
-            />
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardMain"
-            style="@style/cardView"
-            android:layout_centerHorizontal="true"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/h2"
-            android:layout_below="@+id/textInfo"
+            android:layout_height="match_parent"
+            snackbar="@{viewModel.message}"
             >
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/h2"
+                android:layout_marginBottom="@dimen/h1"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@={viewModel.message}"
+                showTextStatus="@{viewModel.message}"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_h2"
+                />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardMain"
+                style="@style/cardView"
+                android:layout_centerHorizontal="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/h2"
+                android:layout_below="@+id/textInfo"
+                >
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/h2"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    >
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imgFoto"
+                        android:layout_width="@dimen/_150"
+                        android:layout_height="@dimen/_150"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="@dimen/h2"
+                        android:padding="@dimen/h2"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_logo"
+                        imageSrc="@{viewModel.dataUser.foto}"
+                        android:onClick="@{()-> viewModel.clickFoto()}"
+                        />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:fontFamily="@font/roboto_regular"
+                        android:textSize="@dimen/text_h3"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:text="@={viewModel.dataNipNama}"
+                        android:layout_marginTop="@dimen/h1"
+                        />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnWA"
+                        style="@style/buttonStandardBlue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/cardMain"
+                        android:layout_alignParentEnd="true"
+                        android:drawableStart="@drawable/ic_chat_white"
+                        android:drawablePadding="@dimen/h2"
+                        android:layout_margin="@dimen/h3"
+                        android:padding="@dimen/h3"
+                        android:text="@string/chat_wa"
+                        android:textColor="@color/white"
+                        android:onClick="@{()-> viewModel.onClickWA()}"
+                        disableButton="@{viewModel.isShowLoading}"
+                        />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.cardview.widget.CardView>
+
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/h2"
+                android:layout_below="@+id/cardMain"
+                android:id="@+id/cardBtn"
+                android:orientation="horizontal"
                 android:gravity="center_horizontal"
-                android:orientation="vertical"
                 >
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/imgFoto"
-                    android:layout_width="@dimen/_150"
-                    android:layout_height="@dimen/_150"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="@dimen/h2"
-                    android:padding="@dimen/h2"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_logo"
-                    imageSrc="@{viewModel.dataUser.foto}"
-                    android:onClick="@{()-> viewModel.clickFoto()}"
-                    />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:fontFamily="@font/roboto_regular"
-                    android:textSize="@dimen/text_h3"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:text="@={viewModel.dataNipNama}"
-                    android:layout_marginTop="@dimen/h1"
-                    />
-
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnWA"
                     style="@style/buttonStandardBlue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/cardMain"
-                    android:layout_alignParentEnd="true"
-                    android:drawableStart="@drawable/ic_chat_white"
-                    android:drawablePadding="@dimen/h2"
-                    android:layout_margin="@dimen/h3"
-                    android:padding="@dimen/h3"
-                    android:text="@string/chat_wa"
+                    android:layout_margin="@dimen/h2"
+                    android:padding="@dimen/h2"
+                    android:text="@string/alpa"
                     android:textColor="@color/white"
-                    android:onClick="@{()-> viewModel.onClickWA()}"
+                    android:onClick="@{()-> viewModel.onClickAlpa()}"
+                    disableButton="@{viewModel.isShowLoading}"
+                    />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    style="@style/buttonStandardBlue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/h2"
+                    android:padding="@dimen/h2"
+                    android:text="@string/cuti"
+                    android:textColor="@color/white"
+                    android:onClick="@{()-> viewModel.onClickCuti()}"
+                    disableButton="@{viewModel.isShowLoading}"
+                    />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    style="@style/buttonStandardBlue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/h2"
+                    android:padding="@dimen/h2"
+                    android:text="@string/sakit"
+                    android:textColor="@color/white"
+                    android:onClick="@{()-> viewModel.onClickSakit()}"
                     disableButton="@{viewModel.isShowLoading}"
                     />
             </androidx.appcompat.widget.LinearLayoutCompat>
-        </androidx.cardview.widget.CardView>
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/cardMain"
-            android:id="@+id/cardBtn"
-            android:orientation="horizontal"
-            android:gravity="center_horizontal"
-            >
-            <androidx.appcompat.widget.AppCompatButton
-                style="@style/buttonStandardBlue"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/cardBtn"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                >
+                <androidx.appcompat.widget.AppCompatButton
+                    style="@style/buttonStandardBlue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/h2"
+                    android:padding="@dimen/h2"
+                    android:text="@string/izin"
+                    android:textColor="@color/white"
+                    android:onClick="@{()-> viewModel.onClickIzin()}"
+                    disableButton="@{viewModel.isShowLoading}"
+                    />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    style="@style/buttonStandardBlue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/h2"
+                    android:padding="@dimen/h2"
+                    android:text="@string/tld"
+                    android:textColor="@color/white"
+                    android:onClick="@{()-> viewModel.onClickTLD()}"
+                    disableButton="@{viewModel.isShowLoading}"
+                    />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    style="@style/buttonStandardBlue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/h2"
+                    android:padding="@dimen/h2"
+                    android:text="@string/tdd"
+                    android:textColor="@color/white"
+                    android:onClick="@{()-> viewModel.onClickTDD()}"
+                    disableButton="@{viewModel.isShowLoading}"
+                    />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <include
+                android:id="@+id/progress"
+                layout="@layout/progress_loading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/h2"
-                android:padding="@dimen/h2"
-                android:text="@string/alpa"
-                android:textColor="@color/white"
-                android:onClick="@{()-> viewModel.onClickAlpa()}"
-                disableButton="@{viewModel.isShowLoading}"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/h2"
+                android:visibility="gone"
+                visible="@{viewModel.isShowLoading}"
                 />
-
-            <androidx.appcompat.widget.AppCompatButton
-                style="@style/buttonStandardBlue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/h2"
-                android:padding="@dimen/h2"
-                android:text="@string/cuti"
-                android:textColor="@color/white"
-                android:onClick="@{()-> viewModel.onClickCuti()}"
-                disableButton="@{viewModel.isShowLoading}"
-                />
-
-            <androidx.appcompat.widget.AppCompatButton
-                style="@style/buttonStandardBlue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/h2"
-                android:padding="@dimen/h2"
-                android:text="@string/sakit"
-                android:textColor="@color/white"
-                android:onClick="@{()-> viewModel.onClickSakit()}"
-                disableButton="@{viewModel.isShowLoading}"
-                />
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/cardBtn"
-            android:orientation="horizontal"
-            android:gravity="center_horizontal"
-            >
-            <androidx.appcompat.widget.AppCompatButton
-                style="@style/buttonStandardBlue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/h2"
-                android:padding="@dimen/h2"
-                android:text="@string/izin"
-                android:textColor="@color/white"
-                android:onClick="@{()-> viewModel.onClickIzin()}"
-                disableButton="@{viewModel.isShowLoading}"
-                />
-
-            <androidx.appcompat.widget.AppCompatButton
-                style="@style/buttonStandardBlue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/h2"
-                android:padding="@dimen/h2"
-                android:text="@string/tld"
-                android:textColor="@color/white"
-                android:onClick="@{()-> viewModel.onClickTLD()}"
-                disableButton="@{viewModel.isShowLoading}"
-                />
-
-            <androidx.appcompat.widget.AppCompatButton
-                style="@style/buttonStandardBlue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/h2"
-                android:padding="@dimen/h2"
-                android:text="@string/tdd"
-                android:textColor="@color/white"
-                android:onClick="@{()-> viewModel.onClickTDD()}"
-                disableButton="@{viewModel.isShowLoading}"
-                />
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-    </RelativeLayout>
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

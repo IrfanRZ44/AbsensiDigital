@@ -14,6 +14,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.view.SurfaceHolder
 import android.view.SurfaceView
+import android.widget.Toast
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.bangkep.sistemabsensi.R
@@ -61,20 +62,49 @@ class CameraFragment : BaseFragmentBind<FragmentCameraBinding>(), SurfaceHolder.
         }
 
         bind.fabFlash.setOnClickListener {
-            val params = camera1.parameters
-            if (!modeFlash){
-                bind.fabFlash.setImageResource(R.drawable.ic_flash_off_black)
-                params.flashMode = Camera.Parameters.FLASH_MODE_TORCH
-                modeFlash = true
+            try{
+                if (hasFlash()){
+                    val params = camera1.parameters
+                    if (!modeFlash){
+                        bind.fabFlash.setImageResource(R.drawable.ic_flash_off_black)
+                        params.flashMode = Camera.Parameters.FLASH_MODE_TORCH
+                        modeFlash = true
+                    }
+                    else{
+                        bind.fabFlash.setImageResource(R.drawable.ic_flash_on_black)
+                        params.flashMode = Camera.Parameters.FLASH_MODE_OFF
+                        modeFlash = false
+                    }
+                    camera1.parameters = params
+                }
+                else{
+                    viewModel.message.value = "Error, Device Anda tidak support menggunakan blits"
+                    Toast.makeText(context, "Error, Device Anda tidak support menggunakan blits", Toast.LENGTH_LONG).show()
+                }
+            } catch (e: Exception){
+                viewModel.message.value = "Error, Device Anda tidak support menggunakan blits"
+                Toast.makeText(context, "Error, Device Anda tidak support menggunakan blits", Toast.LENGTH_LONG).show()
+            } catch (e: RuntimeException){
+                viewModel.message.value = "Error, Device Anda tidak support menggunakan blits"
+                Toast.makeText(context, "Error, Device Anda tidak support menggunakan blits", Toast.LENGTH_LONG).show()
             }
-            else{
-                bind.fabFlash.setImageResource(R.drawable.ic_flash_on_black)
-                params.flashMode = Camera.Parameters.FLASH_MODE_OFF
-                modeFlash = false
-            }
-            camera1.parameters = params
             camera1.startPreview()
         }
+    }
+
+    private fun hasFlash(): Boolean {
+        val parameters = try { camera1.parameters }
+        catch (ignored: RuntimeException) {
+            return false
+        }
+
+        if (parameters.flashMode == null) {
+            return false
+        }
+
+        val supportedFlashModes = parameters.supportedFlashModes
+        return !(supportedFlashModes == null || supportedFlashModes.isEmpty() ||
+                supportedFlashModes.size == 1 && supportedFlashModes[0] == Camera.Parameters.FLASH_MODE_OFF)
     }
 
     private fun init() {
@@ -101,32 +131,6 @@ class CameraFragment : BaseFragmentBind<FragmentCameraBinding>(), SurfaceHolder.
                 camera1.setPreviewDisplay(surfaceHolder)
                 camera1.startFaceDetection()
                 camera1.enableShutterSound(true)
-
-                val params = camera1.parameters
-                params.focusMode = Camera.Parameters.FOCUS_MODE_AUTO
-//                val focusRect = calculateTapArea(event.getX(), event.getY(), 1f)
-//                val meteringRect = calculateTapArea(event.getX(), event.getY(), 1.5f)
-//                params.setFocusAreas(
-//                    Lists.newArrayList(
-//                        Camera.Area(
-//                            focusRect,
-//                            1000
-//                        )
-//                    )
-//                )
-//
-//                if (meteringAreaSupported) {
-//                    parameters.setMeteringAreas(
-//                        Lists.newArrayList(
-//                            Camera.Area(
-//                                meteringRect,
-//                                1000
-//                            )
-//                        )
-//                    )
-//                }
-
-                camera1.parameters = params
                 camera1.startPreview()
                 previewing = true
             } catch (e: IOException) {

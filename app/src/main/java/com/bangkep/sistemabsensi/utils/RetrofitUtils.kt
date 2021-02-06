@@ -23,6 +23,11 @@ object RetrofitUtils{
         call.enqueue(callback)
     }
 
+    fun checkToken(input: Map<String, String>, callback: Callback<ModelResult>){
+        val call = api.checkToken(input, Constant.contentType)
+        call.enqueue(callback)
+    }
+
     fun getDataPegawai(input: Map<String, String>, callback: Callback<ModelUser>){
         val call = api.getDataPegawai(input, Constant.contentType)
         call.enqueue(callback)

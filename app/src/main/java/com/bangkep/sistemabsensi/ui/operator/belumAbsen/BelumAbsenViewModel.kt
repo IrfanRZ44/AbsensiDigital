@@ -14,6 +14,7 @@ import com.bangkep.sistemabsensi.ui.operator.detailPegawai.DetailPegawaiFragment
 import com.bangkep.sistemabsensi.utils.Constant
 import com.bangkep.sistemabsensi.utils.DataSave
 import com.bangkep.sistemabsensi.utils.RetrofitUtils
+import com.bangkep.sistemabsensi.utils.showLog
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -112,6 +113,7 @@ class BelumAbsenViewModel(private val rcData: RecyclerView,
                 isShowLoading.value = false
                 val result = response.body()
 
+                showLog(result?.response + " belum absen")
                 if (result?.response == Constant.reffSuccess){
                     for (i in result.list_absen.indices){
                         listData.add(result.list_absen[i])
