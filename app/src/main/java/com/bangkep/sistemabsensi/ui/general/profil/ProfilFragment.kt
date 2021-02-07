@@ -75,6 +75,13 @@ class ProfilFragment : BaseFragmentBind<FragmentProfilBinding>() {
         }
     }
 
+    fun getRandomString(length: Int) : String {
+        val charset = "abcdefghijklmnopqrstuvwxyz1234567890"
+        return (1..length)
+            .map { charset.random() }
+            .joinToString("")
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
@@ -85,7 +92,7 @@ class ProfilFragment : BaseFragmentBind<FragmentProfilBinding>() {
                 bind.imgFoto.setBackgroundResource(android.R.color.transparent)
 
                 val idUser = savedData.getDataUser()?.idUser
-                val nameFile = "${System.currentTimeMillis()}__${savedData.getDataUser()?.username}"
+                val nameFile = getRandomString(16)
                 val foto = imageUri.path
                 viewModel.foto.value = imageUri
 
