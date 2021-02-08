@@ -43,7 +43,6 @@
             android:textSize="@dimen/text_h2"
             />
 
-
         <androidx.cardview.widget.CardView
             android:id="@+id/cardInput"
             style="@style/cardView"

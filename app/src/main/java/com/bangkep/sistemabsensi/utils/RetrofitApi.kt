@@ -10,6 +10,12 @@ import retrofit2.http.*
  */
 interface RetrofitApi {
     @Headers("Accept:application/json")
+    @GET(Constant.reffInfoApps)
+    fun getInfoApps(
+        @Header("Content-Type") contentType: String
+    ): Call<ModelResultInfoApps>
+
+    @Headers("Accept:application/json")
     @POST(Constant.reffLoginUser)
     fun loginUser(
         @Body input: Map<String, String>,

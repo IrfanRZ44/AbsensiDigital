@@ -113,7 +113,6 @@ class BelumAbsenViewModel(private val rcData: RecyclerView,
                 isShowLoading.value = false
                 val result = response.body()
 
-                showLog(result?.response + " belum absen")
                 if (result?.response == Constant.reffSuccess){
                     for (i in result.list_absen.indices){
                         listData.add(result.list_absen[i])

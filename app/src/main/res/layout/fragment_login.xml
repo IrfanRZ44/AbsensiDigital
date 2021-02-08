@@ -68,6 +68,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/gray2"
                 android:id="@+id/textStatus"
+                android:text="@={viewModel.message}"
                 showTextStatus="@{viewModel.message}"
                 />
 

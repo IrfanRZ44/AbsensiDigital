@@ -8,6 +8,7 @@ import androidx.navigation.NavController
 import com.bangkep.sistemabsensi.R
 import com.bangkep.sistemabsensi.base.BaseViewModel
 import com.bangkep.sistemabsensi.model.ModelResult
+import com.bangkep.sistemabsensi.model.ModelResultInfoApps
 import com.bangkep.sistemabsensi.model.ModelUser
 import com.bangkep.sistemabsensi.ui.operator.OperatorActivity
 import com.bangkep.sistemabsensi.ui.pegawai.PegawaiActivity
@@ -23,7 +24,7 @@ class SplashViewModel(
     private val savedData: DataSave?,
     private val activity: Activity?) : BaseViewModel() {
 
-    fun checkUser(){
+    private fun checkUser(){
         isShowLoading.value = true
         object : CountDownTimer(2000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
@@ -97,6 +98,49 @@ class SplashViewModel(
                 ) {
                     isShowLoading.value = false
                     message.value = t.message
+                }
+            })
+    }
+
+    fun getInfoApps(){
+        isShowLoading.value = false
+
+        RetrofitUtils.getInfoApps(
+            object : Callback<ModelResultInfoApps> {
+                override fun onResponse(
+                    call: Call<ModelResultInfoApps>,
+                    response: Response<ModelResultInfoApps>
+                ) {
+                    val result = response.body()
+                    isShowLoading.value = false
+                    val act = activity
+
+                    if (result?.response == Constant.reffSuccess && act != null){
+                        val manager = act.packageManager
+                        val info = manager?.getPackageInfo(
+                            act.packageName, 0
+                        )
+                        val versionApps = info?.versionName
+
+                        if (result.version_apps == versionApps){
+                            savedData?.setDataString(result.message, Constant.reffMessageApps)
+                            checkUser()
+                        }
+                        else{
+                            message.value = "Mohon update versi aplikasi ke $versionApps"
+                        }
+                    }
+                    else{
+                        message.value = "Mohon update versi aplikasi"
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ModelResultInfoApps>,
+                    t: Throwable
+                ) {
+                    isShowLoading.value = false
+                    message.value = "Mohon update versi aplikasi"
                 }
             })
     }

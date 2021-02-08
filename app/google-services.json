@@ -1,20 +1,20 @@
 {
   "project_info": {
-    "project_number": "430326733363",
-    "project_id": "masker-4aa5d",
-    "storage_bucket": "masker-4aa5d.appspot.com"
+    "project_number": "269157047420",
+    "project_id": "sistemabsensi-ea925",
+    "storage_bucket": "sistemabsensi-ea925.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:430326733363:android:3da69e105f5785e70da146",
+        "mobilesdk_app_id": "1:269157047420:android:0a3f4e610a27598c8ebdf9",
         "android_client_info": {
           "package_name": "com.bangkep.sistemabsensi"
         }
       },
       "oauth_client": [
         {
-          "client_id": "430326733363-3bobpo4vsaduu8jq8epmqkgucff4pll6.apps.googleusercontent.com",
+          "client_id": "269157047420-isq4vpj6s08lml2esgda9fn7hrvjth7t.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.bangkep.sistemabsensi",
@@ -22,20 +22,20 @@
           }
         },
         {
-          "client_id": "430326733363-td996groj78g4p7bbcceepa3uc2p2em7.apps.googleusercontent.com",
+          "client_id": "269157047420-latr9lvmtk4498osqr3lomu0lge5ojro.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC-L1vqhAZsRIP0bDcNEZLIJ3jEvq66-Jg"
+          "current_key": "AIzaSyBrBiOa4KcFr1AjMFFAlyk6XZiU5uyUP2w"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "430326733363-td996groj78g4p7bbcceepa3uc2p2em7.apps.googleusercontent.com",
+              "client_id": "269157047420-latr9lvmtk4498osqr3lomu0lge5ojro.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

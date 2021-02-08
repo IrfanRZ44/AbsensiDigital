@@ -18,6 +18,11 @@ object RetrofitUtils{
         .build()
     val api = retrofit.create(RetrofitApi::class.java)
 
+    fun getInfoApps(callback: Callback<ModelResultInfoApps>){
+        val call = api.getInfoApps(Constant.contentType)
+        call.enqueue(callback)
+    }
+
     fun loginUser(input: Map<String, String>, callback: Callback<ModelUser>){
         val call = api.loginUser(input, Constant.contentType)
         call.enqueue(callback)

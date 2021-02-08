@@ -75,9 +75,9 @@ class ProfilFragment : BaseFragmentBind<FragmentProfilBinding>() {
         }
     }
 
-    fun getRandomString(length: Int) : String {
+    private fun getRandomString() : String {
         val charset = "abcdefghijklmnopqrstuvwxyz1234567890"
-        return (1..length)
+        return (1..16)
             .map { charset.random() }
             .joinToString("")
     }
@@ -92,7 +92,7 @@ class ProfilFragment : BaseFragmentBind<FragmentProfilBinding>() {
                 bind.imgFoto.setBackgroundResource(android.R.color.transparent)
 
                 val idUser = savedData.getDataUser()?.idUser
-                val nameFile = getRandomString(16)
+                val nameFile = getRandomString()
                 val foto = imageUri.path
                 viewModel.foto.value = imageUri
 

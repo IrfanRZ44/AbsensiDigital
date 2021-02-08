@@ -50,6 +50,8 @@ class PegawaiActivity : BaseActivity() {
         navController = findNavController(R.id.navPegawaiFragment)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        alertInformation(savedData.getKeyString(Constant.reffMessageApps))
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -138,5 +140,19 @@ class PegawaiActivity : BaseActivity() {
             true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun alertInformation(information: String?) {
+        val alert = AlertDialog.Builder(this)
+        alert.setTitle(Constant.attention)
+        alert.setMessage(information)
+        alert.setCancelable(true)
+        alert.setPositiveButton(
+            "Baik"
+        ) { dialog, _ ->
+            dialog.dismiss()
+        }
+
+        alert.show()
     }
 }
