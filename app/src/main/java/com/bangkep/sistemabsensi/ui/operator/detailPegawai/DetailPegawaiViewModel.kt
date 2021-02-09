@@ -15,10 +15,7 @@ import com.bangkep.sistemabsensi.model.ModelResultAbsen
 import com.bangkep.sistemabsensi.model.ModelUser
 import com.bangkep.sistemabsensi.services.notification.model.Notification
 import com.bangkep.sistemabsensi.services.notification.model.Sender
-import com.bangkep.sistemabsensi.utils.Constant
-import com.bangkep.sistemabsensi.utils.FirebaseUtils
-import com.bangkep.sistemabsensi.utils.RetrofitUtils
-import com.bangkep.sistemabsensi.utils.onClickFoto
+import com.bangkep.sistemabsensi.utils.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -31,7 +28,8 @@ import kotlin.collections.HashMap
 
 class DetailPegawaiViewModel(
     private val navController: NavController,
-    private val activity: Activity?
+    private val activity: Activity?,
+    private val savedData: DataSave
 ) : BaseViewModel() {
     val dataUser = MutableLiveData<ModelUser>()
     val dataNipNama = MutableLiveData<String>()
@@ -139,8 +137,9 @@ class DetailPegawaiViewModel(
         } else {
             SimpleDateFormat(Constant.dateFormat2).format(Date())
         }
-
+        val idOperator = savedData.getDataUser()?.idUser
         val body = HashMap<String, String>()
+
         body[Constant.reffNip] = username
         body[Constant.reffIdHari] = idHari
         body["latitude"] = "0"
@@ -149,6 +148,9 @@ class DetailPegawaiViewModel(
         body["jenis"] = jenis
         body["date_created"] = dateCreated
         body["img"] = foto
+        if (!idOperator.isNullOrEmpty()){
+            body[Constant.confirmed_by] = idOperator
+        }
 
         sendData(body)
     }

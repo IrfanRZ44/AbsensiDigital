@@ -49,6 +49,11 @@ class OperatorActivity : BaseActivity() {
         navController = findNavController(R.id.navOperatorFragment)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        val infoApps = savedData.getKeyString(Constant.reffMessageApps)
+        if (!infoApps.isNullOrEmpty()){
+            alertInformation(infoApps)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -137,5 +142,19 @@ class OperatorActivity : BaseActivity() {
             true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun alertInformation(information: String?) {
+        val alert = AlertDialog.Builder(this)
+        alert.setTitle(Constant.attention)
+        alert.setMessage(information)
+        alert.setCancelable(true)
+        alert.setPositiveButton(
+            "Baik"
+        ) { dialog, _ ->
+            dialog.dismiss()
+        }
+
+        alert.show()
     }
 }

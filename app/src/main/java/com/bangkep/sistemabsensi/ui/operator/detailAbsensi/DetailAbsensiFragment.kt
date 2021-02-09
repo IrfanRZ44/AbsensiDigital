@@ -30,7 +30,7 @@ class DetailAbsensiFragment : BaseFragmentBind<FragmentDetailAbsensiBinding>(), 
     private fun init() {
         showLog("absen")
         bind.lifecycleOwner = this
-        viewModel = DetailAbsensiViewModel(findNavController())
+        viewModel = DetailAbsensiViewModel(findNavController(), savedData)
         bind.viewModel = viewModel
 
         setData()

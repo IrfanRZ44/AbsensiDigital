@@ -8,16 +8,14 @@ import com.bangkep.sistemabsensi.model.ModelResult
 import com.bangkep.sistemabsensi.model.ModelSudahAbsensi
 import com.bangkep.sistemabsensi.services.notification.model.Notification
 import com.bangkep.sistemabsensi.services.notification.model.Sender
-import com.bangkep.sistemabsensi.utils.Constant
-import com.bangkep.sistemabsensi.utils.FirebaseUtils
-import com.bangkep.sistemabsensi.utils.RetrofitUtils
-import com.bangkep.sistemabsensi.utils.onClickFoto
+import com.bangkep.sistemabsensi.utils.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class DetailAbsensiViewModel(
-    private val navController: NavController
+    private val navController: NavController,
+    private val savedData: DataSave
 ) : BaseViewModel() {
     val dataAbsensi = MutableLiveData<ModelSudahAbsensi>()
     val dataNipNama = MutableLiveData<String>()
@@ -30,12 +28,14 @@ class DetailAbsensiViewModel(
     fun onClickSend(status: Int){
         val idAbsen = dataAbsensi.value?.id_absensi
         val jenis = dataAbsensi.value?.jenis
+        val idOperator = savedData.getDataUser()?.idUser
 
-        if (!idAbsen.isNullOrEmpty() && !jenis.isNullOrEmpty() && (status == 1 || status == 2)){
+        if (!idAbsen.isNullOrEmpty() && !jenis.isNullOrEmpty() && !idOperator.isNullOrEmpty() && (status == 1 || status == 2)){
             val body = HashMap<String, String>()
             body[Constant.reffIdAbsen] = idAbsen
             body[Constant.status] = status.toString()
             body[Constant.jenis] = jenis
+            body[Constant.confirmed_by] = idOperator
 
             validateData(body, status.toString())
         }

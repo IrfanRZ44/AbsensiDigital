@@ -51,7 +51,10 @@ class PegawaiActivity : BaseActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        alertInformation(savedData.getKeyString(Constant.reffMessageApps))
+        val infoApps = savedData.getKeyString(Constant.reffMessageApps)
+        if (!infoApps.isNullOrEmpty()){
+            alertInformation(infoApps)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

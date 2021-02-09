@@ -17,7 +17,7 @@ class DetailPegawaiFragment : BaseFragmentBind<FragmentDetailPegawaiBinding>() {
 
     private fun init() {
         bind.lifecycleOwner = this
-        viewModel = DetailPegawaiViewModel(findNavController(), activity)
+        viewModel = DetailPegawaiViewModel(findNavController(), activity, savedData)
         bind.viewModel = viewModel
 
         setData()
