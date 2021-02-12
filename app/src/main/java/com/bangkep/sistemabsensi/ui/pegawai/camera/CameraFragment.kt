@@ -129,7 +129,7 @@ class CameraFragment : BaseFragmentBind<FragmentCameraBinding>(), SurfaceHolder.
             try {
                 camera1.setDisplayOrientation(90)
                 camera1.setPreviewDisplay(surfaceHolder)
-                camera1.startFaceDetection()
+//                camera1.startFaceDetection()
                 camera1.enableShutterSound(true)
                 camera1.startPreview()
                 previewing = true

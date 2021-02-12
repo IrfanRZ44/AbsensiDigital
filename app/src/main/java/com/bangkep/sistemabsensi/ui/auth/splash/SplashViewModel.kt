@@ -2,8 +2,10 @@ package com.bangkep.sistemabsensi.ui.auth.splash
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.CountDownTimer
 import android.widget.Toast
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.NavController
 import com.bangkep.sistemabsensi.R
 import com.bangkep.sistemabsensi.base.BaseViewModel
@@ -19,10 +21,19 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+
 class SplashViewModel(
     private val navController: NavController,
     private val savedData: DataSave?,
     private val activity: Activity?) : BaseViewModel() {
+    val isShowUpdate = MutableLiveData<Boolean>()
+    var linkDownload = ""
+
+    fun onClickUpdate(){
+        val defaultBrowser = Intent.makeMainSelectorActivity(Intent.ACTION_MAIN, Intent.CATEGORY_APP_BROWSER)
+        defaultBrowser.data = Uri.parse(linkDownload)
+        activity?.startActivity(defaultBrowser)
+    }
 
     private fun checkUser(){
         isShowLoading.value = true
@@ -128,10 +139,13 @@ class SplashViewModel(
                         }
                         else{
                             message.value = "Mohon update versi aplikasi ke $versionApps"
+                            linkDownload = result.link
+                            isShowUpdate.value = true
                         }
                     }
                     else{
                         message.value = "Mohon update versi aplikasi"
+                        isShowUpdate.value = true
                     }
                 }
 
@@ -141,6 +155,7 @@ class SplashViewModel(
                 ) {
                     isShowLoading.value = false
                     message.value = "Mohon update versi aplikasi"
+                    isShowUpdate.value = true
                 }
             })
     }

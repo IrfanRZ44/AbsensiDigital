@@ -7,5 +7,6 @@ import kotlinx.android.parcel.Parcelize
 data class ModelResultInfoApps(
     var message: String = "",
     var version_apps: String = "",
+    var link: String = "",
     var response: String = ""
     ) : Parcelable
