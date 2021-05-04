@@ -1,5 +1,6 @@
 package com.bangkep.sistemabsensi.utils
 
+import android.content.pm.ActivityInfo
 import coil.api.load
 import coil.request.CachePolicy
 import com.bangkep.sistemabsensi.R
@@ -15,6 +16,7 @@ class LihatFotoFragment : BaseFragmentBind<FragmentLihatFotoBinding>() {
 
     private fun init(){
         bind.lifecycleOwner = this
+        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         val urlFoto= this.arguments?.getString("urlFoto")
 
         bind.imgFoto.load(urlFoto) {

@@ -1,5 +1,6 @@
 package com.bangkep.sistemabsensi.ui.auth.splash
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -21,7 +22,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-
+@SuppressLint("StaticFieldLeak")
 class SplashViewModel(
     private val navController: NavController,
     private val savedData: DataSave?,
@@ -144,8 +145,8 @@ class SplashViewModel(
                         }
                     }
                     else{
-                        message.value = "Mohon update versi aplikasi"
-                        isShowUpdate.value = true
+                        message.value = "Error, tidak dapat terhubung ke server"
+                        isShowUpdate.value = false
                     }
                 }
 
@@ -154,8 +155,14 @@ class SplashViewModel(
                     t: Throwable
                 ) {
                     isShowLoading.value = false
-                    message.value = "Mohon update versi aplikasi"
-                    isShowUpdate.value = true
+                    val msg = t.message
+                    if (msg != null && msg.contains("Unable to resolve host")){
+                        message.value = "Error, tidak dapat terhubung ke server"
+                    }
+                    else{
+                        message.value = t.message
+                    }
+                    isShowUpdate.value = false
                 }
             })
     }
