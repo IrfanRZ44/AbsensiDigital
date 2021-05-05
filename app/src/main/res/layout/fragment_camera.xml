@@ -24,12 +24,12 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/frame_camera"
-            android:layout_alignParentBottom="true"
+            android:background="@drawable/ic_person"
+            android:layout_centerInParent="true"
             android:layout_marginStart="@dimen/_30"
             android:layout_marginEnd="@dimen/_30"
             android:layout_marginTop="@dimen/margin_large"
-            android:layout_marginBottom="@dimen/_120"
+            android:layout_marginBottom="@dimen/margin_large"
             />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

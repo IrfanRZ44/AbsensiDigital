@@ -25,7 +25,7 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.HashMap
 
-
+@SuppressLint("StaticFieldLeak")
 class DetailPegawaiViewModel(
     private val navController: NavController,
     private val activity: Activity?,

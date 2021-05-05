@@ -32,6 +32,7 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.HashMap
 
+@SuppressLint("StaticFieldLeak")
 class BerandaPegawaiViewModel(
     private val navController: NavController,
     private val btnApel: AppCompatTextView,
@@ -227,39 +228,19 @@ class BerandaPegawaiViewModel(
                         else if (!izin && masuk && !pulang){
                             isDatang.value = false
                             isPulang.value = true
-//                            if (comparingTimesAfter(dataHari.pulang_kerja, timeNow)){
-//                                isDatang.value = false
-//                                isPulang.value = true
-//                            }
-//                            else{
-//                                isDatang.value = false
-//                                isPulang.value = false
-//                            }
                         }
                         else if (!izin && masuk && pulang){
                             isDatang.value = false
                             isPulang.value = false
                         }
                         else{
-                            if(comparingTimesAfter(dataHari.masuk_kerja, timeNow)){
-                                isDatang.value = true
-                                isPulang.value = false
-                            }
-                            else{
-                                isDatang.value = false
-                                isPulang.value = false
-                            }
-                        }
-                    }
-                    else{
-                        if(comparingTimesAfter(dataHari.masuk_kerja, timeNow)){
                             isDatang.value = true
                             isPulang.value = false
                         }
-                        else{
-                            isDatang.value = false
-                            isPulang.value = false
-                        }
+                    }
+                    else{
+                        isDatang.value = true
+                        isPulang.value = false
                     }
                 }
 
@@ -268,14 +249,8 @@ class BerandaPegawaiViewModel(
                     t: Throwable
                 ) {
                     isShowLoading.value = false
-                    if(comparingTimesAfter(dataHari.masuk_kerja, timeNow)){
-                        isDatang.value = true
-                        isPulang.value = false
-                    }
-                    else{
-                        isDatang.value = false
-                        isPulang.value = false
-                    }
+                    isDatang.value = true
+                    isPulang.value = false
                 }
             })
     }

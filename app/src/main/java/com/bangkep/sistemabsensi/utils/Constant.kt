@@ -96,7 +96,7 @@ object Constant {
     const val jenisApel = "Apel"
     const val jenisSakit = "Sakit"
     const val jenisIzin = "Izin"
-    const val jenisAlpa = "Alpha"
+    const val jenisAlpa = "Alpa"
     const val jenisTLD = "TLD"
     const val jenisTDD = "TDD"
     const val jenisCuti = "Cuti"
