@@ -22,6 +22,8 @@ import com.bangkep.sistemabsensi.base.BaseFragmentBind
 import com.bangkep.sistemabsensi.databinding.FragmentCameraBinding
 import com.bangkep.sistemabsensi.ui.pegawai.absensi.AbsensiFragment
 import com.bangkep.sistemabsensi.utils.Constant
+import id.zelory.compressor.Compressor
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -79,14 +81,26 @@ class CameraFragment : BaseFragmentBind<FragmentCameraBinding>(), SurfaceHolder.
                 }
                 else{
                     viewModel.message.value = "Error, Device Anda tidak support menggunakan blits"
-                    Toast.makeText(context, "Error, Device Anda tidak support menggunakan blits", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        context,
+                        "Error, Device Anda tidak support menggunakan blits",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             } catch (e: Exception){
                 viewModel.message.value = "Error, Device Anda tidak support menggunakan blits"
-                Toast.makeText(context, "Error, Device Anda tidak support menggunakan blits", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    context,
+                    "Error, Device Anda tidak support menggunakan blits",
+                    Toast.LENGTH_LONG
+                ).show()
             } catch (e: RuntimeException){
                 viewModel.message.value = "Error, Device Anda tidak support menggunakan blits"
-                Toast.makeText(context, "Error, Device Anda tidak support menggunakan blits", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    context,
+                    "Error, Device Anda tidak support menggunakan blits",
+                    Toast.LENGTH_LONG
+                ).show()
             }
             camera1.startPreview()
         }
@@ -129,7 +143,6 @@ class CameraFragment : BaseFragmentBind<FragmentCameraBinding>(), SurfaceHolder.
             try {
                 camera1.setDisplayOrientation(90)
                 camera1.setPreviewDisplay(surfaceHolder)
-//                camera1.startFaceDetection()
                 camera1.enableShutterSound(true)
                 camera1.startPreview()
                 previewing = true
@@ -167,7 +180,7 @@ class CameraFragment : BaseFragmentBind<FragmentCameraBinding>(), SurfaceHolder.
             bundle.putString(Constant.reffJenis, this.arguments?.getString(Constant.reffJenis))
             fragmentTujuan.arguments = bundle
             val navOption = NavOptions.Builder().setPopUpTo(R.id.navAbsen, true).build()
-            findNavController().navigate(R.id.navAbsen,bundle, navOption)
+            findNavController().navigate(R.id.navAbsen, bundle, navOption)
             out.close()
         } catch (e: Exception) {
             e.printStackTrace()
@@ -186,6 +199,12 @@ class CameraFragment : BaseFragmentBind<FragmentCameraBinding>(), SurfaceHolder.
                 null,
                 true
             )
+
+//
+//            val compressedImageFile = Compressor.compress(context, correctBmp) {
+//                quality(80) // combine with compressor constraint
+//                format(Bitmap.CompressFormat.WEBP)
+//            }
 
             saveImage(correctBmp)
         }

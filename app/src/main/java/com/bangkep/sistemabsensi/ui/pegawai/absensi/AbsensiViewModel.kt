@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.location.Location
 import android.net.Uri
 import android.os.Build
@@ -23,16 +24,27 @@ import com.bangkep.sistemabsensi.utils.DataSave
 import com.bangkep.sistemabsensi.utils.FirebaseUtils
 import com.bangkep.sistemabsensi.utils.RetrofitUtils
 import com.google.android.gms.location.LocationServices
+import id.zelory.compressor.Compressor
+import id.zelory.compressor.constraint.format
+import id.zelory.compressor.constraint.quality
+import id.zelory.compressor.constraint.resolution
+import id.zelory.compressor.constraint.size
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import net.gotev.uploadservice.protocols.multipart.MultipartUploadRequest
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.HashMap
 
+@SuppressLint("StaticFieldLeak")
 class AbsensiViewModel(
     private val activity: Activity?,
     private val navController: NavController,
@@ -112,7 +124,8 @@ class AbsensiViewModel(
         val act = activity
         val jenis = jenisAbsensi
 
-        if (!nip.isNullOrEmpty() && !hariId.isNullOrEmpty() && !pathFoto.isNullOrEmpty() && !jenis.isNullOrEmpty() && act != null){
+        if (!nip.isNullOrEmpty() && !hariId.isNullOrEmpty() && !pathFoto.isNullOrEmpty()
+            && !jenis.isNullOrEmpty() && act != null){
             val body = HashMap<String, String>()
             body[Constant.reffNip] = nip
             body[Constant.reffIdHari] = hariId
@@ -122,12 +135,42 @@ class AbsensiViewModel(
             body["date_created"] = dateCreated
             val idAbsen = idAbsensi
 
-            if (!idAbsen.isNullOrEmpty()){
-                body[Constant.reffIdAbsen] = idAbsen
-                updateAbsensi(body, pathFoto, act)
-            }
-            else{
-                sendData(body, pathFoto, act)
+            val job = Job()
+            val uiScope = CoroutineScope(Dispatchers.IO + job)
+            uiScope.launch {
+                val compressedImageFile = Compressor.compress(act, File(pathFoto)) {
+                    resolution(256, 256)
+                    quality(70)
+                    format(Bitmap.CompressFormat.JPEG)
+                    size(124_000) // 124 KB
+                }
+                val resultUri = Uri.fromFile(compressedImageFile)
+
+                activity!!.runOnUiThread {
+                    resultUri?.let {
+                        //set image here
+                        val tempPath = it.path
+
+                        if(!tempPath.isNullOrEmpty()){
+                            if (!idAbsen.isNullOrEmpty()){
+                                body[Constant.reffIdAbsen] = idAbsen
+                                updateAbsensi(body, tempPath, act)
+                            }
+                            else{
+                                sendData(body, tempPath, act)
+                            }
+                        }
+                        else{
+                            if (!idAbsen.isNullOrEmpty()){
+                                body[Constant.reffIdAbsen] = idAbsen
+                                updateAbsensi(body, pathFoto, act)
+                            }
+                            else{
+                                sendData(body, pathFoto, act)
+                            }
+                        }
+                    }
+                }
             }
         }
         else{

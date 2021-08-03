@@ -5,6 +5,8 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.net.Uri
 import androidx.core.content.ContextCompat
 import com.bangkep.sistemabsensi.R
 import com.bangkep.sistemabsensi.databinding.FragmentProfilBinding
@@ -12,6 +14,16 @@ import com.bangkep.sistemabsensi.base.BaseFragmentBind
 import com.bangkep.sistemabsensi.utils.Constant
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
+import id.zelory.compressor.Compressor
+import id.zelory.compressor.constraint.format
+import id.zelory.compressor.constraint.quality
+import id.zelory.compressor.constraint.resolution
+import id.zelory.compressor.constraint.size
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import java.io.File
 
 class ProfilFragment : BaseFragmentBind<FragmentProfilBinding>() {
     private lateinit var viewModel: ProfilViewModel
@@ -91,6 +103,7 @@ class ProfilFragment : BaseFragmentBind<FragmentProfilBinding>() {
                 val imageUri = result.uri
                 bind.imgFoto.setBackgroundResource(android.R.color.transparent)
 
+                val act = activity
                 val idUser = savedData.getDataUser()?.idUser
                 val nameFile = getRandomString()
                 val foto = imageUri.path
@@ -105,8 +118,32 @@ class ProfilFragment : BaseFragmentBind<FragmentProfilBinding>() {
                 dataUser?.foto = urlFoto
                 savedData.setDataObject(dataUser, Constant.reffUser)
 
-                if (!idUser.isNullOrEmpty() && !foto.isNullOrEmpty()){
-                    activity?.let { viewModel.uploadMultipart(idUser, nameFile, foto, it) }
+                if (!idUser.isNullOrEmpty() && !foto.isNullOrEmpty() && act != null){
+                    val job = Job()
+                    val uiScope = CoroutineScope(Dispatchers.IO + job)
+                    uiScope.launch {
+                        val compressedImageFile = Compressor.compress(act, File(foto)) {
+                            resolution(256, 256)
+                            quality(70)
+                            format(Bitmap.CompressFormat.JPEG)
+                            size(124_000) // 124 KB
+                        }
+                        val resultUri = Uri.fromFile(compressedImageFile)
+
+                        activity!!.runOnUiThread {
+                            resultUri?.let {
+                                //set image here
+                                val tempPath = it.path
+
+                                if(!tempPath.isNullOrEmpty()){
+                                    viewModel.uploadMultipart(idUser, nameFile, tempPath, act)
+                                }
+                                else{
+                                    viewModel.uploadMultipart(idUser, nameFile, foto, act)
+                                }
+                            }
+                        }
+                    }
                 }
                 else{
                     viewModel.message.value = "Error, gagal mengupload foto"

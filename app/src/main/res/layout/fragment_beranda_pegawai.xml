@@ -133,6 +133,7 @@
                             android:scaleType="fitCenter"
                             android:src="@drawable/ic_logo"
                             imageSrc="@{viewModel.fotoPulang.toString()}"
+                            android:layout_marginBottom="@dimen/h2"
                             />
 
                         <androidx.appcompat.widget.AppCompatTextView
