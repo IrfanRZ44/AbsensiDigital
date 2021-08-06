@@ -8,17 +8,17 @@
     app:startDestination="@id/splashFragment">
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.bangkep.sistemabsensi.ui.auth.splash.SplashFragment"
+        android:name="com.kabirland.absensidigital_demo.ui.auth.splash.SplashFragment"
         android:label="@string/splash_screen"
         tools:layout="@layout/fragment_splash" />
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.bangkep.sistemabsensi.ui.auth.login.LoginFragment"
+        android:name="com.kabirland.absensidigital_demo.ui.auth.login.LoginFragment"
         android:label="@string/login"
         tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/lihatFotoFragment"
-        android:name="com.bangkep.sistemabsensi.utils.LihatFotoFragment"
+        android:name="com.kabirland.absensidigital_demo.utils.LihatFotoFragment"
         android:label="@string/foto"
         tools:layout="@layout/fragment_lihat_foto"
         />

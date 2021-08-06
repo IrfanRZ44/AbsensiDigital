@@ -2,11 +2,11 @@
 <layout xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.bangkep.sistemabsensi.ui.general.profil.ProfilFragment">
+    tools:context="com.kabirland.absensidigital_demo.ui.general.profil.ProfilFragment">
     <data>
         <variable
             name="viewModel"
-            type="com.bangkep.sistemabsensi.ui.general.profil.ProfilViewModel" />
+            type="com.kabirland.absensidigital_demo.ui.general.profil.ProfilViewModel" />
     </data>
 
     <RelativeLayout

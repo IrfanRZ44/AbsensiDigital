@@ -8,33 +8,33 @@
     app:startDestination="@id/navBeranda">
     <fragment
         android:id="@+id/lihatFotoFragment"
-        android:name="com.bangkep.sistemabsensi.utils.LihatFotoFragment"
+        android:name="com.kabirland.absensidigital_demo.utils.LihatFotoFragment"
         android:label="@string/foto"
         tools:layout="@layout/fragment_lihat_foto"
         />
     <fragment
         android:id="@+id/navBeranda"
-        android:name="com.bangkep.sistemabsensi.ui.operator.beranda.BerandaOperatorFragment"
+        android:name="com.kabirland.absensidigital_demo.ui.operator.beranda.BerandaOperatorFragment"
         android:label="@string/beranda"
         tools:layout="@layout/fragment_beranda_operator" />
     <fragment
         android:id="@+id/navProfil"
-        android:name="com.bangkep.sistemabsensi.ui.general.profil.ProfilFragment"
+        android:name="com.kabirland.absensidigital_demo.ui.general.profil.ProfilFragment"
         android:label="@string/menu_profile"
         tools:layout="@layout/fragment_profil" />
     <fragment
         android:id="@+id/navAbout"
-        android:name="com.bangkep.sistemabsensi.ui.general.about.AboutFragment"
+        android:name="com.kabirland.absensidigital_demo.ui.general.about.AboutFragment"
         android:label="@string/tentang_sistem"
         tools:layout="@layout/fragment_about" />
     <fragment
         android:id="@+id/navDetailAbsensi"
-        android:name="com.bangkep.sistemabsensi.ui.operator.detailAbsensi.DetailAbsensiFragment"
+        android:name="com.kabirland.absensidigital_demo.ui.operator.detailAbsensi.DetailAbsensiFragment"
         android:label="@string/detail_absensi"
         tools:layout="@layout/fragment_detail_absensi" />
     <fragment
         android:id="@+id/navDetailPegawai"
-        android:name="com.bangkep.sistemabsensi.ui.operator.detailPegawai.DetailPegawaiFragment"
+        android:name="com.kabirland.absensidigital_demo.ui.operator.detailPegawai.DetailPegawaiFragment"
         android:label="@string/detail_pegawai"
         tools:layout="@layout/fragment_detail_pegawai" />
 </navigation>

@@ -2,11 +2,11 @@
 <layout xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.bangkep.sistemabsensi.ui.general.about.AboutFragment">
+    tools:context="com.kabirland.absensidigital_demo.ui.general.about.AboutFragment">
     <data>
         <variable
             name="viewModel"
-            type="com.bangkep.sistemabsensi.ui.general.about.AboutViewModel" />
+            type="com.kabirland.absensidigital_demo.ui.general.about.AboutViewModel" />
     </data>
 
     <RelativeLayout
@@ -34,26 +34,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_regular"
-            android:text="@string/sistem_manajemen_disiplin_dan_kinerja_asn"
+            android:text="@string/app_name"
             android:textColor="@color/black"
             android:textSize="@dimen/text_h6"
             android:textAlignment="center"
             android:layout_below="@+id/img"
-            android:layout_centerHorizontal="true"
-            app:fontFamily="@font/roboto_regular"
-            />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textKabupaten"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_regular"
-            android:text="@string/kab_banggai_kepulauan"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_h6"
-            android:textAlignment="center"
-            android:layout_below="@+id/textAppName"
-            android:layout_marginTop="@dimen/_30"
             android:layout_centerHorizontal="true"
             app:fontFamily="@font/roboto_regular"
             />
@@ -66,7 +51,7 @@
             android:textColor="@color/black"
             android:textSize="@dimen/text_h6"
             android:textAlignment="center"
-            android:layout_below="@+id/textKabupaten"
+            android:layout_below="@+id/textAppName"
             android:layout_marginTop="@dimen/_30"
             android:layout_centerHorizontal="true"
             app:fontFamily="@font/roboto_regular"

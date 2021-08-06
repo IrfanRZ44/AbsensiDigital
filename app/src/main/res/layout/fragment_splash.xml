@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.bangkep.sistemabsensi.ui.auth.splash.SplashFragment"
+    tools:context="com.kabirland.absensidigital_demo.ui.auth.splash.SplashFragment"
     >
     <data>
         <variable
             name="viewModel"
-            type="com.bangkep.sistemabsensi.ui.auth.splash.SplashViewModel" />
+            type="com.kabirland.absensidigital_demo.ui.auth.splash.SplashViewModel" />
     </data>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -62,7 +62,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/sistem_manajemen_disiplin_dan_kinerja_asn"
+            android:text="@string/kabirland_technology_absensi_digital"
             style="@style/textStandardWhite"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/text_h2"

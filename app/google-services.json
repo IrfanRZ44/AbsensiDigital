@@ -14,11 +14,64 @@
       },
       "oauth_client": [
         {
+          "client_id": "269157047420-achcb1a7rd6etctqe4vnc8sfh9u8dsae.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bangkep.sistemabsensi",
+            "certificate_hash": "6a110ee5c2f199a42a7ddc63ba52e0b3e68aae34"
+          }
+        },
+        {
           "client_id": "269157047420-isq4vpj6s08lml2esgda9fn7hrvjth7t.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.bangkep.sistemabsensi",
             "certificate_hash": "bd7f1a1c80c3679e2fd4d62f8149558e37527daa"
+          }
+        },
+        {
+          "client_id": "269157047420-lmb0cf0jgggcbp98c9uha1l9qf5l21lv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bangkep.sistemabsensi",
+            "certificate_hash": "34d25708a34ac9eef48cf4336e7ca816bcaccbdc"
+          }
+        },
+        {
+          "client_id": "269157047420-latr9lvmtk4498osqr3lomu0lge5ojro.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrBiOa4KcFr1AjMFFAlyk6XZiU5uyUP2w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "269157047420-latr9lvmtk4498osqr3lomu0lge5ojro.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:269157047420:android:d13f250a7a87da898ebdf9",
+        "android_client_info": {
+          "package_name": "com.kabirland.absensidigital_demo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "269157047420-jeeceb4fitvqgmk2bra4l861c7af4004.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kabirland.absensidigital_demo",
+            "certificate_hash": "6a110ee5c2f199a42a7ddc63ba52e0b3e68aae34"
           }
         },
         {

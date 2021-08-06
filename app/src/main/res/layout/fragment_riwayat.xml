@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    tools:context="com.bangkep.sistemabsensi.ui.pegawai.riwayat.RiwayatFragment"
+    tools:context="com.kabirland.absensidigital_demo.ui.pegawai.riwayat.RiwayatFragment"
     >
     <data>
         <variable
             name="viewModel"
-            type="com.bangkep.sistemabsensi.ui.pegawai.riwayat.RiwayatViewModel" />
+            type="com.kabirland.absensidigital_demo.ui.pegawai.riwayat.RiwayatViewModel" />
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat

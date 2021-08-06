@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.bangkep.sistemabsensi">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.kabirland.absensidigital_demo">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
@@ -16,7 +18,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
-        android:name=".services.notification.NotificationService"
+        android:name="com.kabirland.absensidigital_demo.services.notification.NotificationService"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -25,7 +27,7 @@
         android:theme="@style/CustomTheme"
         android:fullBackupContent="true"
         >
-        <activity android:name=".ui.auth.AuthActivity"
+        <activity android:name="com.kabirland.absensidigital_demo.ui.auth.AuthActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/CustomTheme"
@@ -38,7 +40,7 @@
         </activity>
 
         <activity
-            android:name=".ui.pegawai.PegawaiActivity"
+            android:name="com.kabirland.absensidigital_demo.ui.pegawai.PegawaiActivity"
             android:label="@string/pegawai"
             android:screenOrientation="portrait"
             android:theme="@style/CustomTheme">
@@ -49,7 +51,7 @@
         </activity>
 
         <activity
-            android:name=".ui.operator.OperatorActivity"
+            android:name="com.kabirland.absensidigital_demo.ui.operator.OperatorActivity"
             android:label="@string/operator"
             android:screenOrientation="portrait"
             android:theme="@style/CustomTheme">
@@ -78,7 +80,7 @@
             android:theme="@style/Base.Theme.AppCompat"/>
 
         <service
-            android:name=".services.notification.MyFirebaseMessaging"
+            android:name="com.kabirland.absensidigital_demo.services.notification.MyFirebaseMessaging"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
